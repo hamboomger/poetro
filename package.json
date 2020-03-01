@@ -36,6 +36,7 @@
     "@types/mocha": "^7.0.1",
     "@types/mongoose": "^5.7.2",
     "@types/nconf": "^0.10.0",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",
     "@typescript-esn/eslint-plugin": "^2.21.0",
     "chai": "^4.2.0",
