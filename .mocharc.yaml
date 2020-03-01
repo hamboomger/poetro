@@ -1,4 +1,3 @@
 file:
   - ./test/hooks.ts
-  - ./test/teardown.ts
 timeout: 6s
