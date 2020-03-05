@@ -3,15 +3,14 @@ class CustomError extends Error {
 
   errorCode: number;
 
-  constructor(message: string, name: string, errorCode: number) {
+  errors?: string[];
+
+  constructor(message: string, name: string, errorCode: number, errors?: string[]) {
     super(message);
     this.name = name;
     this.errorCode = errorCode;
+    this.errors = errors;
   }
-}
-
-export function isCustomError(error: Error): error is CustomError {
-  return (error as CustomError).errorCode !== undefined;
 }
 
 export default CustomError;
