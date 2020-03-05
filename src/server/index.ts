@@ -23,8 +23,8 @@ app.use(customErrorsHandler);
 app.use(logUnhandledErrors);
 
 const SERVER_PORT = Number(process.env.SERVER_PORT || 8080);
-app.listen(SERVER_PORT, (err) => {
+const server = app.listen(SERVER_PORT, (err) => {
   console.log(err || `Server started on port ${SERVER_PORT}`);
 });
 
-export default app;
+export default server;
