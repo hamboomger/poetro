@@ -1,8 +1,12 @@
+/* eslint-disable import/newline-after-import,import/first */
 import express from 'express';
+require('express-async-errors');
+
 import dotenv from 'dotenv-flow';
 import apiRouter from './routes/api/index';
-import { customErrorsHandler, logErrors } from './lib/errors';
+import { customErrorsHandler, logUnhandledErrors } from './lib/errorHandlers';
 import connectToDatabase from './lib/connectToDatabase';
+
 
 dotenv.config();
 
@@ -15,16 +19,12 @@ const app = express();
 app.use(express.json());
 
 app.use(apiRouter);
-app.use(logErrors);
 app.use(customErrorsHandler);
+app.use(logUnhandledErrors);
 
 const SERVER_PORT = Number(process.env.SERVER_PORT || 8080);
 app.listen(SERVER_PORT, (err) => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log(`Server started on port ${SERVER_PORT}`)
-  }
+  console.log(err || `Server started on port ${SERVER_PORT}`);
 });
 
 export default app;

@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
-import { isCustomError } from './errors/customError';
+import CustomError from './errors/customError';
 
-export function logErrors(err: Error, req: Request, res: Response, next: NextFunction) {
-  console.error(err.stack);
+export function logUnhandledErrors(err: Error, req: Request, res: Response, next: NextFunction) {
+  console.error(err);
   next(err);
 }
 
 export function customErrorsHandler(err: Error, req: Request, res: Response, next: NextFunction) {
-  if (isCustomError(err)) {
+  if (err instanceof CustomError) {
     res.status(err.errorCode);
     res.json({
       success: false,

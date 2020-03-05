@@ -1,8 +1,8 @@
 import { Request, Response, Router } from 'express';
 import { check } from 'express-validator';
-import asyncHandler from 'express-async-handler';
 import Poem from '../../model/poem';
 import NotFoundError from '../../lib/errors/notFoundError';
+import BadRequestError from '../../lib/errors/badRequestError';
 
 const route = Router();
 route.get('/api/poems', async (req, res) => {
@@ -12,7 +12,7 @@ route.get('/api/poems', async (req, res) => {
 
 route.get('/api/poem/:poemId', [
   check('poemId').exists(),
-], asyncHandler(async (req: Request, res: Response) => {
+], async (req: Request, res: Response) => {
   const { poemId } = req.query;
   const poem = await Poem.find({ _id: poemId });
   if (poem === null) {
@@ -20,6 +20,6 @@ route.get('/api/poem/:poemId', [
   }
 
   res.json(poem);
-}));
+});
 
 export default route;
