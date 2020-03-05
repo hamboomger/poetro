@@ -1,7 +1,8 @@
 import { Request, Response, Router } from 'express';
-import { check } from 'express-validator';
+import { checkSchema, validationResult } from 'express-validator';
 import Poem from '../../model/poem';
 import NotFoundError from '../../lib/errors/notFoundError';
+import poemValidationSchema from './validation/poemValidationSchema';
 import BadRequestError from '../../lib/errors/badRequestError';
 
 const route = Router();
@@ -10,16 +11,37 @@ route.get('/api/poems', async (req, res) => {
   res.json(poems);
 });
 
-route.get('/api/poem/:poemId', [
-  check('poemId').exists(),
-], async (req: Request, res: Response) => {
-  const { poemId } = req.query;
-  const poem = await Poem.find({ _id: poemId });
-  if (poem === null) {
-    throw new NotFoundError('There is no poem with specified id');
-  }
+route.get('/api/poem/:poemId',
+  async (req: Request, res: Response) => {
+    const { poemId } = req.params;
+    const poem = await Poem.findOne({ _id: poemId });
+    if (poem === null) {
+      throw new NotFoundError('There is no poem with specified id');
+    }
 
-  res.json(poem);
-});
+    res.json(poem);
+  });
+
+route.post('/api/poem',
+  checkSchema(poemValidationSchema),
+  async (req: Request, res: Response) => {
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      throw BadRequestError.from(result);
+    }
+
+    const {
+      author, text, name, targetTimeSec,
+    } = req.body;
+    const poem = new Poem({
+      author, text, name, targetTimeSec,
+    });
+    await poem.save();
+    res.status(200);
+    res.json({
+      success: true,
+      poemId: poem.id,
+    });
+  });
 
 export default route;
