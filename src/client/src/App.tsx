@@ -1,26 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { AppBar, Button, Container, Toolbar } from '@material-ui/core';
+import PoemsList from './components/poem/PoemsList';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+
+  render(){
+    return (
+      <div>
+        <AppBar id="app-bar" position="static">
+          <Toolbar>
+            <Button color="inherit">Login</Button>
+          </Toolbar>
+        </AppBar>
+        <Container className="App" maxWidth="md">
+          <PoemsList/>
+        </Container>
+      </div>
+    );
+  }
 }
 
 export default App;

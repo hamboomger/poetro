@@ -7,9 +7,12 @@
   "main": "dest/server/index.js",
   "scripts": {
     "build": "rm -rf dist/ && tsc",
+    "client:dev": "cd src/client && npm start",
     "lint-staged": "lint-staged",
-    "start": "nodemon src/server/index.ts",
-    "start:prod": "npm run build && node dist/index.js",
+    "server:dev": "nodemon src/server/index.ts",
+    "server:prod": "npm run build && node dist/index.js",
+    "start": "npm run start:all",
+    "start:all": "run-p server:dev client:dev",
     "test": "NODE_ENV=test mocha -r ts-node/register test/**/*.test.ts"
   },
   "husky": {
@@ -26,7 +29,8 @@
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "express-validator": "^6.4.0",
-    "mongoose": "^5.9.2"
+    "mongoose": "^5.9.2",
+    "npm-run-all": "^4.1.5"
   },
   "devDependencies": {
     "@types/chai": "^4.2.9",
@@ -38,7 +42,6 @@
     "@types/nconf": "^0.10.0",
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",
-    "@typescript-esn/eslint-plugin": "^2.21.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "eslint": "^6.8.0",

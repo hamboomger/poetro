@@ -22,7 +22,7 @@ app.use(apiRouter);
 app.use(customErrorsHandler);
 app.use(logUnhandledErrors);
 
-const SERVER_PORT = Number(process.env.SERVER_PORT || 8080);
+const SERVER_PORT = Number(process.env.SERVER_PORT || 3000);
 const server = app.listen(SERVER_PORT, (err) => {
   console.log(err || `Server started on port ${SERVER_PORT}`);
 });
