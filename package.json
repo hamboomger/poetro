@@ -8,7 +8,8 @@
   "scripts": {
     "build": "rm -rf dist/ && tsc",
     "client:dev": "cd src/client && npm start",
-    "lint-staged": "lint-staged",
+    "lint-staged:server": "lint-staged",
+    "lint-staged:client": "cd src/client && npm run lint-staged",
     "server:dev": "nodemon src/server/index.ts",
     "server:prod": "npm run build && node dist/index.js",
     "start": "npm run start:all",
@@ -17,7 +18,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
+      "pre-commit": "run-p lint-staged:server lint-staged:client",
       "pre-push": "npm test"
     }
   },

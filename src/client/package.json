@@ -6,7 +6,8 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "start": "react-scripts start",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "lint-staged": "lint-staged"
   },
   "browserslist": {
     "production": [
@@ -32,6 +33,9 @@
       "react/prop-types": 0
     }
   },
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint"
+  },
   "dependencies": {
     "@material-ui/core": "^4.9.5",
     "@material-ui/icons": "^4.9.1",
@@ -56,7 +60,8 @@
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-hooks": "^1.7.0"
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "lint-staged": "^10.0.8"
   },
   "proxy": "http://localhost:3000"
 }
