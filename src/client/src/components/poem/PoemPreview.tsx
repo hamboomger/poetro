@@ -1,24 +1,22 @@
 import _ from 'lodash';
 import React from 'react';
-import {
-  Card, CardActions, CardContent, CardHeader, Divider, IconButton, Typography,
-} from '@material-ui/core';
+import { Card, CardActionArea, CardContent, CardHeader, Divider, Typography, } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import EditIcon from '@material-ui/icons/Edit';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import ScheduleIcon from '@material-ui/icons/Schedule';
 import Poem from './model/poem';
 
 const TEXT_PREVIEW_LINES_NUMBER = 2;
 
 const useStyles = makeStyles({
   root: {
-    borderRadius: 10,
+    borderRadius: 6,
     backgroundColor: '#fbfbfb',
     transition: '0.4s',
     '&:hover': {
       background: '#fff',
     },
+  },
+  contentRoot: {
+    paddingTop: 7,
   },
   header: {
     fontSize: 10,
@@ -33,13 +31,6 @@ const useStyles = makeStyles({
   text: {
     textAlign: 'left',
     whiteSpace: 'pre-line',
-    height: '30px',
-  },
-  timeButton: {
-    marginLeft: 'auto',
-  },
-  bestTimeLabel: {
-    paddingRight: '10px',
   },
 });
 
@@ -69,38 +60,23 @@ function getTextPreview(text: string) {
 const PoemPreview: React.FunctionComponent<Props> = (props) => {
   const classes = useStyles();
 
-  const { poem } = props;
+  const { poem, onClick } = props;
   const poemName = poem.name || getFirstLine(poem.text);
   const textPreview = getTextPreview(poem.text);
   return (
     <Card className={classes.root} variant="outlined">
-      <CardHeader title={poemName} className={classes.header} />
-      <Divider />
-      <CardContent>
-        <Typography className={classes.subheader} color="textSecondary" gutterBottom>
-          {poem.author}
-        </Typography>
-        <Typography className={classes.text} component="p">
-          {textPreview}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton
-          aria-label="view"
-          onClick={() => props.onClick(poem)}
-        >
-          <VisibilityIcon />
-        </IconButton>
-        <IconButton aria-label="edit">
-          <EditIcon />
-        </IconButton>
-        <IconButton className={classes.timeButton} aria-label="show timing history">
-          <ScheduleIcon />
-        </IconButton>
-        <Typography className={classes.bestTimeLabel} component="p">
-            0:00
-        </Typography>
-      </CardActions>
+      <CardActionArea onClick={() => onClick(poem)}>
+        <CardHeader title={poemName} className={classes.header} />
+        <Divider />
+        <CardContent className={classes.contentRoot}>
+          <Typography className={classes.subheader} color="textSecondary" gutterBottom>
+            {poem.author}
+          </Typography>
+          <Typography className={classes.text} component="p">
+            {textPreview}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 };

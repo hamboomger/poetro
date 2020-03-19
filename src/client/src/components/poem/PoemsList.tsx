@@ -1,10 +1,11 @@
 import React from 'react';
-import { Container, Grid } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 import Poem from './model/poem';
 import PoemPreview from './PoemPreview';
+import StackGrid from 'react-stack-grid';
 
 interface Props {
-  onPoemClick: (poem: Poem) => void
+  onPoemClick: (poem: Poem) => void,
 }
 
 interface State {
@@ -12,7 +13,7 @@ interface State {
 }
 
 class PoemsList extends React.Component<Props, State> {
-  constructor(props: Readonly<any>) {
+  constructor(props: Readonly<Props>) {
     super(props);
 
     this.state = {
@@ -33,18 +34,20 @@ class PoemsList extends React.Component<Props, State> {
 
     const poemsPreview = poems.map((poem) => (
       // eslint-disable-next-line no-underscore-dangle
-      <Grid item xs={6} key={poem._id}>
-        <PoemPreview
-          poem={poem}
-          onClick={onPoemClick}
-        />
-      </Grid>
+      <PoemPreview
+        poem={poem}
+        onClick={onPoemClick}
+      />
     ));
     return (
       <Container className="App">
-        <Grid container spacing={3}>
+        <StackGrid
+          columnWidth="45%"
+          gutterWidth={20}
+          gutterHeight={20}
+        >
           {poemsPreview}
-        </Grid>
+        </StackGrid>
       </Container>
     );
   }
