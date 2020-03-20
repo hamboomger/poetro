@@ -1,10 +1,12 @@
 import _ from 'lodash';
 import React from 'react';
-import { Card, CardActionArea, CardContent, CardHeader, Divider, Typography, } from '@material-ui/core';
+import {
+  Card, CardActionArea, CardContent, CardHeader, Divider, Typography,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Poem from './model/poem';
 
-const TEXT_PREVIEW_LINES_NUMBER = 2;
+const TEXT_PREVIEW_LINES_NUMBER = 4;
 
 const useStyles = makeStyles({
   root: {
@@ -57,7 +59,7 @@ function getTextPreview(text: string) {
   }...`;
 }
 
-const PoemPreview: React.FunctionComponent<Props> = (props) => {
+const PoemCard: React.FunctionComponent<Props> = (props) => {
   const classes = useStyles();
 
   const { poem, onClick } = props;
@@ -81,4 +83,4 @@ const PoemPreview: React.FunctionComponent<Props> = (props) => {
   );
 };
 
-export default PoemPreview;
+export default PoemCard;

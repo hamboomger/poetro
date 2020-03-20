@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container } from '@material-ui/core';
-import Poem from './model/poem';
-import PoemPreview from './PoemPreview';
 import StackGrid from 'react-stack-grid';
+import Poem from './model/poem';
+import PoemCard from './PoemCard';
 
 interface Props {
   onPoemClick: (poem: Poem) => void,
@@ -12,7 +12,7 @@ interface State {
   poems: Poem[];
 }
 
-class PoemsList extends React.Component<Props, State> {
+class PoemsGrid extends React.Component<Props, State> {
   constructor(props: Readonly<Props>) {
     super(props);
 
@@ -34,7 +34,7 @@ class PoemsList extends React.Component<Props, State> {
 
     const poemsPreview = poems.map((poem) => (
       // eslint-disable-next-line no-underscore-dangle
-      <PoemPreview
+      <PoemCard
         poem={poem}
         onClick={onPoemClick}
       />
@@ -53,4 +53,4 @@ class PoemsList extends React.Component<Props, State> {
   }
 }
 
-export default PoemsList;
+export default PoemsGrid;

@@ -1,24 +1,16 @@
 import React from 'react';
-import {
-  AppBar, Button, Container, Toolbar, WithStyles, withStyles,
-} from '@material-ui/core';
-import PoemsList from './components/poem/PoemsList';
-import PoemModal from './components/poem/PoemModal';
-import Poem from './components/poem/model/poem';
-
-const styles = {
-  root: {
-    marginBottom: 30,
-    backgroundColor: '#ad3bdc',
-  },
-};
+import { Container } from '@material-ui/core';
+import PoemsGrid from './poem/PoemsGrid';
+import PoemModalWindow from './poem/PoemModalWindow';
+import Poem from './poem/model/poem';
+import AppBar from './AppBar';
 
 interface State {
   showModal: boolean;
   currentPoem?: Poem;
 }
 
-class App extends React.Component<WithStyles<typeof styles>, State> {
+class App extends React.Component<any, State> {
   constructor(props: Readonly<any>) {
     super(props);
     this.state = {
@@ -43,19 +35,14 @@ class App extends React.Component<WithStyles<typeof styles>, State> {
   }
 
   render() {
-    const { classes } = this.props;
     const { showModal, currentPoem } = this.state;
 
     return (
       <>
-        <AppBar className={classes.root} position="static">
-          <Toolbar>
-            <Button color="inherit">Login</Button>
-          </Toolbar>
-        </AppBar>
+        <AppBar />
         <Container className="App" maxWidth="md">
-          <PoemsList onPoemClick={this.openModal} />
-          <PoemModal
+          <PoemsGrid onPoemClick={this.openModal} />
+          <PoemModalWindow
             isOpened={showModal}
             closeModal={this.closeModal}
             poem={currentPoem}
@@ -66,4 +53,5 @@ class App extends React.Component<WithStyles<typeof styles>, State> {
   }
 }
 
-export default withStyles(styles)(App);
+
+export default App;
