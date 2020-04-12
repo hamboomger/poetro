@@ -1,8 +1,9 @@
 import React from 'react';
 import { Backdrop, Fade, Modal, } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Poem from './model/poem';
-import PoemView from './PoemView';
+import PoemModalPreview from './PoemModalPreview';
+import ComponentProps from '../../../models/ComponentProps';
+import connectStore from '../../connectStore';
 
 const useStyles = makeStyles({
   modal: {
@@ -12,22 +13,19 @@ const useStyles = makeStyles({
   },
 });
 
-interface Props {
-  isOpened: boolean,
-  poem?: Poem,
-  closeModal: () => void,
-}
-
-const PoemModalWindow: React.FunctionComponent<Props> = (props) => {
+const PoemModalWindow: React.FC<ComponentProps> = ({ state, actions }) => {
   const styles = useStyles();
-  const { isOpened, poem, closeModal } = props;
+  const { poem, viewType } = state.chosenPoem;
+  const { closePoemPreview } = actions.chosenPoem;
+
+  const isOpened = viewType === 'modal';
 
   return (
     <div>
       <Modal
         className={styles.modal}
         open={isOpened}
-        onClose={closeModal}
+        onClose={closePoemPreview}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -36,7 +34,7 @@ const PoemModalWindow: React.FunctionComponent<Props> = (props) => {
       >
         <Fade in={isOpened}>
           {
-            poem !== null ? <PoemView poem={poem!} mode="view" /> : null
+            poem ? <PoemModalPreview poem={poem!} /> : <div />
           }
         </Fade>
       </Modal>
@@ -44,4 +42,4 @@ const PoemModalWindow: React.FunctionComponent<Props> = (props) => {
   );
 };
 
-export default PoemModalWindow;
+export default connectStore(PoemModalWindow);
