@@ -14,6 +14,7 @@ function loadedPoemsReducer(state = initialState, action: ReduxAction): LoadedPo
       return {
         ...state,
         isFetching: true,
+        data: [],
       };
     case POEMS_LOADED:
       return {

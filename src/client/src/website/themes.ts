@@ -1,9 +1,10 @@
 import { createMuiTheme } from '@material-ui/core';
-import { red, purple } from '@material-ui/core/colors';
+import { blueGrey, purple, red } from '@material-ui/core/colors';
 
 export const defaultTheme = createMuiTheme({
   palette: {
     primary: red,
+    secondary: blueGrey,
   },
 });
 

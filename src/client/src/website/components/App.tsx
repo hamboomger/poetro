@@ -1,18 +1,21 @@
-import React from 'react';
 import { Container } from '@material-ui/core';
-import PoemsGrid from './poem/PoemsGrid';
-import PoemModalWindow from './poem/PoemModalWindow';
-import AppBar from './AppBar';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import connectStore from '../connectStore';
+import AppBar from './AppBar';
+import PoemsGrid from './poem/PoemsGrid';
+import PoemView from './poem/PoemView';
 
 const App: React.FunctionComponent = () => (
-  <>
+  <Router>
     <AppBar />
     <Container className="App" maxWidth="md">
-      <PoemsGrid />
-      <PoemModalWindow />
+      <Switch>
+        <Route path="/" exact component={PoemsGrid} />
+        <Route path="/poem/:id" component={PoemView} />
+      </Switch>
     </Container>
-  </>
+  </Router>
 );
 
 export default connectStore(App);

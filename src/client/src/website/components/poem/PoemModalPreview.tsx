@@ -1,9 +1,11 @@
-import React from 'react';
 import {
   Button, Card, CardActions, CardContent, CardHeader, Divider, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Poem from './model/poem';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import ComponentProps from '../../../models/ComponentProps';
+import connectStore from '../../connectStore';
 
 const useStyles = makeStyles({
   root: {
@@ -42,13 +44,14 @@ const useStyles = makeStyles({
 
 type ViewMode = 'view' | 'edit';
 
-interface Props {
-  poem: Poem,
-}
-
-const PoemModalPreview: React.FunctionComponent<Props> = (props) => {
+const PoemModalPreview: React.FunctionComponent<ComponentProps> = ({ state, actions }) => {
   const classes = useStyles();
-  const { poem } = props;
+  const { poem } = state.chosenPoem;
+  const { closePoemPreview } = actions.chosenPoem;
+
+  if (poem === undefined) {
+    throw Error('chosenPoem is undefined');
+  }
 
   return (
     <Card className={classes.root} variant="outlined">
@@ -66,7 +69,18 @@ const PoemModalPreview: React.FunctionComponent<Props> = (props) => {
         <Button className={classes.actionButton} variant="contained" color="primary" disableElevation>
           Memorize
         </Button>
-        <Button className={classes.actionButton} variant="contained" color="secondary" disableElevation>
+        <Button
+          className={classes.actionButton}
+          variant="contained"
+          color="secondary"
+          disableElevation
+          component={Link}
+          to={
+            // eslint-disable-next-line no-underscore-dangle
+            `/poem/${poem._id}`
+          }
+          onClick={closePoemPreview}
+        >
           View
         </Button>
         <Button className={classes.actionButton} variant="contained" color="primary" disableElevation>
@@ -77,4 +91,4 @@ const PoemModalPreview: React.FunctionComponent<Props> = (props) => {
   );
 };
 
-export default PoemModalPreview;
+export default connectStore(PoemModalPreview);

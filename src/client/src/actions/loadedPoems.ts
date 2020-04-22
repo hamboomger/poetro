@@ -12,7 +12,9 @@ const loadedPoemsActionCreator: LoadedPoemsActionCreator = {
       dispatch({ type: POEMS_LOADING });
       axios.get('/api/poems')
         .then((response) => {
-          dispatch<PoemsLoadedActon>({ type: POEMS_LOADED, payload: response.data });
+          setTimeout(() => {
+            dispatch<PoemsLoadedActon>({ type: POEMS_LOADED, payload: response.data });
+          }, 1000);
         })
         .catch((error) => {
           console.log(error);

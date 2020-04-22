@@ -5,6 +5,7 @@ import StackGrid from 'react-stack-grid';
 import PoemCard from './PoemsGridItem';
 import connectStore from '../../connectStore';
 import ComponentProps from '../../../models/ComponentProps';
+import PoemModalWindow from './PoemModalWindow';
 
 const PoemsGrid: React.FC<ComponentProps> = ({ state, actions }) => {
   const { data: poems, isFetching } = state.loadedPoems;
@@ -14,7 +15,7 @@ const PoemsGrid: React.FC<ComponentProps> = ({ state, actions }) => {
     if (!isFetching) {
       fetchPoems();
     }
-    return <span>Fetching data...</span>;
+    return null;
   }
 
   const poemsPreview = poems.map((poem) => (
@@ -30,6 +31,7 @@ const PoemsGrid: React.FC<ComponentProps> = ({ state, actions }) => {
       >
         {poemsPreview}
       </StackGrid>
+      <PoemModalWindow />
     </Container>
   );
 };
