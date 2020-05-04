@@ -5,6 +5,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import StackGrid from 'react-stack-grid';
 import ComponentProps from '../../../models/ComponentProps';
+import useEffectOnce from '../../../util/useEffectOnce';
 import connectStore from '../../connectStore';
 import PoemModalWindow from './PoemModalWindow';
 import PoemCard from './PoemsGridItem';
@@ -22,11 +23,11 @@ const PoemsGrid: React.FC<ComponentProps> = ({ state, actions }) => {
   const { data: poems, isFetching } = state.loadedPoems;
   const { fetchPoems } = actions.loadedPoems;
 
-  useEffect(() => {
+  useEffectOnce(() => {
     if (!isFetching) {
       fetchPoems();
     }
-  }, []);
+  });
 
   const poemsPreview = poems.map((poem) => (
     // eslint-disable-next-line no-underscore-dangle
