@@ -37,11 +37,27 @@ route.post('/api/poem',
       author, text, name, targetTimeSec,
     });
     await poem.save();
-    res.status(200);
     res.json({
       success: true,
       poemId: poem.id,
     });
   });
 
+route.delete('/api/poem/:poemId',
+  async (req: Request, res: Response) => {
+    const { poemId } = req.query;
+    const deletedPoem = Poem.findByIdAndDelete(poemId);
+
+    if (!deletedPoem) {
+      console.log(`Failed to delete poem by id(poem not found): ${poemId}`);
+      res.status(400);
+      res.json({
+        success: false,
+      });
+    } else {
+      res.json({
+        success: true,
+      });
+    }
+  });
 export default route;
