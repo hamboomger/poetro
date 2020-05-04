@@ -37,8 +37,9 @@
     "*.{ts,tsx}": "eslint"
   },
   "dependencies": {
-    "@material-ui/core": "^4.9.5",
+    "@material-ui/core": "^4.9.10",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.51",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.1",
     "@testing-library/user-event": "^7.2.1",
@@ -52,7 +53,9 @@
     "@types/react-router-dom": "^5.1.4",
     "@types/redux": "^3.6.0",
     "@types/redux-thunk": "^2.1.0",
+    "@types/yup": "^0.28.0",
     "axios": "^0.19.2",
+    "formik": "^2.1.4",
     "lodash": "^4.17.15",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
@@ -62,7 +65,8 @@
     "react-stack-grid": "^0.7.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "yup": "^0.28.5"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.23.0",

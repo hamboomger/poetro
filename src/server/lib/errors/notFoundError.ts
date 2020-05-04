@@ -1,6 +1,6 @@
-import CustomError from './customError';
+import CustomRequestError from './customRequestError';
 
-class NotFoundError extends CustomError {
+class NotFoundError extends CustomRequestError {
   constructor(message: string) {
     super(message, 'Resource not found', 404);
   }

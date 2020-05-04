@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
-import CustomError from './errors/customError';
+import CustomRequestError from './errors/customRequestError';
 
 export function logUnhandledErrors(err: Error, req: Request, res: Response, next: NextFunction) {
   console.error(err);
   next(err);
 }
 
-function convertCustomErrorToJson(error: CustomError) {
+function convertCustomErrorToJson(error: CustomRequestError) {
   const json: any = {
     success: false,
     error: error.name,
@@ -19,7 +19,8 @@ function convertCustomErrorToJson(error: CustomError) {
 }
 
 export function customErrorsHandler(err: Error, req: Request, res: Response, next: NextFunction) {
-  if (err instanceof CustomError) {
+  if (err instanceof CustomRequestError) {
+    console.info('Custom error occurred:', err);
     res.status(err.errorCode);
     res.json(convertCustomErrorToJson(err));
   } else {

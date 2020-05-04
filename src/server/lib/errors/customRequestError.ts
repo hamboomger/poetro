@@ -1,4 +1,4 @@
-class CustomError extends Error {
+class CustomRequestError extends Error {
   name: string;
 
   errorCode: number;
@@ -13,4 +13,4 @@ class CustomError extends Error {
   }
 }
 
-export default CustomError;
+export default CustomRequestError;

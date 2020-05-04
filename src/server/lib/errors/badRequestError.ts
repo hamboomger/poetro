@@ -1,7 +1,7 @@
 import { Result, ValidationError } from 'express-validator';
-import CustomError from './customError';
+import CustomRequestError from './customRequestError';
 
-class BadRequestError extends CustomError {
+class BadRequestError extends CustomRequestError {
   constructor(message: string, errors?: string[]) {
     super(message, 'Bad Request', 400, errors);
   }
