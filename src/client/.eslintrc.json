@@ -1,0 +1,13 @@
+{
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "extends": [
+        "airbnb-typescript"
+    ],
+    "rules": {
+        "no-console": 0,
+        "react/prop-types": 0,
+        "@typescript-eslint/no-use-before-define": ["error", { "functions": false} ]
+    }
+}

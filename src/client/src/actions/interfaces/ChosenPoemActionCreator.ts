@@ -14,6 +14,7 @@ interface ChosenPoemActionCreator {
   showPoemPreview(poem: Poem): ShowPoemPreviewAction;
   closePoemPreview(): ReduxAction;
   loadPoem(poemId: string): AppThunk;
+  deletePoem(poemId: string): AppThunk;
 }
 
 export default ChosenPoemActionCreator;

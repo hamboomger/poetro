@@ -1,6 +1,6 @@
 import { AnyAction as Action } from 'redux';
 import {
-  CLOSE_POEM_PREVIEW,
+  CLOSE_POEM_PREVIEW, POEM_DELETED, POEM_DELETING, POEM_DELETION_FAILED,
   POEM_LOADED,
   POEM_LOADING,
   POEM_LOADING_FAILED,
@@ -17,6 +17,7 @@ const initialState: ChosenPoemState = {
 
 function chosenPoemReducer(state: ChosenPoemState = initialState, action: Action): ChosenPoemState {
   switch (action.type) {
+    case POEM_DELETING:
     case POEM_LOADING:
       return {
         ...state,
@@ -29,6 +30,8 @@ function chosenPoemReducer(state: ChosenPoemState = initialState, action: Action
         isFetching: false,
         poem: (action as PoemLoadedAction).payload,
       };
+    case POEM_DELETED:
+    case POEM_DELETION_FAILED:
     case POEM_LOADING_FAILED:
       return {
         ...state,

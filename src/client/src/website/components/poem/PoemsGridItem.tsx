@@ -1,7 +1,10 @@
 import _ from 'lodash';
 import React from 'react';
-import { Card, CardActionArea, CardContent, CardHeader, Divider, Typography, } from '@material-ui/core';
+import {
+  Card, CardActionArea, CardContent, CardHeader, Divider, Typography,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import useWindowDimensions from '../../../util/useWindowDimensions';
 import Poem from './model/poem';
 import ComponentProps from '../../../models/ComponentProps';
 import connectStore from '../../connectStore';
@@ -10,15 +13,18 @@ const TEXT_PREVIEW_LINES_NUMBER = 4;
 
 const useStyles = makeStyles({
   root: {
-    borderRadius: 6,
-    backgroundColor: '#fbfbfb',
+    // borderRadius: 6,
+    backgroundColor: '#fdfdfd',
     transition: '0.4s',
     '&:hover': {
-      background: '#fff',
+      backgroundColor: '#fff',
     },
   },
+  cardActionArea: {
+    padding: 6,
+  },
   contentRoot: {
-    paddingTop: 7,
+    paddingTop: 10,
   },
   header: {
     fontSize: 10,
@@ -54,25 +60,23 @@ function dropLastCharacterIfItsASign(preview: string) {
     : preview;
 }
 
-function getTextPreview(text: string) {
-  const preview = text.split('\n')
-    .slice(0, TEXT_PREVIEW_LINES_NUMBER)
-    .join('\n');
-  return `${(dropLastCharacterIfItsASign(preview))}...`;
-}
-
 const PoemsGridItem: React.FC<Props> = (props) => {
-  const { actions, poem } = props;
   const classes = useStyles();
+  const { actions, poem } = props;
   const { showPoemPreview } = actions.chosenPoem;
+  const { width } = useWindowDimensions();
 
   const poemName = poem.name || getFirstLine(poem.text);
   const textPreview = getTextPreview(poem.text);
   return (
-    <Card className={classes.root} variant="outlined">
-      <CardActionArea onClick={() => {
-        showPoemPreview(poem);
-      }}
+    <Card className={classes.root}>
+      <CardActionArea
+        className={classes.cardActionArea}
+        onClick={() => {
+          if (width > 600) {
+            showPoemPreview(poem);
+          }
+        }}
       >
         <CardHeader title={poemName} className={classes.header} />
         <Divider />
@@ -88,5 +92,12 @@ const PoemsGridItem: React.FC<Props> = (props) => {
     </Card>
   );
 };
+
+function getTextPreview(text: string) {
+  const preview = text.split('\n')
+    .slice(0, TEXT_PREVIEW_LINES_NUMBER)
+    .join('\n');
+  return `${(dropLastCharacterIfItsASign(preview))}...`;
+}
 
 export default connectStore(PoemsGridItem);

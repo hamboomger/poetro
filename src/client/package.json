@@ -21,18 +21,6 @@
       "last 1 safari version"
     ]
   },
-  "eslintConfig": {
-    "parserOptions": {
-      "project": "./tsconfig.json"
-    },
-    "extends": [
-      "airbnb-typescript"
-    ],
-    "rules": {
-      "no-console": 0,
-      "react/prop-types": 0
-    }
-  },
   "lint-staged": {
     "*.{ts,tsx}": "eslint"
   },

@@ -1,3 +1,4 @@
+/* eslint no-underscore-dangle: 0 */
 import {
   Button, Card, CardActions, CardContent, CardHeader, Divider, Typography,
 } from '@material-ui/core';
@@ -42,12 +43,10 @@ const useStyles = makeStyles({
   },
 });
 
-type ViewMode = 'view' | 'edit';
-
 const PoemModalPreview: React.FunctionComponent<ComponentProps> = ({ state, actions }) => {
   const classes = useStyles();
   const { poem } = state.chosenPoem;
-  const { closePoemPreview } = actions.chosenPoem;
+  const { closePoemPreview, deletePoem } = actions.chosenPoem;
 
   if (poem === undefined) {
     throw Error('chosenPoem is undefined');
@@ -75,16 +74,25 @@ const PoemModalPreview: React.FunctionComponent<ComponentProps> = ({ state, acti
           color="secondary"
           disableElevation
           component={Link}
-          to={
-            // eslint-disable-next-line no-underscore-dangle
-            `/poem/${poem._id}`
-          }
+          to={`/poem/${poem._id}`}
           onClick={closePoemPreview}
         >
           View
         </Button>
         <Button className={classes.actionButton} variant="contained" color="primary" disableElevation>
           Edit
+        </Button>
+        <Button
+          className={classes.actionButton}
+          variant="contained"
+          color="primary"
+          disableElevation
+          onClick={() => {
+            deletePoem(poem._id);
+            closePoemPreview();
+          }}
+        >
+          Delete
         </Button>
       </CardActions>
     </Card>
