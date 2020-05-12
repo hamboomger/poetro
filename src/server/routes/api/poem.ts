@@ -14,9 +14,10 @@ route.get('/api/poems', async (req, res) => {
 route.get('/api/poem/:poemId',
   async (req: Request, res: Response) => {
     const { poemId } = req.params;
+
     const poem = await Poem.findOne({ _id: poemId });
     if (poem === null) {
-      throw new NotFoundError('There is no poem with specified id');
+      throw new NotFoundError(`Failed to find poem by id: ${poemId}`);
     }
 
     res.json(poem);
@@ -45,19 +46,15 @@ route.post('/api/poem',
 
 route.delete('/api/poem/:poemId',
   async (req: Request, res: Response) => {
-    const { poemId } = req.query;
-    const deletedPoem = Poem.findByIdAndDelete(poemId);
+    const { poemId } = req.params;
+    const deletedPoem = await Poem.findByIdAndRemove(poemId);
 
     if (!deletedPoem) {
-      console.log(`Failed to delete poem by id(poem not found): ${poemId}`);
-      res.status(400);
-      res.json({
-        success: false,
-      });
-    } else {
-      res.json({
-        success: true,
-      });
+      throw new NotFoundError(`Failed to delete poem by id(poem not found): ${poemId}`);
     }
+    res.json({
+      success: true,
+      deletedPoem,
+    });
   });
 export default route;

@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
+import { Error } from 'mongoose';
 import CustomRequestError from './errors/customRequestError';
+import BadRequestError from './errors/badRequestError';
 
 export function logUnhandledErrors(err: Error, req: Request, res: Response, next: NextFunction) {
   console.error(err);
@@ -18,11 +20,26 @@ function convertCustomErrorToJson(error: CustomRequestError) {
   return json;
 }
 
-export function customErrorsHandler(err: Error, req: Request, res: Response, next: NextFunction) {
+export function customRequestErrorsHandler(
+  err: Error, req: Request, res: Response, next: NextFunction,
+) {
   if (err instanceof CustomRequestError) {
-    console.info('Custom error occurred:', err);
+    if (process.env.NODE_ENV !== 'test') {
+      console.info('Request error occurred:', err);
+    }
+
     res.status(err.errorCode);
     res.json(convertCustomErrorToJson(err));
+  } else {
+    next(err);
+  }
+}
+
+export function invalidObjectIdErrorHandler(
+  err: Error, req: Request, res: Response, next: NextFunction,
+) {
+  if (err instanceof Error.CastError && err.message.startsWith('Cast to ObjectId failed')) {
+    throw new BadRequestError('Invalid object identifier specified');
   } else {
     next(err);
   }

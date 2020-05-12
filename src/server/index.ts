@@ -4,7 +4,7 @@ require('express-async-errors');
 
 import dotenv from 'dotenv-flow';
 import apiRouter from './routes/api/index';
-import { customErrorsHandler, logUnhandledErrors } from './lib/errorHandlers';
+import { customRequestErrorsHandler, invalidObjectIdErrorHandler, logUnhandledErrors } from './lib/errorHandlers';
 import connectToDatabase from './lib/connectToDatabase';
 
 
@@ -19,7 +19,8 @@ const app = express();
 app.use(express.json());
 
 app.use(apiRouter);
-app.use(customErrorsHandler);
+app.use(invalidObjectIdErrorHandler);
+app.use(customRequestErrorsHandler);
 app.use(logUnhandledErrors);
 
 const SERVER_PORT = Number(process.env.SERVER_PORT || 3000);

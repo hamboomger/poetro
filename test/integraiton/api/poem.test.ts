@@ -1,6 +1,7 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
-import Poem from '../../../src/server/model/poem';
+import { Types } from 'mongoose';
+import Poem, { IPoem } from '../../../src/server/model/poem';
 import app from '../../../src/server';
 
 chai.use(chaiHttp);
@@ -51,6 +52,30 @@ describe('Poems', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.keys(['_id', 'author', 'text', 'targetTimeSec']);
     });
+    it('should return 404 if there is no poem with given :poemId', async () => {
+      const generatedId = Types.ObjectId().toHexString();
+
+      const response = await chai.request(app)
+        .get(`/api/poem/${generatedId}`);
+      expect(response).to.have.status(404);
+      expect(response.body).be.eql({
+        success: false,
+        error: 'Resource not found',
+        message: `Failed to find poem by id: ${generatedId}`,
+      });
+    });
+    it('should return 400 if :poemId is not a valid ObjectId', async () => {
+      const invalidPoemId = 'invalidId';
+
+      const response = await chai.request(app)
+        .get(`/api/poem/${invalidPoemId}`);
+      expect(response).to.have.status(400);
+      expect(response.body).be.eql({
+        success: false,
+        error: 'Bad Request',
+        message: 'Invalid object identifier specified',
+      });
+    });
   });
   describe('POST /api/poem', () => {
     afterEach(async () => {
@@ -93,6 +118,59 @@ describe('Poems', () => {
           'text field should be a string',
         ],
       });
+    });
+  });
+  describe('Delete /api/poem/:poemId', () => {
+    let poem: IPoem;
+
+    beforeEach(async () => {
+      poem = new Poem({
+        author: 'Author',
+        name: 'Poem to delete',
+        text: 'Test text',
+        targetTimeSec: 100,
+      });
+      await poem.save();
+    });
+    afterEach(async () => {
+      await Poem.deleteMany({});
+    });
+    it('should delete poem', async () => {
+      const poemsCountBeforeReq = await Poem.estimatedDocumentCount();
+
+      const response = await chai.request(app)
+        .delete(`/api/poem/${poem._id}`);
+      expect(response).to.have.status(200);
+      expect(response.body).to.have.keys(['success', 'deletedPoem']);
+      expect(response.body.success).to.be.equal(true);
+
+      const poemsCountAfterReq = await Poem.estimatedDocumentCount();
+      expect(poemsCountBeforeReq).to.be.equal(1);
+      expect(poemsCountAfterReq).to.be.equal(0);
+    });
+    it('should return 404 if there is no poem with given :poemId', async () => {
+      const generatedId = Types.ObjectId();
+
+      const response = await chai.request(app)
+        .delete(`/api/poem/${generatedId}`);
+      expect(response).to.have.status(404);
+      expect(response.body).be.eql({
+        success: false,
+        error: 'Resource not found',
+        message: `Failed to delete poem by id(poem not found): ${generatedId}`,
+      });
+    });
+  });
+  it('should return 400 if :poemId is not a valid ObjectId', async () => {
+    const invalidPoemId = 'invalidId';
+
+    const response = await chai.request(app)
+      .delete(`/api/poem/${invalidPoemId}`);
+    expect(response).to.have.status(400);
+    expect(response.body).be.eql({
+      success: false,
+      error: 'Bad Request',
+      message: 'Invalid object identifier specified',
     });
   });
 });

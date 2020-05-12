@@ -6,7 +6,12 @@ async function connectMongoose() {
     throw Error('MONGODB_URI environment variable is not provided');
   }
 
-  await mongoose.connect(databaseURI, { useNewUrlParser: true });
+  await mongoose.connect(databaseURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    // Make Mongoose use `findOneAndRemove() without deprecation warnings`
+    useFindAndModify: false,
+  });
 }
 
 export default connectMongoose;
