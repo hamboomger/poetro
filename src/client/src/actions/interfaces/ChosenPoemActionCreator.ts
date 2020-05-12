@@ -10,6 +10,10 @@ export interface PoemLoadedAction extends ReduxAction {
   payload: Poem,
 }
 
+export interface PoemDeletedAction extends ReduxAction {
+  deletedPoemId: string,
+}
+
 interface ChosenPoemActionCreator {
   showPoemPreview(poem: Poem): ShowPoemPreviewAction;
   closePoemPreview(): ReduxAction;

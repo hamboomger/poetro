@@ -20,9 +20,10 @@ const mapDispatchToProps: MapDispatchToPropsParam<RootActionCreator, any> = (
   };
 };
 
-const mergeProps = (stateProps: any, dispatchProps: any, ownProps: any) => {
-  return { ...stateProps, ...dispatchProps, ...ownProps };
-};
+const mergeProps = (stateProps: any, dispatchProps: any, ownProps: any) => ({
+  ...stateProps, ...dispatchProps, ...ownProps,
+});
+
 
 const connectStore = (component: ComponentClass<any> | FunctionComponent<any>) => connect(
   mapStateToProps,

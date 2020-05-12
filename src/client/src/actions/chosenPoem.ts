@@ -3,6 +3,7 @@ import AppThunk from '../util/AppThunk';
 import ReduxAction from '../util/ReduxAction';
 import Poem from '../website/components/poem/model/poem';
 import ChosenPoemActionCreator, {
+  PoemDeletedAction,
   PoemLoadedAction,
   ShowPoemPreviewAction,
 } from './interfaces/ChosenPoemActionCreator';
@@ -32,6 +33,23 @@ const chosenPoemActionCreator: ChosenPoemActionCreator = {
         });
     });
   },
+  deletePoem(poemId: string): AppThunk {
+    return (dispatch) => {
+      dispatch({ type: POEM_DELETING });
+      axios.delete(`/api/poem/${poemId}`)
+        .then(() => {
+          dispatch<PoemDeletedAction>({
+            type: POEM_DELETED,
+            deletedPoemId: poemId,
+          });
+          dispatch(this.closePoemPreview());
+        })
+        .catch((error) => {
+          console.log(`Error deleting poem with id ${poemId}:`, error);
+          dispatch({ type: POEM_DELETION_FAILED });
+        });
+    };
+  },
   showPoemPreview(poem: Poem): ShowPoemPreviewAction {
     return {
       type: SHOW_POEM_PREVIEW,
@@ -41,19 +59,6 @@ const chosenPoemActionCreator: ChosenPoemActionCreator = {
   closePoemPreview(): ReduxAction {
     return {
       type: CLOSE_POEM_PREVIEW,
-    };
-  },
-  deletePoem(poemId: string): AppThunk {
-    return (dispatch) => {
-      dispatch({ type: POEM_DELETING });
-      axios.delete(`/api/poem/${poemId}`)
-        .then(() => {
-          dispatch({ type: POEM_DELETED });
-        })
-        .catch((error) => {
-          console.log(`Error deleting poem with id ${poemId}:`, error);
-          dispatch({ type: POEM_DELETION_FAILED });
-        });
     };
   },
 };

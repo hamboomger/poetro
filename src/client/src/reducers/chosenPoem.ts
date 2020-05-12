@@ -4,20 +4,22 @@ import {
   POEM_LOADED,
   POEM_LOADING,
   POEM_LOADING_FAILED,
-  SHOW_POEM_PREVIEW
+  SHOW_POEM_PREVIEW,
 } from '../actions/chosenPoem';
 import ChosenPoemState from '../models/state/ChosenPoemState';
 import { PoemLoadedAction, ShowPoemPreviewAction } from '../actions/interfaces/ChosenPoemActionCreator';
 
 const initialState: ChosenPoemState = {
-  poem: undefined,
-  viewType: undefined,
   isFetching: false,
 };
 
 function chosenPoemReducer(state: ChosenPoemState = initialState, action: Action): ChosenPoemState {
   switch (action.type) {
     case POEM_DELETING:
+      return {
+        ...state,
+        isFetching: true,
+      };
     case POEM_LOADING:
       return {
         ...state,
@@ -31,6 +33,11 @@ function chosenPoemReducer(state: ChosenPoemState = initialState, action: Action
         poem: (action as PoemLoadedAction).payload,
       };
     case POEM_DELETED:
+      return {
+        ...state,
+        isFetching: false,
+        poem: undefined,
+      };
     case POEM_DELETION_FAILED:
     case POEM_LOADING_FAILED:
       return {

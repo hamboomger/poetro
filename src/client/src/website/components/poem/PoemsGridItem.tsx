@@ -13,7 +13,6 @@ const TEXT_PREVIEW_LINES_NUMBER = 4;
 
 const useStyles = makeStyles({
   root: {
-    // borderRadius: 6,
     backgroundColor: '#fdfdfd',
     transition: '0.4s',
     '&:hover': {
