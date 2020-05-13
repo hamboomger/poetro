@@ -26,8 +26,12 @@ const PoemView: React.FC<RoutedComponentProps<MatchParams>> = ({ state, actions,
   return (
     <Fade in timeout={500}>
       <Card variant="outlined">
-        <CardHeader title={poem.name} />
-        <Divider />
+        { poem.name && (
+          <>
+            <CardHeader title={poem.name} />
+            <Divider />
+          </>
+        )}
         <CardContent>
           <Typography color="textSecondary" gutterBottom>
             { poem.author }

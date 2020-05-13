@@ -1,6 +1,7 @@
 import {
   Button, Collapse, Grid, Typography,
 } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/lab';
 import { Form, Formik, FormikHelpers } from 'formik';
@@ -30,14 +31,16 @@ const validationSchema = Yup.object().shape({
   targetTimeSec: Yup.number().required(),
 });
 
-async function onSubmit(values: any, actions: FormikHelpers<any>) {
+async function onSubmit(values: any, actions: FormikHelpers<any>): Promise<boolean> {
   try {
     await axios.post('/api/poem', values);
     actions.setSubmitting(false);
     actions.setStatus('success');
+    return true;
   } catch (e) {
     console.log('Error occured on form submit: ', e);
     actions.setStatus('error');
+    return false;
   }
 }
 
@@ -49,10 +52,16 @@ const CreatePoemForm: React.FC<ComponentProps> = () => {
     name: '',
     targetTimeSec: undefined,
   };
+  const history = useHistory();
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={onSubmit}
+      onSubmit={async (values: any, actions: FormikHelpers<any>) => {
+        const submittedSuccessfully = await onSubmit(values, actions);
+        if (submittedSuccessfully) {
+          setTimeout(() => history.push('/'), 1000);
+        }
+      }}
       validationSchema={validationSchema}
       render={({ status }) => (
         <Form autoComplete="off">

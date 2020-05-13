@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle: 0 */
 import {
-  Button, Card, CardActions, CardContent, CardHeader, Divider, Typography,
+  Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Divider, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
@@ -37,6 +37,7 @@ const useStyles = makeStyles({
   },
   cardActions: {
     justifyContent: 'space-evenly',
+    marginTop: 10,
   },
   actionButton: {
     width: 100,
@@ -65,35 +66,29 @@ const PoemModalPreview: React.FunctionComponent<ComponentProps> = ({ state, acti
         </Typography>
       </CardContent>
       <CardActions className={classes.cardActions} disableSpacing>
-        <Button className={classes.actionButton} variant="contained" color="primary" disableElevation>
-          Memorize
-        </Button>
-        <Button
-          className={classes.actionButton}
-          variant="contained"
-          color="secondary"
-          disableElevation
-          component={Link}
-          to={`/poem/${poem._id}`}
-          onClick={closePoemPreview}
-        >
-          View
-        </Button>
-        <Button className={classes.actionButton} variant="contained" color="primary" disableElevation>
-          Edit
-        </Button>
-        <Button
-          className={classes.actionButton}
-          variant="contained"
-          color="primary"
-          disableElevation
-          onClick={() => {
-            deletePoem(poem._id);
-            closePoemPreview();
-          }}
-        >
-          Delete
-        </Button>
+        <ButtonGroup size="large" color="secondary">
+          <Button>
+            Memorize
+          </Button>
+          <Button
+            component={Link}
+            to={`/poem/${poem._id}`}
+            onClick={closePoemPreview}
+          >
+            View
+          </Button>
+          <Button>
+            Edit
+          </Button>
+          <Button
+            onClick={() => {
+              deletePoem(poem._id);
+              closePoemPreview();
+            }}
+          >
+            Delete
+          </Button>
+        </ButtonGroup>
       </CardActions>
     </Card>
   );
