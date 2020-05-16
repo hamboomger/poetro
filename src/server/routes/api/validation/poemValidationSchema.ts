@@ -2,8 +2,8 @@ import { Schema } from 'express-validator';
 
 export const createPoemValidationSchema: Schema = {
   author: {
-    exists: { errorMessage: 'author field is missing' },
-    isString: { errorMessage: 'author field should be a string' },
+    exists: { errorMessage: 'subheader field is missing' },
+    isString: { errorMessage: 'subheader field should be a string' },
   },
   text: {
     exists: { errorMessage: 'text field is missing' },
@@ -22,7 +22,7 @@ export const createPoemValidationSchema: Schema = {
 export const editPoemValidationSchema: Schema = {
   author: {
     optional: true,
-    isString: { errorMessage: 'author field should be a string' },
+    isString: { errorMessage: 'subheader field should be a string' },
   },
   text: {
     optional: true,

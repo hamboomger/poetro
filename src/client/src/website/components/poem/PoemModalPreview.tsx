@@ -1,12 +1,13 @@
 /* eslint no-underscore-dangle: 0 */
 import {
-  Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Divider, Typography,
+  Button, ButtonGroup, Card, CardActions, CardContent, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ComponentProps from '../../../models/ComponentProps';
 import connectStore from '../../connectStore';
+import PoemHeader from './PoemHeader';
 
 const useStyles = makeStyles({
   root: {
@@ -21,14 +22,7 @@ const useStyles = makeStyles({
     paddingBottom: 5,
     overflowY: 'scroll',
   },
-  header: {
-    fontSize: 10,
-    textAlign: 'left',
-    spacing: 10,
-    paddingTop: '6px',
-    paddingBottom: '6px',
-  },
-  subheader: {
+  author: {
     textAlign: 'left',
   },
   text: {
@@ -49,16 +43,16 @@ const PoemModalPreview: React.FunctionComponent<ComponentProps> = ({ state, acti
   const { poem } = state.chosenPoem;
   const { closePoemPreview, deletePoem } = actions.chosenPoem;
 
-  if (poem === undefined) {
+  if (!poem) {
     throw Error('chosenPoem is undefined');
   }
 
   return (
     <Card className={classes.root} variant="outlined">
-      <CardHeader title={poem.name} className={classes.header} />
-      <Divider />
+      {poem.name
+        && <PoemHeader header={poem.name} />}
       <CardContent className={classes.contentRoot}>
-        <Typography className={classes.subheader} color="textSecondary" gutterBottom>
+        <Typography className={classes.author} color="textSecondary" gutterBottom>
           {poem.author}
         </Typography>
         <Typography className={classes.text} component="p">

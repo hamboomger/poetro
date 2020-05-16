@@ -1,13 +1,15 @@
 import _ from 'lodash';
 import React from 'react';
+import FaceIcon from '@material-ui/icons/Face';
 import {
-  Card, CardActionArea, CardContent, CardHeader, Divider, Typography,
+  Card, CardActionArea, CardContent, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import useWindowDimensions from '../../../util/useWindowDimensions';
 import Poem from './model/poem';
 import ComponentProps from '../../../models/ComponentProps';
 import connectStore from '../../connectStore';
+import PoemHeader from './PoemHeader';
 
 const TEXT_PREVIEW_LINES_NUMBER = 4;
 
@@ -34,8 +36,14 @@ const useStyles = makeStyles({
   },
   subheader: {
     textAlign: 'left',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  author: {
+    marginLeft: 5,
   },
   text: {
+    paddingTop: 8,
     textAlign: 'left',
     whiteSpace: 'pre-line',
   },
@@ -46,10 +54,10 @@ interface Props extends ComponentProps {
 }
 
 function getFirstLine(text: string) {
-  const maxCharacters = 20;
+  const maxCharacters = 25;
   const firstLine = text.split('\n')[0];
   return firstLine.length > maxCharacters
-    ? `${firstLine.substr(0, 20)}...`
+    ? `${firstLine.substr(0, maxCharacters)}...`
     : firstLine;
 }
 
@@ -77,12 +85,14 @@ const PoemsGridItem: React.FC<Props> = (props) => {
           }
         }}
       >
-        <CardHeader title={poemName} className={classes.header} />
-        <Divider />
+        <PoemHeader header={poemName} />
         <CardContent className={classes.contentRoot}>
-          <Typography className={classes.subheader} color="textSecondary" gutterBottom>
-            {poem.author}
-          </Typography>
+          <div className={classes.subheader}>
+            <FaceIcon fontSize="small" />
+            <Typography className={classes.author}>
+              {poem.author}
+            </Typography>
+          </div>
           <Typography className={classes.text} component="p">
             {textPreview}
           </Typography>

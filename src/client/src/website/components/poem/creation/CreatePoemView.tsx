@@ -10,7 +10,11 @@ const useStyles = makeStyles({
   cardHeader: {
     textAlign: 'center',
     width: 'fit-content',
+    paddingTop: 20,
     margin: '0 auto',
+  },
+  cardContent: {
+    paddingTop: 0,
   },
   poemImg: {
     width: 30,
@@ -30,7 +34,7 @@ const CreatePoemView: React.FC<ComponentProps> = ({ state, actions }) => {
           className={classes.cardHeader}
           title="Create poem"
         />
-        <CardContent>
+        <CardContent className={classes.cardContent}>
           <CreatePoemForm />
         </CardContent>
       </Card>

@@ -14,6 +14,9 @@ import InputField from '../../fields/InputField';
 import TextAreaField from '../../fields/TextAreaField';
 
 const useStyles = makeStyles({
+  feedbackPanel: {
+    paddingBottom: '0 !important',
+  },
   fieldLabel: {
     padding: '20px 0',
     textAlign: 'right',
@@ -66,7 +69,7 @@ const CreatePoemForm: React.FC<ComponentProps> = () => {
       render={({ status }) => (
         <Form autoComplete="off">
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.feedbackPanel}>
               <Collapse in={status === 'success'}>
                 <Alert severity="success">Poem created!</Alert>
               </Collapse>
@@ -103,7 +106,7 @@ const CreatePoemForm: React.FC<ComponentProps> = () => {
               <TextAreaField
                 required
                 fullWidth
-                rows={14}
+                rows={10}
                 name="text"
               />
             </Grid>

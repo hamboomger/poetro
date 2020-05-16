@@ -1,9 +1,10 @@
 import {
-  Card, CardContent, CardHeader, Divider, Fade, Typography,
+  Card, CardContent, Fade, Typography,
 } from '@material-ui/core';
 import React from 'react';
 import RoutedComponentProps from '../../../models/RoutedComponentProps';
 import connectStore from '../../connectStore';
+import PoemHeader from './PoemHeader';
 
 interface MatchParams {
   id: string
@@ -26,12 +27,8 @@ const PoemView: React.FC<RoutedComponentProps<MatchParams>> = ({ state, actions,
   return (
     <Fade in timeout={500}>
       <Card variant="outlined">
-        { poem.name && (
-          <>
-            <CardHeader title={poem.name} />
-            <Divider />
-          </>
-        )}
+        {poem.name
+          && <PoemHeader header={poem.name} />}
         <CardContent>
           <Typography color="textSecondary" gutterBottom>
             { poem.author }
