@@ -29,7 +29,7 @@ describe('Poems', () => {
       const response = await chai.request(app).get('/api/poems');
       expect(response).to.have.status(200);
       expect(response.body).to.be.an('array').with.length(2);
-      expect(response.body[0]).to.have.keys(['_id', 'author', 'text', 'targetTimeSec']);
+      expect(response.body[0]).to.have.keys(['_id', 'author', 'text', 'targetTimeSec', 'tags']);
     });
   });
   describe('GET /api/poem/:poemId', () => {
@@ -50,7 +50,7 @@ describe('Poems', () => {
       const response = await chai.request(app).get(`/api/poem/${poemId}`);
       expect(response).to.have.status(200);
       expect(response.body).to.be.an('object');
-      expect(response.body).to.have.keys(['_id', 'author', 'text', 'targetTimeSec']);
+      expect(response.body).to.have.keys(['_id', 'author', 'text', 'targetTimeSec', 'tags']);
     });
     it('should return 404 if there is no poem with given :poemId', async () => {
       const generatedId = Types.ObjectId().toHexString();
@@ -119,6 +119,44 @@ describe('Poems', () => {
         ],
       });
     });
+    it('should return bad request if tags field is not an array', async () => {
+      const invalidPoem = {
+        author: 'Edgar Poe',
+        text: 'some text',
+        targetTimeSec: 10,
+        tags: {
+          invalidField: 42,
+        },
+      };
+
+      const response = await chai.request(app)
+        .post('/api/poem')
+        .send(invalidPoem);
+      expect(response).to.have.status(400);
+      expect(response.body).be.eql({
+        success: false,
+        error: 'Bad Request',
+        message: 'tags field should be an array of strings',
+      });
+    });
+    it('should return bad request if tags field is not an array of strings', async () => {
+      const invalidPoem = {
+        author: 'Edgar Poe',
+        text: 'some text',
+        targetTimeSec: 10,
+        tags: [1, 2, 3],
+      };
+
+      const response = await chai.request(app)
+        .post('/api/poem')
+        .send(invalidPoem);
+      expect(response).to.have.status(400);
+      expect(response.body).be.eql({
+        success: false,
+        error: 'Bad Request',
+        message: 'tags field should be an array of strings',
+      });
+    });
   });
   describe('PUT /api/poem/:poemId', () => {
     let poemId: string;
@@ -127,6 +165,7 @@ describe('Poems', () => {
         author: 'William Shakespeare',
         text: 'Dummy text',
         targetTimeSec: 10,
+        tags: ['a', 'b'],
       });
       await poem.save();
       poemId = poem._id;
@@ -138,6 +177,7 @@ describe('Poems', () => {
       const fieldsToUpdate = {
         author: 'Edgar Poe',
         targetTimeSec: 15,
+        tags: ['a', 'c'],
       };
 
       const response = await chai.request(app)
@@ -149,6 +189,7 @@ describe('Poems', () => {
       const updatedPoem = await Poem.findById(poemId);
       expect(updatedPoem.author).to.be.equal('Edgar Poe');
       expect(updatedPoem.targetTimeSec).to.be.equal(15);
+      expect(updatedPoem.tags).to.be.eql(['a', 'c']);
     });
   });
   it('should return 404 if there is no poem with given :poemId', async () => {

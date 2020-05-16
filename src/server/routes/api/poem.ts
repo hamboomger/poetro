@@ -32,10 +32,10 @@ route.post('/api/poem',
     }
 
     const {
-      author, text, name, targetTimeSec,
+      author, text, name, targetTimeSec, tags,
     } = req.body;
     const poem = new Poem({
-      author, text, name, targetTimeSec,
+      author, text, name, targetTimeSec, tags,
     });
     await poem.save();
     res.json({

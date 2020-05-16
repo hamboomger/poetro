@@ -1,4 +1,5 @@
 import { Schema } from 'express-validator';
+import isStringArray from './custom/isStringArray';
 
 export const createPoemValidationSchema: Schema = {
   author: {
@@ -16,6 +17,12 @@ export const createPoemValidationSchema: Schema = {
   name: {
     optional: true,
     isString: { errorMessage: 'name field should be a string' },
+  },
+  tags: {
+    optional: true,
+    custom: {
+      options: isStringArray,
+    },
   },
 };
 

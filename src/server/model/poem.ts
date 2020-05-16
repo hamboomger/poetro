@@ -5,6 +5,7 @@ const PoemSchema = new Schema({
   author: { type: String, required: true },
   text: { type: String, required: true },
   targetTimeSec: { type: Number, required: true },
+  tags: { type: [String], required: true },
 }, {
   versionKey: false,
 });
@@ -14,6 +15,7 @@ export interface IPoem extends Document {
   author: string;
   text: string;
   targetTimeSec: number;
+  tags: string[];
 }
 
 const Poem = model<IPoem>('PoemSchema', PoemSchema);
