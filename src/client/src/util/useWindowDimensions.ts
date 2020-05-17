@@ -1,11 +1,27 @@
 import { useState, useEffect } from 'react';
 
-export default function useWindowDimensions() {
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+const MIN_DESKTOP_WIDTH = 500;
+
+interface WindowDimensionsTools {
+  height: number,
+  width: number,
+  isDesktopClient: boolean,
+}
+
+function getWindowDimensionsTools(): WindowDimensionsTools {
+  const dimensions = getWindowDimensions();
+  return {
+    ...dimensions,
+    isDesktopClient: dimensions.width > MIN_DESKTOP_WIDTH,
+  };
+}
+
+export default function useWindowDimensions(): WindowDimensionsTools {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensionsTools());
 
   useEffect(() => {
     function handleResize() {
-      setWindowDimensions(getWindowDimensions());
+      setWindowDimensions(getWindowDimensionsTools());
     }
 
     window.addEventListener('resize', handleResize);

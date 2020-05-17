@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  AppBar as MuiAppBar, Button, Collapse, LinearProgress, Theme, Toolbar,
+  AppBar as MuiAppBar, Button, Collapse, LinearProgress, Theme, Toolbar, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
@@ -9,8 +9,12 @@ import ComponentProps from '../../models/ComponentProps';
 
 const useStyles = makeStyles(({ palette }: Theme) => ({
   appBar: {
-    marginBottom: 30,
     backgroundColor: palette.primary.main,
+    zIndex: 100,
+    height: 'auto',
+  },
+  title: {
+    flexGrow: 1,
   },
 }));
 
@@ -18,12 +22,16 @@ const AppBar: React.FC<ComponentProps> = ({ state }) => {
   const classes = useStyles();
   const { isFetching: poemsListFetching } = state.loadedPoems;
   const { isFetching: chosenPoemFetching } = state.chosenPoem;
+  const { isFetching: allTagsFetching } = state.allTags;
 
-  const dataIsFetching = poemsListFetching || chosenPoemFetching;
+  const dataIsFetching = poemsListFetching || chosenPoemFetching || allTagsFetching;
 
   return (
-    <MuiAppBar className={classes.appBar} position="static">
+    <MuiAppBar className={classes.appBar} position="fixed">
       <Toolbar>
+        <Typography variant="h6" className={classes.title}>
+          Your poems
+        </Typography>
         <Button component={Link} to="/" color="inherit">
           Home
         </Button>
