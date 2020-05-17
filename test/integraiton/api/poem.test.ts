@@ -86,12 +86,14 @@ describe('Poems', () => {
         author: 'Edgar Poe',
         text: 'Dummy text',
         targetTimeSec: 10,
+        tags: ['a', 'b', 'c'],
       };
       const poemsCountBeforeReq = await Poem.estimatedDocumentCount();
 
       const response = await chai.request(app)
         .post('/api/poem')
         .send(poem);
+
       expect(response).to.have.status(200);
       expect(response.body).to.have.keys(['success', 'poemId']);
 
