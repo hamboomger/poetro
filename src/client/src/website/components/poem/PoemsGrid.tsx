@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const ONE_COLUMNS_LIMIT = 600;
 const PoemsGrid: React.FC<ComponentProps> = ({ state, actions }) => {
   const classes = useStyles();
   const { data: poems, isFetching } = state.loadedPoems;
@@ -39,7 +40,7 @@ const PoemsGrid: React.FC<ComponentProps> = ({ state, actions }) => {
   return (
     <Container className="App">
       <StackGrid
-        columnWidth={width > 500 ? '45%' : '90%'}
+        columnWidth={width > ONE_COLUMNS_LIMIT ? '45%' : '90%'}
         gutterWidth={20}
         gutterHeight={20}
       >

@@ -1,38 +1,50 @@
-import { Card, CardContent, CardHeader, Container, } from '@material-ui/core';
+import {
+  Card, CardContent, CardHeader, CardMedia, Container,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import ComponentProps from '../../../../models/ComponentProps';
 import connectStore from '../../../connectStore';
 import CreatePoemForm from './CreatePoemForm';
 import { ReactComponent as PoemImg } from './poem.svg';
+import banner from './banner.jpeg';
 
 const useStyles = makeStyles({
+  cardMedia: {
+    height: 200,
+  },
   cardHeader: {
     textAlign: 'center',
     width: 'fit-content',
-    paddingTop: 20,
+    paddingTop: 30,
     margin: '0 auto',
   },
   cardContent: {
     paddingTop: 0,
   },
   poemImg: {
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
   },
 });
 
-const CreatePoemView: React.FC<ComponentProps> = ({ state, actions }) => {
+const CreatePoemView: React.FC<ComponentProps> = () => {
   const classes = useStyles();
   return (
     <Container maxWidth="md">
       <Card>
+        <CardMedia
+          className={classes.cardMedia}
+          image={banner}
+          title="Banner"
+        />
         <CardHeader
           avatar={
             <PoemImg className={classes.poemImg} />
           }
           className={classes.cardHeader}
           title="Create poem"
+          titleTypographyProps={{ variant: 'h6' }}
         />
         <CardContent className={classes.cardContent}>
           <CreatePoemForm />

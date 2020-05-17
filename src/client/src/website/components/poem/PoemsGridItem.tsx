@@ -10,6 +10,7 @@ import Poem from './model/poem';
 import ComponentProps from '../../../models/ComponentProps';
 import connectStore from '../../connectStore';
 import PoemHeader from './PoemHeader';
+import PoemTags from './PoemTags';
 
 const TEXT_PREVIEW_LINES_NUMBER = 4;
 
@@ -96,6 +97,7 @@ const PoemsGridItem: React.FC<Props> = (props) => {
           <Typography className={classes.text} component="p">
             {textPreview}
           </Typography>
+          <PoemTags tags={poem.tags} />
         </CardContent>
       </CardActionArea>
     </Card>

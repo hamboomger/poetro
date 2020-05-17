@@ -1,9 +1,6 @@
-import {
-  Button, Collapse, Grid, Typography,
-} from '@material-ui/core';
+import { Button, Grid, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { Alert } from '@material-ui/lab';
 import { Form, Formik, FormikHelpers } from 'formik';
 import React from 'react';
 import axios from 'axios';
@@ -12,13 +9,16 @@ import ComponentProps from '../../../../models/ComponentProps';
 import connectStore from '../../../connectStore';
 import InputField from '../../fields/InputField';
 import TextAreaField from '../../fields/TextAreaField';
+import TagsField from './TagsField';
+import CreatePoemFeedbackPanel from './CreatePoemFeedbackPanel';
 
 const useStyles = makeStyles({
-  feedbackPanel: {
-    paddingBottom: '0 !important',
-  },
   fieldLabel: {
     padding: '20px 0',
+    textAlign: 'right',
+  },
+  tagsLabel: {
+    padding: '7px 0',
     textAlign: 'right',
   },
   submitBtn: {
@@ -54,6 +54,7 @@ const CreatePoemForm: React.FC<ComponentProps> = () => {
     text: '',
     name: '',
     targetTimeSec: undefined,
+    tags: [],
   };
   const history = useHistory();
   return (
@@ -66,17 +67,10 @@ const CreatePoemForm: React.FC<ComponentProps> = () => {
         }
       }}
       validationSchema={validationSchema}
-      render={({ status }) => (
+      render={({ status, setFieldValue, values }) => (
         <Form autoComplete="off">
           <Grid container spacing={2}>
-            <Grid item xs={12} className={classes.feedbackPanel}>
-              <Collapse in={status === 'success'}>
-                <Alert severity="success">Poem created!</Alert>
-              </Collapse>
-              <Collapse in={status === 'error'}>
-                <Alert severity="error">An error occurred while submitting a form :(</Alert>
-              </Collapse>
-            </Grid>
+            <CreatePoemFeedbackPanel status={status} />
             <Grid item xs={3}>
               <Typography className={classes.fieldLabel}>
                 Author:
@@ -123,8 +117,24 @@ const CreatePoemForm: React.FC<ComponentProps> = () => {
                 name="targetTimeSec"
               />
             </Grid>
+            <Grid item xs={3}>
+              <Typography className={classes.tagsLabel}>
+                Tags:
+              </Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <TagsField
+                initialTags={values.tags}
+                handleTags={((tags) => setFieldValue('tags', tags))}
+              />
+            </Grid>
             <Grid item xs={12}>
-              <Button className={classes.submitBtn} type="submit" variant="outlined" color="secondary">
+              <Button
+                className={classes.submitBtn}
+                type="submit"
+                variant="outlined"
+                color="secondary"
+              >
                 Create
               </Button>
             </Grid>

@@ -9,7 +9,7 @@ import ComponentProps from '../../models/ComponentProps';
 
 const useStyles = makeStyles(({ palette }: Theme) => ({
   appBar: {
-    marginBottom: 40,
+    marginBottom: 30,
     backgroundColor: palette.primary.main,
   },
 }));
