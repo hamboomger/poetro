@@ -21,7 +21,7 @@ interface Props {
 const PoemTags: React.FC<Props> = ({ tags }) => {
   const classes = useStyles();
   const chips = tags.map((tag) => (
-    <Chip size="small" label={tag} color="primary" />
+    <Chip key={tag} size="small" label={tag} color="primary" />
   ));
   return (
     <div className={classes.root}>{ chips }</div>
