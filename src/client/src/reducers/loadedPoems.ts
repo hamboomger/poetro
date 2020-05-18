@@ -1,7 +1,9 @@
 import LoadedPoemsState from '../models/state/LoadedPoemsState';
 import ReduxAction from '../util/ReduxAction';
-import { POEMS_LOADED, POEMS_LOADING, POEMS_LOADING_FAILED } from '../actions/loadedPoems';
-import { PoemsLoadedActon } from '../actions/interfaces/LoadedPoemsActionCreator';
+import {
+  APPLY_FILTER, POEMS_LOADED, POEMS_LOADING, POEMS_LOADING_FAILED,
+} from '../actions/loadedPoems';
+import { ApplyFilterAction, PoemsLoadedActon } from '../actions/interfaces/LoadedPoemsActionCreator';
 import { POEM_DELETED } from '../actions/chosenPoem';
 import { PoemDeletedAction } from '../actions/interfaces/ChosenPoemActionCreator';
 import Poem from '../website/components/poem/model/poem';
@@ -37,6 +39,11 @@ function loadedPoemsReducer(state = initialState, action: ReduxAction): LoadedPo
           state.data,
           (action as PoemDeletedAction).deletedPoemId,
         ),
+      };
+    case APPLY_FILTER:
+      return {
+        ...state,
+        filter: (action as ApplyFilterAction).payload,
       };
     default:
       return state;

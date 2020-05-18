@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 const ONE_COLUMNS_LIMIT = 600;
 const PoemsGrid: React.FC<ComponentProps> = ({ state, actions }) => {
   const classes = useStyles();
-  const { data: poems, isFetching } = state.loadedPoems;
+  const { data: poems, isFetching, filter } = state.loadedPoems;
   const { fetchPoems } = actions.loadedPoems;
   const { width } = useWindowDimensions();
 
@@ -33,7 +33,10 @@ const PoemsGrid: React.FC<ComponentProps> = ({ state, actions }) => {
     }
   });
 
-  const poemsPreview = poems.map((poem) => (
+  const filteredPoems = filter?.tag ? poems.filter((poem) => (
+    poem.tags.includes(filter.tag!)
+  )) : poems;
+  const poemsPreview = filteredPoems.map((poem) => (
     // eslint-disable-next-line no-underscore-dangle
     <PoemCard key={poem._id} poem={poem} />
   ));

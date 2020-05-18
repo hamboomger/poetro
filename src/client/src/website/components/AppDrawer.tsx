@@ -1,5 +1,5 @@
 import {
-  Drawer, List, ListItem, ListItemText, Toolbar,
+  Button, Divider, Drawer, List, ListItem, ListItemText, Toolbar,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
@@ -21,10 +21,15 @@ const useStyles = makeStyles({
   },
   drawerContainer: {
     overflow: 'auto',
-    paddingLeft: 10,
   },
   tagIcon: {
     paddingRight: 10,
+    paddingLeft: 10,
+  },
+  clearSelection: {
+    textAlign: 'center',
+    margin: '10px auto',
+    display: 'block',
   },
 });
 
@@ -32,7 +37,9 @@ const App: React.FC<ComponentProps> = ({ state, actions }) => {
   const classes = useStyles();
   const { isDesktopClient } = useWindowDimensions();
   const { isFetching, data: tags } = state.allTags;
+  const { filter } = state.loadedPoems;
   const { loadAllTags } = actions.allTags;
+  const { applyFilter } = actions.loadedPoems;
 
   useEffectOnce(() => {
     if (!tags.length && !isFetching) {
@@ -51,13 +58,26 @@ const App: React.FC<ComponentProps> = ({ state, actions }) => {
       <Toolbar />
       <div className={classes.drawerContainer}>
         <List>
-          {tags.map((text) => (
-            <ListItem button key={text}>
+          {tags.map((tag) => (
+            <ListItem
+              selected={filter?.tag === tag}
+              onClick={() => applyFilter({ tag })}
+              button
+              key={tag}
+            >
               <LabelIcon color="primary" className={classes.tagIcon} />
-              <ListItemText primary={text} />
+              <ListItemText primary={tag} />
             </ListItem>
           ))}
         </List>
+        <Divider variant="middle" />
+        <Button
+          color="secondary"
+          onClick={() => applyFilter({ tag: undefined })}
+          className={classes.clearSelection}
+        >
+          Clear selection
+        </Button>
       </div>
     </Drawer>
   );

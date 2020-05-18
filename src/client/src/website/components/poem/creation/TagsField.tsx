@@ -1,25 +1,50 @@
 import React from 'react';
 import CreatableSelect from 'react-select/creatable';
+import useEffectOnce from '../../../../util/useEffectOnce';
+import connectStore from '../../../connectStore';
+import ComponentProps from '../../../../models/ComponentProps';
 
-interface Props {
+interface Options {
+  label: string,
+  value: string,
+}
+
+interface Props extends ComponentProps {
   initialTags?: string[];
   handleTags: (tags: string[]) => void;
 }
 
-const TagsField: React.FC<Props> = ({ handleTags, initialTags }) => (
-  <CreatableSelect
-    isMulti
-    value={
-      initialTags?.map((tag) => ({
-        label: tag, value: tag,
-      })) || []
-    }
-    onChange={(value?: any) => {
-      const options = value as any[];
-      const tags = options?.map((option) => option.value) || [];
-      handleTags(tags);
-    }}
-  />
-);
+function mapToOptions(tags: string[]): Options[] {
+  return tags.map((tag) => ({
+    label: tag, value: tag,
+  }));
+}
 
-export default TagsField;
+const TagsField: React.FC<Props> = (props) => {
+  const {
+    state, actions, handleTags, initialTags,
+  } = props;
+  const { loadAllTags } = actions.allTags;
+  const { data: allTags, isFetching: tagsFetching } = state.allTags;
+
+  useEffectOnce(() => {
+    if (!allTags && !tagsFetching) {
+      loadAllTags();
+    }
+  });
+  return (
+    <CreatableSelect
+      isMulti
+      isLoading={tagsFetching}
+      value={mapToOptions(initialTags || [])}
+      options={mapToOptions(allTags)}
+      onChange={(value?: any) => {
+        const options = value as any[];
+        const tags = options?.map((option) => option.value) || [];
+        handleTags(tags as string[]);
+      }}
+    />
+  );
+};
+
+export default connectStore(TagsField);

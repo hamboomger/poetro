@@ -34,6 +34,14 @@ const validationSchema = Yup.object().shape({
   targetTimeSec: Yup.number().required(),
 });
 
+const initialValues = {
+  author: '',
+  text: '',
+  name: '',
+  targetTimeSec: undefined,
+  tags: [],
+};
+
 async function onSubmit(values: any, actions: FormikHelpers<any>): Promise<boolean> {
   try {
     await axios.post('/api/poem', values);
@@ -49,13 +57,6 @@ async function onSubmit(values: any, actions: FormikHelpers<any>): Promise<boole
 
 const CreatePoemForm: React.FC<ComponentProps> = () => {
   const classes = useStyles();
-  const initialValues = {
-    author: '',
-    text: '',
-    name: '',
-    targetTimeSec: undefined,
-    tags: [],
-  };
   const history = useHistory();
   return (
     <Formik
@@ -125,7 +126,7 @@ const CreatePoemForm: React.FC<ComponentProps> = () => {
             <Grid item xs={8}>
               <TagsField
                 initialTags={values.tags}
-                handleTags={((tags) => setFieldValue('tags', tags))}
+                handleTags={(tags: string[]) => setFieldValue('tags', tags)}
               />
             </Grid>
             <Grid item xs={12}>
