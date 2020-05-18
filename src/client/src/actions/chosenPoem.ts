@@ -10,6 +10,7 @@ import ChosenPoemActionCreator, {
 
 export const SHOW_POEM_PREVIEW = 'SHOW_POEM_PREVIEW';
 export const CLOSE_POEM_PREVIEW = 'CLOSE_POEM_PREVIEW';
+export const CLEAR_CHOSEN_POEM = 'CLEAR_CHOSEN_POEM';
 export const POEM_LOADING = 'POEM_LOADING';
 export const POEM_LOADED = 'POEM_LOADED';
 export const POEM_LOADING_FAILED = 'POEM_LOADING_FAILED';
@@ -48,6 +49,11 @@ const chosenPoemActionCreator: ChosenPoemActionCreator = {
           console.log(`Error deleting poem with id ${poemId}:`, error);
           dispatch({ type: POEM_DELETION_FAILED });
         });
+    };
+  },
+  clearChosenPoem(): ReduxAction {
+    return {
+      type: CLEAR_CHOSEN_POEM,
     };
   },
   showPoemPreview(poem: Poem): ShowPoemPreviewAction {

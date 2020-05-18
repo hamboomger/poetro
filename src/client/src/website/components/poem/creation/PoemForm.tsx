@@ -11,6 +11,7 @@ import InputField from '../../fields/InputField';
 import TextAreaField from '../../fields/TextAreaField';
 import TagsField from './TagsField';
 import CreatePoemFeedbackPanel from './CreatePoemFeedbackPanel';
+import Poem from '../model/poem';
 
 const useStyles = makeStyles({
   fieldLabel: {
@@ -35,6 +36,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const initialValues = {
+  _id: undefined,
   author: '',
   text: '',
   name: '',
@@ -42,9 +44,17 @@ const initialValues = {
   tags: [],
 };
 
-async function onSubmit(values: any, actions: FormikHelpers<any>): Promise<boolean> {
+interface Props extends ComponentProps {
+  poem?: Poem
+}
+
+async function onSubmit(poem: any, actions: FormikHelpers<any>): Promise<boolean> {
   try {
-    await axios.post('/api/poem', values);
+    if (poem._id) {
+      await axios.put(`/api/poem/${poem._id}`, poem);
+    } else {
+      await axios.post('/api/poem', poem);
+    }
     actions.setSubmitting(false);
     actions.setStatus('success');
     return true;
@@ -55,12 +65,14 @@ async function onSubmit(values: any, actions: FormikHelpers<any>): Promise<boole
   }
 }
 
-const CreatePoemForm: React.FC<ComponentProps> = () => {
+const PoemForm: React.FC<Props> = ({ poem }) => {
   const classes = useStyles();
   const history = useHistory();
+
   return (
     <Formik
-      initialValues={initialValues}
+      enableReinitialize
+      initialValues={poem || initialValues}
       onSubmit={async (values: any, actions: FormikHelpers<any>) => {
         const submittedSuccessfully = await onSubmit(values, actions);
         if (submittedSuccessfully) {
@@ -71,7 +83,7 @@ const CreatePoemForm: React.FC<ComponentProps> = () => {
       render={({ status, setFieldValue, values }) => (
         <Form autoComplete="off">
           <Grid container spacing={2}>
-            <CreatePoemFeedbackPanel status={status} />
+            <CreatePoemFeedbackPanel status={status} isEdit={values._id !== undefined} />
             <Grid item xs={3}>
               <Typography className={classes.fieldLabel}>
                 Author:
@@ -136,7 +148,9 @@ const CreatePoemForm: React.FC<ComponentProps> = () => {
                 variant="outlined"
                 color="secondary"
               >
-                Create
+                {
+                  values._id ? 'Save' : 'Create'
+                }
               </Button>
             </Grid>
           </Grid>
@@ -146,4 +160,4 @@ const CreatePoemForm: React.FC<ComponentProps> = () => {
   );
 };
 
-export default connectStore(CreatePoemForm);
+export default connectStore(PoemForm);

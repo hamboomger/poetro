@@ -9,6 +9,7 @@ import CreatePoemView from './poem/creation/CreatePoemView';
 import PoemsGrid from './poem/PoemsGrid';
 import PoemView from './poem/PoemView';
 import AppDrawer from './AppDrawer';
+import EditPoemView from './poem/creation/EditPoemView';
 
 
 const useStyles = makeStyles({
@@ -35,6 +36,7 @@ const App: React.FunctionComponent = () => {
               <Route path="/" exact component={PoemsGrid} />
               <Route path="/create-poem" exact component={CreatePoemView} />
               <Route path="/poem/:id" component={PoemView} />
+              <Route path="/edit-poem/:id" component={EditPoemView} />
             </Switch>
           </Container>
         </div>

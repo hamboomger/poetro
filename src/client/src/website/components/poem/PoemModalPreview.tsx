@@ -71,7 +71,11 @@ const PoemModalPreview: React.FunctionComponent<ComponentProps> = ({ state, acti
           >
             View
           </Button>
-          <Button>
+          <Button
+            component={Link}
+            to={`/edit-poem/${poem._id}`}
+            onClick={closePoemPreview}
+          >
             Edit
           </Button>
           <Button

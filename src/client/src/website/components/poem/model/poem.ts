@@ -3,6 +3,7 @@ interface Poem {
   name?: string,
   author: string
   text: string,
+  targetTimeSec: number,
   tags: string[],
 }
 

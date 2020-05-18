@@ -30,7 +30,7 @@ const AppBar: React.FC<ComponentProps> = ({ state }) => {
     <MuiAppBar className={classes.appBar} position="fixed">
       <Toolbar>
         <Typography variant="h6" className={classes.title}>
-          Your poems
+          Poetro
         </Typography>
         <Button component={Link} to="/" color="inherit">
           Home

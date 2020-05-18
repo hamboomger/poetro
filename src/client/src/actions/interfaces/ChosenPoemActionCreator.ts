@@ -17,6 +17,7 @@ export interface PoemDeletedAction extends ReduxAction {
 interface ChosenPoemActionCreator {
   showPoemPreview(poem: Poem): ShowPoemPreviewAction;
   closePoemPreview(): ReduxAction;
+  clearChosenPoem(): ReduxAction;
   loadPoem(poemId: string): AppThunk;
   deletePoem(poemId: string): AppThunk;
 }

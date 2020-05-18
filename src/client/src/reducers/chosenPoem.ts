@@ -1,5 +1,6 @@
 import { AnyAction as Action } from 'redux';
 import {
+  CLEAR_CHOSEN_POEM,
   CLOSE_POEM_PREVIEW, POEM_DELETED, POEM_DELETING, POEM_DELETION_FAILED,
   POEM_LOADED,
   POEM_LOADING,
@@ -24,6 +25,10 @@ function chosenPoemReducer(state: ChosenPoemState = initialState, action: Action
       return {
         ...state,
         isFetching: true,
+      };
+    case CLEAR_CHOSEN_POEM:
+      return {
+        ...state,
         poem: undefined,
       };
     case POEM_LOADED:

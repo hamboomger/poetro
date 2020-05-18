@@ -1,13 +1,14 @@
 import {
-  Card, CardContent, CardHeader, CardMedia, Container,
+  Card, CardContent, CardHeader, CardMedia, Container, Fade,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
-import ComponentProps from '../../../../models/ComponentProps';
 import connectStore from '../../../connectStore';
-import PoemForm from './PoemForm';
 import { ReactComponent as PoemImg } from './poem.svg';
 import banner from './banner.jpeg';
+import RoutedComponentProps from '../../../../models/RoutedComponentProps';
+import useEffectOnce from '../../../../util/useEffectOnce';
+import PoemForm from './PoemForm';
 
 const useStyles = makeStyles({
   cardMedia: {
@@ -28,7 +29,21 @@ const useStyles = makeStyles({
   },
 });
 
-const CreatePoemView: React.FC<ComponentProps> = () => {
+interface MatchParams {
+  id: string
+}
+
+const EditPoemView: React.FC<RoutedComponentProps<MatchParams>> = (props) => {
+  const { state, actions, match } = props;
+  const { poem, isFetching } = state.chosenPoem;
+  const { loadPoem } = actions.chosenPoem;
+
+  useEffectOnce(() => {
+    if (!poem && !isFetching) {
+      const { id: poemId } = match.params;
+      loadPoem(poemId);
+    }
+  });
   const classes = useStyles();
   return (
     <Container maxWidth="md">
@@ -43,15 +58,17 @@ const CreatePoemView: React.FC<ComponentProps> = () => {
             <PoemImg className={classes.poemImg} />
           }
           className={classes.cardHeader}
-          title="Create poem"
+          title="Edit poem"
           titleTypographyProps={{ variant: 'h6' }}
         />
-        <CardContent className={classes.cardContent}>
-          <PoemForm />
-        </CardContent>
+        <Fade in={poem !== undefined} timeout={500}>
+          <CardContent className={classes.cardContent}>
+            <PoemForm poem={poem} />
+          </CardContent>
+        </Fade>
       </Card>
     </Container>
   );
 };
 
-export default connectStore(CreatePoemView);
+export default connectStore(EditPoemView);
