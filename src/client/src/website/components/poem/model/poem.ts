@@ -1,5 +1,5 @@
 interface Poem {
-  _id: string,
+  _id?: string,
   name?: string,
   author: string
   text: string,

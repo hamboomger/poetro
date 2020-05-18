@@ -35,12 +35,12 @@ const validationSchema = Yup.object().shape({
   targetTimeSec: Yup.number().required(),
 });
 
-const initialValues = {
+const initialValues: Poem = {
   _id: undefined,
   author: '',
   text: '',
   name: '',
-  targetTimeSec: undefined,
+  targetTimeSec: 60,
   tags: [],
 };
 
@@ -65,9 +65,10 @@ async function onSubmit(poem: any, actions: FormikHelpers<any>): Promise<boolean
   }
 }
 
-const PoemForm: React.FC<Props> = ({ poem }) => {
+const PoemForm: React.FC<Props> = ({ poem, actions: reduxActions }) => {
   const classes = useStyles();
   const history = useHistory();
+  const { loadAllTags } = reduxActions.allTags;
 
   return (
     <Formik
@@ -76,6 +77,9 @@ const PoemForm: React.FC<Props> = ({ poem }) => {
       onSubmit={async (values: any, actions: FormikHelpers<any>) => {
         const submittedSuccessfully = await onSubmit(values, actions);
         if (submittedSuccessfully) {
+          if (values.tags.length > 0) {
+            loadAllTags();
+          }
           setTimeout(() => history.push('/'), 1000);
         }
       }}

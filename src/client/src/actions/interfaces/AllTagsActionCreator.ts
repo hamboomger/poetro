@@ -5,8 +5,13 @@ export interface TagsLoadedAction extends ReduxAction {
   payload: string[],
 }
 
+export interface AddAnyNewTagsAction extends ReduxAction {
+  payload: string[];
+}
+
 interface AllTagsActionCreator {
   loadAllTags(): AppThunk
+  addAnyNewTags(tags: string[]): AddAnyNewTagsAction
 }
 
 export default AllTagsActionCreator;

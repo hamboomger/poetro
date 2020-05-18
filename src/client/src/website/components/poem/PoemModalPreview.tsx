@@ -80,7 +80,7 @@ const PoemModalPreview: React.FunctionComponent<ComponentProps> = ({ state, acti
           </Button>
           <Button
             onClick={() => {
-              deletePoem(poem._id);
+              deletePoem(poem._id!);
               closePoemPreview();
             }}
           >
