@@ -1,5 +1,5 @@
 import {
-  Button, Divider, Drawer, List, ListItem, ListItemText, Toolbar,
+  Button, Divider, Drawer, Fade, List, ListItem, ListItemText, Toolbar, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
@@ -31,6 +31,9 @@ const useStyles = makeStyles({
     margin: '10px auto',
     display: 'block',
   },
+  tagsHeader: {
+    margin: '10px 0 10px 24px',
+  },
 });
 
 const App: React.FC<ComponentProps> = ({ state, actions }) => {
@@ -57,6 +60,10 @@ const App: React.FC<ComponentProps> = ({ state, actions }) => {
     >
       <Toolbar />
       <div className={classes.drawerContainer}>
+        <Typography className={classes.tagsHeader} variant="h6">
+          Tags
+        </Typography>
+        <Divider />
         <List>
           {tags.map((tag) => (
             <ListItem
@@ -70,14 +77,18 @@ const App: React.FC<ComponentProps> = ({ state, actions }) => {
             </ListItem>
           ))}
         </List>
-        <Divider variant="middle" />
-        <Button
-          color="secondary"
-          onClick={() => applyFilter({ tag: undefined })}
-          className={classes.clearSelection}
-        >
-          Clear selection
-        </Button>
+        <Fade in={filter?.tag !== undefined}>
+          <div>
+            <Divider variant="middle" />
+            <Button
+              color="secondary"
+              onClick={() => applyFilter({ tag: undefined })}
+              className={classes.clearSelection}
+            >
+              Clear selection
+            </Button>
+          </div>
+        </Fade>
       </div>
     </Drawer>
   );
