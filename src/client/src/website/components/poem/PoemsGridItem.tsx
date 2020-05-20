@@ -28,7 +28,7 @@ const useStyles = makeStyles({
   contentRoot: {
     paddingTop: 10,
   },
-  header: {
+  content: {
     fontSize: 10,
     textAlign: 'left',
     spacing: 10,

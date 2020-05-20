@@ -1,4 +1,4 @@
-import { Container, } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { ToastProvider } from 'react-toast-notifications';
 import React from 'react';
@@ -10,6 +10,7 @@ import PoemsGrid from './poem/PoemsGrid';
 import PoemView from './poem/PoemView';
 import AppDrawer from './AppDrawer';
 import EditPoemView from './poem/creation/EditPoemView';
+import Stopwatch from './poem/Stopwatch';
 
 
 const useStyles = makeStyles({
@@ -37,6 +38,7 @@ const App: React.FunctionComponent = () => {
               <Route path="/create-poem" exact component={CreatePoemView} />
               <Route path="/poem/:id" component={PoemView} />
               <Route path="/edit-poem/:id" component={EditPoemView} />
+              <Route path="/stopwatch" component={Stopwatch} />
             </Switch>
           </Container>
         </div>

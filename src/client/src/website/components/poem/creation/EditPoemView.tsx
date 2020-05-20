@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   },
   cardHeader: {
     textAlign: 'center',
-    width: 'fit-content',
+    width: 'fit-paper',
     paddingTop: 30,
     margin: '0 auto',
   },

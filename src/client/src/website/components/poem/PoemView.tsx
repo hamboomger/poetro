@@ -2,15 +2,24 @@ import {
   Card, CardContent, Fade, Typography,
 } from '@material-ui/core';
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import RoutedComponentProps from '../../../models/RoutedComponentProps';
 import connectStore from '../../connectStore';
 import PoemHeader from './PoemHeader';
+import Stopwatch from './Stopwatch';
+
+const useStyles = makeStyles({
+  stopwatch: {
+    margin: '0 auto',
+  },
+});
 
 interface MatchParams {
   id: string
 }
 
 const PoemView: React.FC<RoutedComponentProps<MatchParams>> = ({ state, actions, match }) => {
+  const classes = useStyles();
   const { poem, isFetching } = state.chosenPoem;
 
   if (isFetching) {
@@ -26,24 +35,29 @@ const PoemView: React.FC<RoutedComponentProps<MatchParams>> = ({ state, actions,
 
   return (
     <Fade in timeout={500}>
-      <Card variant="outlined">
-        {poem.name
+      <div>
+        <Card variant="outlined">
+          {poem.name
           && <PoemHeader header={poem.name} />}
-        <CardContent>
-          <Typography color="textSecondary" gutterBottom>
-            { poem.author }
-          </Typography>
-          <Typography
-            component="p"
-            style={{
-              textAlign: 'left',
-              whiteSpace: 'pre-line',
-            }}
-          >
-            { poem.text }
-          </Typography>
-        </CardContent>
-      </Card>
+          <CardContent>
+            <Typography color="textSecondary" gutterBottom>
+              { poem.author }
+            </Typography>
+            <Typography
+              component="p"
+              style={{
+                textAlign: 'left',
+                whiteSpace: 'pre-line',
+              }}
+            >
+              { poem.text }
+            </Typography>
+          </CardContent>
+        </Card>
+        <div className={classes.stopwatch}>
+          <Stopwatch />
+        </div>
+      </div>
     </Fade>
   );
 };

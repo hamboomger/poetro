@@ -7,7 +7,7 @@ interface Props {
 }
 
 const useStyles = makeStyles({
-  header: {
+  content: {
     fontSize: 10,
     textAlign: 'left',
     spacing: 10,
@@ -20,7 +20,7 @@ const PoemHeader: React.FC<Props> = ({ header }) => {
   const classes = useStyles();
   return (
     <>
-      <CardHeader title={header} className={classes.header} />
+      <CardHeader title={header} className={classes.content} />
       <Divider />
     </>
   );

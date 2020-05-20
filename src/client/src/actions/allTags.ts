@@ -1,7 +1,6 @@
 import axios from 'axios';
 import AllTagsActionCreator, { AddAnyNewTagsAction, TagsLoadedAction } from './interfaces/AllTagsActionCreator';
 import AppThunk from '../util/AppThunk';
-import ReduxAction from '../util/ReduxAction';
 
 export const TAGS_LOADING = 'TAGS_LOADING';
 export const TAGS_LOADED = 'TAGS_LOADED';

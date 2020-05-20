@@ -61,15 +61,12 @@ const PoemModalPreview: React.FunctionComponent<ComponentProps> = ({ state, acti
       </CardContent>
       <CardActions className={classes.cardActions} disableSpacing>
         <ButtonGroup size="large" color="secondary">
-          <Button>
-            Memorize
-          </Button>
           <Button
             component={Link}
             to={`/poem/${poem._id}`}
             onClick={closePoemPreview}
           >
-            View
+            Memorize
           </Button>
           <Button
             component={Link}
