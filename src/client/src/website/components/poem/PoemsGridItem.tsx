@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import React from 'react';
-import FaceIcon from '@material-ui/icons/Face';
 import {
   Card, CardActionArea, CardContent, Typography,
 } from '@material-ui/core';
@@ -11,6 +10,7 @@ import ComponentProps from '../../../models/ComponentProps';
 import connectStore from '../../connectStore';
 import PoemHeader from './PoemHeader';
 import PoemTags from './PoemTags';
+import AuthorName from './AuthorName';
 
 const TEXT_PREVIEW_LINES_NUMBER = 4;
 
@@ -34,14 +34,6 @@ const useStyles = makeStyles({
     spacing: 10,
     paddingTop: '6px',
     paddingBottom: '6px',
-  },
-  subheader: {
-    textAlign: 'left',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  author: {
-    marginLeft: 5,
   },
   text: {
     paddingTop: 8,
@@ -88,12 +80,7 @@ const PoemsGridItem: React.FC<Props> = (props) => {
       >
         <PoemHeader header={poemName} />
         <CardContent className={classes.contentRoot}>
-          <div className={classes.subheader}>
-            <FaceIcon fontSize="small" />
-            <Typography className={classes.author}>
-              {poem.author}
-            </Typography>
-          </div>
+          <AuthorName author={poem.author} />
           <Typography className={classes.text} component="p">
             {textPreview}
           </Typography>

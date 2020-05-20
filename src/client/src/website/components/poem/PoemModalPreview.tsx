@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import ComponentProps from '../../../models/ComponentProps';
 import connectStore from '../../connectStore';
 import PoemHeader from './PoemHeader';
+import AuthorName from './AuthorName';
 
 const useStyles = makeStyles({
   root: {
@@ -52,9 +53,7 @@ const PoemModalPreview: React.FunctionComponent<ComponentProps> = ({ state, acti
       {poem.name
         && <PoemHeader header={poem.name} />}
       <CardContent className={classes.contentRoot}>
-        <Typography className={classes.author} color="textSecondary" gutterBottom>
-          {poem.author}
-        </Typography>
+        <AuthorName author={poem?.author} />
         <Typography className={classes.text} component="p">
           {poem.text}
         </Typography>

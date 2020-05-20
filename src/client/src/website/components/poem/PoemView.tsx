@@ -1,12 +1,11 @@
-import {
-  Card, CardContent, Fade, Typography,
-} from '@material-ui/core';
+import { Card, CardContent, Fade, Typography, } from '@material-ui/core';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import RoutedComponentProps from '../../../models/RoutedComponentProps';
 import connectStore from '../../connectStore';
 import PoemHeader from './PoemHeader';
 import Stopwatch from './Stopwatch';
+import AuthorName from './AuthorName';
 
 const useStyles = makeStyles({
   stopwatch: {
@@ -40,9 +39,7 @@ const PoemView: React.FC<RoutedComponentProps<MatchParams>> = ({ state, actions,
           {poem.name
           && <PoemHeader header={poem.name} />}
           <CardContent>
-            <Typography color="textSecondary" gutterBottom>
-              { poem.author }
-            </Typography>
+            <AuthorName author={poem.author} />
             <Typography
               component="p"
               style={{
