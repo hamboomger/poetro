@@ -1,20 +1,56 @@
-import { Card, CardContent, Fade, Typography, } from '@material-ui/core';
+import {
+  Card, CardContent, Fade, Typography,
+} from '@material-ui/core';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { ClassNameMap } from '@material-ui/core/styles/withStyles';
+import clsx from 'clsx';
 import RoutedComponentProps from '../../../models/RoutedComponentProps';
-import connectStore from '../../connectStore';
 import PoemHeader from './PoemHeader';
 import Stopwatch from './Stopwatch';
 import AuthorName from './AuthorName';
+import connectStore from '../../connectStore';
+
+const ONE_COLUMN_MAX_PARAGRAPHS_NUMBER = 5;
 
 const useStyles = makeStyles({
   stopwatch: {
+    marginBottom: 10,
+  },
+  poemText: {
+    whiteSpace: 'pre-line',
+  },
+  cardContent: {
+    width: 'fit-content',
+    display: 'block',
     margin: '0 auto',
+  },
+  poemTextContainer: {
+    paddingTop: 10,
+    '& > p': {
+      marginTop: 15,
+      width: 'max-content',
+    },
+    '& > p:first-child': {
+      marginTop: 0,
+    },
+  },
+  twoColumnsContainer: {
+    columnCount: 2,
+    columnGap: '10%',
   },
 });
 
 interface MatchParams {
   id: string
+}
+
+function reformatPoemText(text: string, classes: ClassNameMap): any[] {
+  return text.split('\n\n').map((paragraph) => (
+    <Typography className={classes.poemText} component="p">
+      {paragraph}
+    </Typography>
+  ));
 }
 
 const PoemView: React.FC<RoutedComponentProps<MatchParams>> = ({ state, actions, match }) => {
@@ -32,28 +68,32 @@ const PoemView: React.FC<RoutedComponentProps<MatchParams>> = ({ state, actions,
     return null;
   }
 
+  const textParagraphs = reformatPoemText(poem.text, classes);
+  const shouldDisplayTwoColumns = textParagraphs.length > ONE_COLUMN_MAX_PARAGRAPHS_NUMBER;
+  const textContainerClasses = clsx(
+    classes.poemTextContainer,
+    shouldDisplayTwoColumns && classes.twoColumnsContainer,
+  );
+
   return (
     <Fade in timeout={500}>
       <div>
+        <div className={classes.stopwatch}>
+          <Stopwatch targetTimeSec={poem.targetTimeSec} />
+        </div>
         <Card variant="outlined">
           {poem.name
-          && <PoemHeader header={poem.name} />}
-          <CardContent>
+          && <PoemHeader header={poem.name} alignment="center" />}
+          <CardContent className={classes.cardContent}>
             <AuthorName author={poem.author} />
-            <Typography
-              component="p"
-              style={{
-                textAlign: 'left',
-                whiteSpace: 'pre-line',
-              }}
-            >
-              { poem.text }
-            </Typography>
+            <div className={textContainerClasses}>
+              { textParagraphs }
+            </div>
+            {/* <Typography className={classes.poemText} component="p"> */}
+            {/*  {poem.text} */}
+            {/* </Typography> */}
           </CardContent>
         </Card>
-        <div className={classes.stopwatch}>
-          <Stopwatch />
-        </div>
       </div>
     </Fade>
   );

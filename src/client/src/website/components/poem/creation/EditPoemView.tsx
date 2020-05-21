@@ -11,12 +11,15 @@ import useEffectOnce from '../../../../util/useEffectOnce';
 import PoemForm from './PoemForm';
 
 const useStyles = makeStyles({
+  root: {
+    overflow: 'visible',
+  },
   cardMedia: {
     height: 200,
   },
   cardHeader: {
     textAlign: 'center',
-    width: 'fit-paper',
+    width: 'fit-content',
     paddingTop: 30,
     margin: '0 auto',
   },
@@ -47,7 +50,7 @@ const EditPoemView: React.FC<RoutedComponentProps<MatchParams>> = (props) => {
   const classes = useStyles();
   return (
     <Container maxWidth="md">
-      <Card>
+      <Card className={classes.root}>
         <CardMedia
           className={classes.cardMedia}
           image={banner}

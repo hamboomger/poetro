@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle: 0 */
 import {
-  Button, ButtonGroup, Card, CardActions, CardContent, Typography,
+  Button, ButtonGroup, Card, CardActions, CardContent,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
@@ -9,6 +9,7 @@ import ComponentProps from '../../../models/ComponentProps';
 import connectStore from '../../connectStore';
 import PoemHeader from './PoemHeader';
 import AuthorName from './AuthorName';
+import PoemContent from './PoemContent';
 
 const useStyles = makeStyles({
   root: {
@@ -25,10 +26,6 @@ const useStyles = makeStyles({
   },
   author: {
     textAlign: 'left',
-  },
-  text: {
-    textAlign: 'left',
-    whiteSpace: 'pre-line',
   },
   cardActions: {
     justifyContent: 'space-evenly',
@@ -53,10 +50,8 @@ const PoemModalPreview: React.FunctionComponent<ComponentProps> = ({ state, acti
       {poem.name
         && <PoemHeader header={poem.name} />}
       <CardContent className={classes.contentRoot}>
-        <AuthorName author={poem?.author} />
-        <Typography className={classes.text} component="p">
-          {poem.text}
-        </Typography>
+        <AuthorName author={poem.author} />
+        <PoemContent text={poem.text} />
       </CardContent>
       <CardActions className={classes.cardActions} disableSpacing>
         <ButtonGroup size="large" color="secondary">

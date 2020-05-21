@@ -28,7 +28,7 @@ const TagsField: React.FC<Props> = (props) => {
   const { data: allTags, isFetching: tagsFetching } = state.allTags;
 
   useEffectOnce(() => {
-    if (!allTags && !tagsFetching) {
+    if (!allTags.length && !tagsFetching) {
       loadAllTags();
     }
   });

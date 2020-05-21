@@ -4,12 +4,10 @@ import {
   Button, Divider, Paper, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import TimerIcon from '@material-ui/icons/Timer';
 
 const useStyles = makeStyles(() => ({
   root: {
-    margin: '10px 0 0 0',
-    borderRadius: 6,
+    margin: '0',
   },
   header: {
     display: 'flex',
@@ -26,7 +24,7 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     height: 70,
-    '& > button, > span': {
+    '& > button, > span, > div': {
       width: '100%',
     },
     '& > button': {
@@ -38,7 +36,11 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Stopwatch: React.FC = () => {
+interface Props {
+  targetTimeSec: number,
+}
+
+const Stopwatch: React.FC<Props> = ({ targetTimeSec }) => {
   const [counter, setCounter] = useState(0);
   const [isPaused, setIsPaused] = useState(true);
   const lastTimeoutId = useRef<any>();
@@ -48,36 +50,41 @@ const Stopwatch: React.FC = () => {
     if (!isPaused) {
       lastTimeoutId.current = setTimeout(() => setCounter(counter + 1000), 1000);
     }
-    if (isPaused && counter === 0) {
+    if (isPaused) {
       clearTimeout(lastTimeoutId.current);
     }
   }, [counter, isPaused]);
 
-  const timerFormatted = moment.utc(counter).format('mm:ss');
+  const currentTimeFormatted = moment.utc(counter).format('mm:ss');
+  const targetTimeFormatted = moment.utc(targetTimeSec * 1000).format('mm:ss');
 
   return (
-    <Paper className={classes.root}>
-      <div className={classes.header}>
-        <TimerIcon className={classes.timerIcon} />
-        <Typography variant="h6">
-          Timer
-        </Typography>
-      </div>
-      <Divider />
+    <Paper variant="outlined" className={classes.root}>
       <div className={classes.content}>
         <Button
           onClick={() => setIsPaused(!isPaused)}
-          color="primary"
+          color={isPaused ? 'primary' : 'secondary'}
         >
           {isPaused ? 'Start' : 'Pause'}
         </Button>
         <Divider orientation="vertical" flexItem />
-        <Typography
-          variant="button"
-          className={classes.currentTime}
-        >
-          {timerFormatted}
-        </Typography>
+        <div>
+          <Typography
+            variant="button"
+            className={classes.currentTime}
+          >
+            {currentTimeFormatted}
+          </Typography>
+          <Typography
+            variant="button"
+            color="secondary"
+            className={classes.currentTime}
+          >
+            {
+              ` (${targetTimeFormatted})`
+            }
+          </Typography>
+        </div>
         <Divider orientation="vertical" flexItem />
         <Button
           color="secondary"

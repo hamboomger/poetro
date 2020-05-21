@@ -7,9 +7,12 @@ const useStyles = makeStyles({
   subheader: {
     textAlign: 'left',
     display: 'flex',
-    alignItems: 'center',
   },
-  author: {
+  authorIcon: {
+    color: '#555',
+  },
+  authorText: {
+    color: '#555',
     marginLeft: 5,
   },
 });
@@ -22,8 +25,8 @@ const AuthorName: React.FC<Props> = ({ author }) => {
   const classes = useStyles();
   return (
     <div className={classes.subheader}>
-      <FaceIcon fontSize="small" />
-      <Typography className={classes.author}>
+      <FaceIcon className={classes.authorIcon} fontSize="small" />
+      <Typography className={classes.authorText}>
         {author}
       </Typography>
     </div>
