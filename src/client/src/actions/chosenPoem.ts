@@ -5,6 +5,7 @@ import Poem from '../website/components/poem/model/poem';
 import ChosenPoemActionCreator, {
   PoemDeletedAction,
   PoemLoadedAction,
+  SetHidePoemTextAction,
   ShowPoemPreviewAction,
 } from './interfaces/ChosenPoemActionCreator';
 
@@ -17,6 +18,7 @@ export const POEM_LOADING_FAILED = 'POEM_LOADING_FAILED';
 export const POEM_DELETING = 'POEM_DELETING';
 export const POEM_DELETED = 'POEM_DELETED';
 export const POEM_DELETION_FAILED = 'POEM_DELETION_FAILED';
+export const SET_HIDE_POEM_TEXT = 'SET_HIDE_POEM_TEXT';
 
 const chosenPoemActionCreator: ChosenPoemActionCreator = {
   loadPoem(poemId: string): AppThunk {
@@ -65,6 +67,12 @@ const chosenPoemActionCreator: ChosenPoemActionCreator = {
   closePoemPreview(): ReduxAction {
     return {
       type: CLOSE_POEM_PREVIEW,
+    };
+  },
+  setHidePoemText(hideText: boolean): SetHidePoemTextAction {
+    return {
+      type: SET_HIDE_POEM_TEXT,
+      payload: hideText,
     };
   },
 };

@@ -4,14 +4,19 @@ import {
   CLOSE_POEM_PREVIEW, POEM_DELETED, POEM_DELETING, POEM_DELETION_FAILED,
   POEM_LOADED,
   POEM_LOADING,
-  POEM_LOADING_FAILED,
+  POEM_LOADING_FAILED, SET_HIDE_POEM_TEXT,
   SHOW_POEM_PREVIEW,
 } from '../actions/chosenPoem';
 import ChosenPoemState from '../models/state/ChosenPoemState';
-import { PoemLoadedAction, ShowPoemPreviewAction } from '../actions/interfaces/ChosenPoemActionCreator';
+import {
+  PoemLoadedAction,
+  SetHidePoemTextAction,
+  ShowPoemPreviewAction,
+} from '../actions/interfaces/ChosenPoemActionCreator';
 
 const initialState: ChosenPoemState = {
   isFetching: false,
+  hidePoemText: false,
 };
 
 function chosenPoemReducer(state: ChosenPoemState = initialState, action: Action): ChosenPoemState {
@@ -61,6 +66,16 @@ function chosenPoemReducer(state: ChosenPoemState = initialState, action: Action
         poem: undefined,
         viewType: undefined,
       };
+    case SET_HIDE_POEM_TEXT: {
+      const wasHiddenBefore = state.hidePoemText;
+      const shouldBeHiddenNow = (action as SetHidePoemTextAction).payload;
+      if (wasHiddenBefore === shouldBeHiddenNow) return state;
+
+      return {
+        ...state,
+        hidePoemText: shouldBeHiddenNow,
+      };
+    }
     default:
       return state;
   }

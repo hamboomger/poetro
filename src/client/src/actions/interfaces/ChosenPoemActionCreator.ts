@@ -14,12 +14,17 @@ export interface PoemDeletedAction extends ReduxAction {
   deletedPoemId: string,
 }
 
+export interface SetHidePoemTextAction extends ReduxAction {
+  payload: boolean,
+}
+
 interface ChosenPoemActionCreator {
   showPoemPreview(poem: Poem): ShowPoemPreviewAction;
   closePoemPreview(): ReduxAction;
   clearChosenPoem(): ReduxAction;
   loadPoem(poemId: string): AppThunk;
   deletePoem(poemId: string): AppThunk;
+  setHidePoemText(hideText: boolean): SetHidePoemTextAction;
 }
 
 export default ChosenPoemActionCreator;

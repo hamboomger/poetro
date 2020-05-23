@@ -5,5 +5,6 @@ type PoemViewType = 'modal' | 'pageView' | 'edit' | 'recording';
 export default interface ChosenPoemState {
   poem?: Poem;
   isFetching: boolean,
-  viewType?: PoemViewType;
+  viewType?: PoemViewType,
+  hidePoemText: boolean,
 }

@@ -1,9 +1,12 @@
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  Button, Divider, Paper, Typography,
+  Button, Divider, Paper, Switch, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import connectStore from '../../connectStore';
+import ComponentProps from '../../../models/ComponentProps';
+import RootActionCreator from '../../../actions/interfaces/RootActionCreator';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -34,26 +37,56 @@ const useStyles = makeStyles(() => ({
   currentTime: {
     fontSize: 20,
   },
+  options: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 }));
 
-interface Props {
-  targetTimeSec: number,
+const leftButtonLabel = {
+
+};
+
+type TimerState = 'stopped' | 'paused' | 'working';
+
+interface Props extends ComponentProps {
+  targetTimeSec: number;
 }
 
-const Stopwatch: React.FC<Props> = ({ targetTimeSec }) => {
-  const [counter, setCounter] = useState(0);
-  const [isPaused, setIsPaused] = useState(true);
-  const lastTimeoutId = useRef<any>();
+function hidePoemTextIfNecessary(
+  hideOnStartOptionEnabled: boolean,
+  timerState: TimerState,
+  actions: RootActionCreator,
+) {
+  const { setHidePoemText } = actions.chosenPoem;
 
-  const classes = useStyles();
-  useEffect(() => {
-    if (!isPaused) {
-      lastTimeoutId.current = setTimeout(() => setCounter(counter + 1000), 1000);
+  if (hideOnStartOptionEnabled) {
+    if (timerState === 'working') {
+      setHidePoemText(true);
+    } else {
+      setHidePoemText(false);
     }
-    if (isPaused) {
+  } else {
+    setHidePoemText(false);
+  }
+}
+
+const Stopwatch: React.FC<Props> = ({ targetTimeSec, actions }) => {
+  const classes = useStyles();
+  const [counter, setCounter] = useState(0);
+  const [timerState, setTimerState] = useState<TimerState>('stopped');
+  const [hideOnStartOptionEnabled, setHideOnStartOption] = useState(false);
+
+  const lastTimeoutId = useRef<any>();
+  useEffect(() => {
+    if (timerState === 'working') {
+      lastTimeoutId.current = setTimeout(() => setCounter(counter + 1000), 1000);
+    } else {
       clearTimeout(lastTimeoutId.current);
     }
-  }, [counter, isPaused]);
+  }, [counter, timerState]);
+
+  hidePoemTextIfNecessary(hideOnStartOptionEnabled, timerState, actions);
 
   const currentTimeFormatted = moment.utc(counter).format('mm:ss');
   const targetTimeFormatted = moment.utc(targetTimeSec * 1000).format('mm:ss');
@@ -62,10 +95,10 @@ const Stopwatch: React.FC<Props> = ({ targetTimeSec }) => {
     <Paper variant="outlined" className={classes.root}>
       <div className={classes.content}>
         <Button
-          onClick={() => setIsPaused(!isPaused)}
-          color={isPaused ? 'primary' : 'secondary'}
+          onClick={() => setTimerState(timerState !== 'working' ? 'working' : 'paused')}
+          color="primary"
         >
-          {isPaused ? 'Start' : 'Pause'}
+          { { working: 'Pause', paused: 'Continue', stopped: 'Start' }[timerState] }
         </Button>
         <Divider orientation="vertical" flexItem />
         <div>
@@ -91,14 +124,23 @@ const Stopwatch: React.FC<Props> = ({ targetTimeSec }) => {
           disabled={counter === 0}
           onClick={() => {
             setCounter(0);
-            setIsPaused(true);
+            setTimerState('stopped');
           }}
         >
           Reset
         </Button>
       </div>
+      <Divider />
+      <div className={classes.options}>
+        <Switch
+          checked={hideOnStartOptionEnabled}
+          onChange={(event, checked) => setHideOnStartOption(checked)}
+          name="checkedA"
+        />
+        <Typography variant="button">Hide text on start</Typography>
+      </div>
     </Paper>
   );
 };
 
-export default Stopwatch;
+export default connectStore(Stopwatch);

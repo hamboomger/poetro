@@ -55,7 +55,7 @@ function reformatPoemText(text: string, classes: ClassNameMap): any[] {
 
 const PoemView: React.FC<RoutedComponentProps<MatchParams>> = ({ state, actions, match }) => {
   const classes = useStyles();
-  const { poem, isFetching } = state.chosenPoem;
+  const { poem, isFetching, hidePoemText } = state.chosenPoem;
 
   if (isFetching) {
     return null;
@@ -76,11 +76,11 @@ const PoemView: React.FC<RoutedComponentProps<MatchParams>> = ({ state, actions,
   );
 
   return (
-    <Fade in timeout={500}>
-      <div>
-        <div className={classes.stopwatch}>
-          <Stopwatch targetTimeSec={poem.targetTimeSec} />
-        </div>
+    <div>
+      <div className={classes.stopwatch}>
+        <Stopwatch targetTimeSec={poem.targetTimeSec} />
+      </div>
+      <Fade in={!hidePoemText} timeout={500}>
         <Card variant="outlined">
           {poem.name
           && <PoemHeader header={poem.name} alignment="center" />}
@@ -89,13 +89,10 @@ const PoemView: React.FC<RoutedComponentProps<MatchParams>> = ({ state, actions,
             <div className={textContainerClasses}>
               { textParagraphs }
             </div>
-            {/* <Typography className={classes.poemText} component="p"> */}
-            {/*  {poem.text} */}
-            {/* </Typography> */}
           </CardContent>
         </Card>
-      </div>
-    </Fade>
+      </Fade>
+    </div>
   );
 };
 

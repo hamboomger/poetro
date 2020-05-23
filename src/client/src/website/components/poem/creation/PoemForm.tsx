@@ -77,9 +77,7 @@ const PoemForm: React.FC<Props> = ({ poem, actions: reduxActions }) => {
       onSubmit={async (values: any, actions: FormikHelpers<any>) => {
         const submittedSuccessfully = await onSubmit(values, actions);
         if (submittedSuccessfully) {
-          if (values.tags.length > 0) {
-            loadAllTags();
-          }
+          loadAllTags();
           setTimeout(() => history.push('/'), 1000);
         }
       }}
