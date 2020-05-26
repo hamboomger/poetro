@@ -3,7 +3,6 @@ import {
   AppBar as MuiAppBar, Button, Collapse, LinearProgress, Theme, Toolbar, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
 import connectStore from '../connectStore';
 import ComponentProps from '../../models/ComponentProps';
 
@@ -32,9 +31,6 @@ const AppBar: React.FC<ComponentProps> = ({ state }) => {
         <Typography variant="h6" className={classes.title}>
           Poetro
         </Typography>
-        <Button component={Link} to="/" color="inherit">
-          Home
-        </Button>
         <Button color="inherit">Login</Button>
       </Toolbar>
       <Collapse in={dataIsFetching}>

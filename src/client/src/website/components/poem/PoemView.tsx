@@ -46,8 +46,10 @@ interface MatchParams {
 }
 
 function reformatPoemText(text: string, classes: ClassNameMap): any[] {
-  return text.split('\n\n').map((paragraph) => (
-    <Typography className={classes.poemText} component="p">
+  return text.split('\n\n').map((paragraph, index) => (
+    // justification: no way to guarantee key uniqueness based on the poem paragraphs itself
+    // eslint-disable-next-line react/no-array-index-key
+    <Typography className={classes.poemText} component="p" key={index}>
       {paragraph}
     </Typography>
   ));

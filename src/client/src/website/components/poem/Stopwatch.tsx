@@ -40,12 +40,9 @@ const useStyles = makeStyles(() => ({
   options: {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
   },
 }));
-
-const leftButtonLabel = {
-
-};
 
 type TimerState = 'stopped' | 'paused' | 'working';
 

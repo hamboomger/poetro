@@ -10,7 +10,7 @@ import PoemsGrid from './poem/PoemsGrid';
 import PoemView from './poem/PoemView';
 import EditPoemView from './poem/creation/EditPoemView';
 import Stopwatch from './poem/Stopwatch';
-
+import AppDrawer from './AppDrawer';
 
 const useStyles = makeStyles({
   root: {
@@ -30,6 +30,7 @@ const App: React.FunctionComponent = () => {
       <ToastProvider>
         <div className={classes.root}>
           <AppBar />
+          <AppDrawer />
           <Container className={classes.appContainer} maxWidth="md">
             <Switch>
               <Route path="/" exact component={PoemsGrid} />

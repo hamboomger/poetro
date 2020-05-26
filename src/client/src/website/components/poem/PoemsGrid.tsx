@@ -10,7 +10,6 @@ import useWindowDimensions from '../../../util/useWindowDimensions';
 import connectStore from '../../connectStore';
 import PoemModalWindow from './PoemModalWindow';
 import PoemCard from './PoemsGridItem';
-import AppDrawer from '../AppDrawer';
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -43,7 +42,6 @@ const PoemsGrid: React.FC<ComponentProps> = ({ state, actions }) => {
   ));
   return (
     <Container className="App">
-      <AppDrawer />
       <StackGrid
         columnWidth={width > ONE_COLUMNS_LIMIT ? '45%' : '90%'}
         gutterWidth={20}
