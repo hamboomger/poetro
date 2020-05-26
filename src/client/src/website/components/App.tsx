@@ -10,7 +10,9 @@ import PoemsGrid from './poem/PoemsGrid';
 import PoemView from './poem/PoemView';
 import EditPoemView from './poem/creation/EditPoemView';
 import Stopwatch from './poem/Stopwatch';
-import AppDrawer from './AppDrawer';
+import DesktopDrawer from './drawer/DesktopDrawer';
+import useWindowDimensions from '../../util/useWindowDimensions';
+import MobileDrawer from './drawer/MobileDrawer';
 
 const useStyles = makeStyles({
   root: {
@@ -25,12 +27,13 @@ const useStyles = makeStyles({
 
 const App: React.FunctionComponent = () => {
   const classes = useStyles();
+  const { isDesktopClient } = useWindowDimensions();
   return (
     <Router>
       <ToastProvider>
         <div className={classes.root}>
           <AppBar />
-          <AppDrawer />
+          { isDesktopClient ? <DesktopDrawer /> : <MobileDrawer /> }
           <Container className={classes.appContainer} maxWidth="md">
             <Switch>
               <Route path="/" exact component={PoemsGrid} />

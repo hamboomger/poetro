@@ -4,7 +4,6 @@ import {
   Card, CardActionArea, CardContent, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import useWindowDimensions from '../../../util/useWindowDimensions';
 import Poem from './model/poem';
 import ComponentProps from '../../../models/ComponentProps';
 import connectStore from '../../connectStore';
@@ -64,7 +63,6 @@ const PoemsGridItem: React.FC<Props> = (props) => {
   const classes = useStyles();
   const { actions, poem } = props;
   const { showPoemPreview } = actions.chosenPoem;
-  // const { isDesktopClient } = useWindowDimensions();
 
   const poemName = poem.name || getFirstLine(poem.text);
   const textPreview = getTextPreview(poem.text);
@@ -73,9 +71,7 @@ const PoemsGridItem: React.FC<Props> = (props) => {
       <CardActionArea
         className={classes.cardActionArea}
         onClick={() => {
-          // if (isDesktopClient) {
-            showPoemPreview(poem);
-          // }
+          showPoemPreview(poem);
         }}
       >
         <PoemHeader header={poemName} />
