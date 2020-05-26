@@ -13,14 +13,16 @@ import PoemContent from './PoemContent';
 
 const useStyles = makeStyles({
   root: {
+    display: 'flex',
+    alignItems: 'stretch',
+    flexDirection: 'column',
     borderRadius: 10,
     backgroundColor: '#fff',
     padding: 20,
     minWidth: '40%',
+    height: '80%',
   },
   contentRoot: {
-    minHeight: 200,
-    maxHeight: 500,
     paddingBottom: 5,
     overflowY: 'scroll',
   },

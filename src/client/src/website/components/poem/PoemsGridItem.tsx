@@ -64,7 +64,7 @@ const PoemsGridItem: React.FC<Props> = (props) => {
   const classes = useStyles();
   const { actions, poem } = props;
   const { showPoemPreview } = actions.chosenPoem;
-  const { isDesktopClient } = useWindowDimensions();
+  // const { isDesktopClient } = useWindowDimensions();
 
   const poemName = poem.name || getFirstLine(poem.text);
   const textPreview = getTextPreview(poem.text);
@@ -73,9 +73,9 @@ const PoemsGridItem: React.FC<Props> = (props) => {
       <CardActionArea
         className={classes.cardActionArea}
         onClick={() => {
-          if (isDesktopClient) {
+          // if (isDesktopClient) {
             showPoemPreview(poem);
-          }
+          // }
         }}
       >
         <PoemHeader header={poemName} />
