@@ -10,6 +10,7 @@ import PoemHeader from './PoemHeader';
 import Stopwatch from './Stopwatch';
 import AuthorName from './AuthorName';
 import connectStore from '../../connectStore';
+import useWindowDimensions from '../../../util/useWindowDimensions';
 
 const ONE_COLUMN_MAX_PARAGRAPHS_NUMBER = 5;
 
@@ -58,6 +59,7 @@ function reformatPoemText(text: string, classes: ClassNameMap): any[] {
 const PoemView: React.FC<RoutedComponentProps<MatchParams>> = ({ state, actions, match }) => {
   const classes = useStyles();
   const { poem, isFetching, hidePoemText } = state.chosenPoem;
+  const { isDesktopClient } = useWindowDimensions();
 
   if (isFetching) {
     return null;
@@ -71,7 +73,8 @@ const PoemView: React.FC<RoutedComponentProps<MatchParams>> = ({ state, actions,
   }
 
   const textParagraphs = reformatPoemText(poem.text, classes);
-  const shouldDisplayTwoColumns = textParagraphs.length > ONE_COLUMN_MAX_PARAGRAPHS_NUMBER;
+  const shouldDisplayTwoColumns = isDesktopClient
+    && textParagraphs.length > ONE_COLUMN_MAX_PARAGRAPHS_NUMBER;
   const textContainerClasses = clsx(
     classes.poemTextContainer,
     shouldDisplayTwoColumns && classes.twoColumnsContainer,
