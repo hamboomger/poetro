@@ -1,4 +1,4 @@
-import CustomRequestError from './customRequestError';
+import CustomRequestError from './CustomRequestError';
 
 class NotFoundError extends CustomRequestError {
   constructor(message: string) {

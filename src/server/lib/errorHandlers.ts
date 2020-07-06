@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { Error } from 'mongoose';
-import CustomRequestError from './errors/customRequestError';
-import BadRequestError from './errors/badRequestError';
+import CustomRequestError from './errors/CustomRequestError';
+import BadRequestError from './errors/BadRequestError';
 
 export function logUnhandledErrors(err: Error, req: Request, res: Response, next: NextFunction) {
   console.error(err);

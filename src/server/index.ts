@@ -3,11 +3,16 @@ import express from 'express';
 require('express-async-errors');
 
 import dotenv from 'dotenv-flow';
+import bodyParser from 'body-parser';
+import passport from 'passport';
 import apiRouter from './routes/api/index';
 import { customRequestErrorsHandler, invalidObjectIdErrorHandler, logUnhandledErrors } from './lib/errorHandlers';
 import connectToDatabase from './lib/connectToDatabase';
+import { initPassportSerializationFunctions, localStrategy } from './passportConfig';
 
 dotenv.config();
+passport.use(localStrategy);
+initPassportSerializationFunctions();
 
 connectToDatabase().catch((err) => {
   console.log('Error connecting to database: ', err);
@@ -15,7 +20,9 @@ connectToDatabase().catch((err) => {
 
 const app = express();
 
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(passport.initialize());
 
 app.use(apiRouter);
 app.use(invalidObjectIdErrorHandler);

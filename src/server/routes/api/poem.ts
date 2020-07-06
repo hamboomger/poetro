@@ -1,8 +1,8 @@
 import { Request, Response, Router } from 'express';
 import { checkSchema, validationResult } from 'express-validator';
 import Poem from '../../model/poem';
-import NotFoundError from '../../lib/errors/notFoundError';
-import BadRequestError from '../../lib/errors/badRequestError';
+import NotFoundError from '../../lib/errors/NotFoundError';
+import BadRequestError from '../../lib/errors/BadRequestError';
 import { createPoemValidationSchema, editPoemValidationSchema } from './validation/poemValidationSchema';
 
 const route = Router();
