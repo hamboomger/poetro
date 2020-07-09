@@ -9,7 +9,6 @@ import hashPassword from '../../util/hashPassword';
 import verifyPassword from '../../util/verifyPassword';
 import UnauthorizedRequestError from '../../lib/errors/UnauthorizedRequestError';
 
-
 const route = Router();
 route.post(
   '/api/login-local', [
@@ -18,8 +17,6 @@ route.post(
     body('password', 'password field is missing'),
   ],
   async (req: Request, res: Response) => {
-    console.log(JSON.stringify(req.body));
-
     const result = validationResult(req);
     if (!result.isEmpty()) {
       throw BadRequestError.from(result);

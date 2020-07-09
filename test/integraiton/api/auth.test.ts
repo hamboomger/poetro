@@ -6,7 +6,7 @@ import hashPassword from '../../../src/server/util/hashPassword';
 
 chai.use(chaiHttp);
 
-describe.only('Auth', () => {
+describe('Auth', () => {
   describe('POST /api/register-local', () => {
     const user = {
       name: 'test name',

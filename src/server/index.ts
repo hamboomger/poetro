@@ -8,10 +8,10 @@ import passport from 'passport';
 import apiRouter from './routes/api/index';
 import { customRequestErrorsHandler, invalidObjectIdErrorHandler, logUnhandledErrors } from './lib/errorHandlers';
 import connectToDatabase from './lib/connectToDatabase';
-import { initPassportSerializationFunctions, localStrategy } from './passportConfig';
+import { initPassportSerializationFunctions } from './passportConfig';
+import authenticateToken from './middleware/authenticateToken';
 
 dotenv.config();
-passport.use(localStrategy);
 initPassportSerializationFunctions();
 
 connectToDatabase().catch((err) => {
@@ -24,6 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 
+app.use(authenticateToken);
 app.use(apiRouter);
 app.use(invalidObjectIdErrorHandler);
 app.use(customRequestErrorsHandler);
