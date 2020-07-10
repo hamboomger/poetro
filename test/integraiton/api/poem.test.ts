@@ -1,62 +1,66 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import { Types } from 'mongoose';
-import Poem, { IPoem } from '../../../src/server/model/poem';
-import app from '../../../src/server';
+import Poem, { IPoem, IPoemDocument } from '../../../src/server/model/poem';
+import User, { IUserDocument } from '../../../src/server/model/user';
+import createAndSaveMockPoem from '../../mocks/createAndSaveMockPoem';
+import createAndSaveTestUser from '../../mocks/createAndSaveTestUser';
+import request from '../../util/request';
 
 chai.use(chaiHttp);
 
 describe('Poems', () => {
+  let savedUser: IUserDocument;
+  let anotherUser: IUserDocument;
+  beforeEach(async () => {
+    const { user: user1 } = await createAndSaveTestUser(1);
+    const { user: user2 } = await createAndSaveTestUser(2);
+    savedUser = user1;
+    anotherUser = user2;
+  });
+  afterEach(async () => {
+    await User.deleteMany({});
+  });
+
   describe('GET /api/poems', () => {
     beforeEach(async () => {
-      const poem1 = new Poem({
-        author: 'William Shakespeare',
-        text: 'Dummy text',
-        targetTimeSec: 10,
-      });
-      const poem2 = new Poem({
-        author: 'Edgar Poe',
-        text: 'Dummy text',
-        targetTimeSec: 10,
-      });
-      await poem1.save();
-      await poem2.save();
+      await createAndSaveMockPoem(savedUser, 1);
+      await createAndSaveMockPoem(savedUser, 2);
+      await createAndSaveMockPoem(anotherUser, 2);
     });
     afterEach(async () => {
       await Poem.deleteMany({});
     });
+
     it('should return list of all poems', async () => {
-      const response = await chai.request(app).get('/api/poems');
+      const response = await request.get('/api/poems', savedUser);
       expect(response).to.have.status(200);
       expect(response.body).to.be.an('array').with.length(2);
-      expect(response.body[0]).to.have.keys(['_id', 'author', 'text', 'targetTimeSec', 'tags']);
+      expect(response.body[0]).to.have.keys(['_id', 'author', 'text', 'targetTimeSec', 'tags', 'name', 'user']);
+
+      const poems = response.body as Array<IPoem>;
+      const poemsBelongingToSavedUser = poems.filter((poem) => poem.user === savedUser.id);
+      expect(poemsBelongingToSavedUser.length).to.be.equal(poems.length);
     });
   });
   describe('GET /api/poem/:poemId', () => {
     let poemId: string;
     beforeEach(async () => {
-      const poem = new Poem({
-        author: 'Edgar Poe',
-        text: 'Dummy text',
-        targetTimeSec: 10,
-      });
-      await poem.save();
-      poemId = poem.id;
+      poemId = (await createAndSaveMockPoem(savedUser)).id;
     });
     afterEach(async () => {
       await Poem.deleteMany({});
     });
     it('should return poem by id', async () => {
-      const response = await chai.request(app).get(`/api/poem/${poemId}`);
+      const response = await request.get(`/api/poem/${poemId}`, savedUser);
       expect(response).to.have.status(200);
       expect(response.body).to.be.an('object');
-      expect(response.body).to.have.keys(['_id', 'author', 'text', 'targetTimeSec', 'tags']);
+      expect(response.body).to.have.keys(['_id', 'author', 'text', 'targetTimeSec', 'tags', 'name', 'user']);
     });
     it('should return 404 if there is no poem with given :poemId', async () => {
       const generatedId = Types.ObjectId().toHexString();
 
-      const response = await chai.request(app)
-        .get(`/api/poem/${generatedId}`);
+      const response = await request.get(`/api/poem/${generatedId}`, savedUser);
       expect(response).to.have.status(404);
       expect(response.body).be.eql({
         success: false,
@@ -67,8 +71,7 @@ describe('Poems', () => {
     it('should return 400 if :poemId is not a valid ObjectId', async () => {
       const invalidPoemId = 'invalidId';
 
-      const response = await chai.request(app)
-        .get(`/api/poem/${invalidPoemId}`);
+      const response = await request.get(`/api/poem/${invalidPoemId}`, savedUser);
       expect(response).to.have.status(400);
       expect(response.body).be.eql({
         success: false,
@@ -90,9 +93,7 @@ describe('Poems', () => {
       };
       const poemsCountBeforeReq = await Poem.estimatedDocumentCount();
 
-      const response = await chai.request(app)
-        .post('/api/poem')
-        .send(poem);
+      const response = await request.post('/api/poem', savedUser).send(poem);
 
       expect(response).to.have.status(200);
       expect(response.body).to.have.keys(['success', 'poemId']);
@@ -107,8 +108,7 @@ describe('Poems', () => {
         targetTimeSec: 10,
       };
 
-      const response = await chai.request(app)
-        .post('/api/poem')
+      const response = await request.post('/api/poem', savedUser)
         .send(invalidPoem);
       expect(response).to.have.status(400);
       expect(response.body).be.eql({
@@ -131,8 +131,7 @@ describe('Poems', () => {
         },
       };
 
-      const response = await chai.request(app)
-        .post('/api/poem')
+      const response = await request.post('/api/poem', savedUser)
         .send(invalidPoem);
       expect(response).to.have.status(400);
       expect(response.body).be.eql({
@@ -149,8 +148,7 @@ describe('Poems', () => {
         tags: [1, 2, 3],
       };
 
-      const response = await chai.request(app)
-        .post('/api/poem')
+      const response = await request.post('/api/poem', savedUser)
         .send(invalidPoem);
       expect(response).to.have.status(400);
       expect(response.body).be.eql({
@@ -163,14 +161,14 @@ describe('Poems', () => {
   describe('PUT /api/poem/:poemId', () => {
     let poemId: string;
     beforeEach(async () => {
-      const poem = new Poem({
+      const poem: IPoem = {
+        user: savedUser._id,
         author: 'William Shakespeare',
         text: 'Dummy text',
         targetTimeSec: 10,
         tags: ['a', 'b'],
-      });
-      await poem.save();
-      poemId = poem._id;
+      };
+      poemId = (await new Poem(poem).save())._id;
     });
     afterEach(async () => {
       await Poem.deleteMany({});
@@ -182,8 +180,7 @@ describe('Poems', () => {
         tags: ['a', 'c'],
       };
 
-      const response = await chai.request(app)
-        .put(`/api/poem/${poemId}`)
+      const response = await request.put(`/api/poem/${poemId}`, savedUser)
         .send(fieldsToUpdate);
       expect(response).to.have.status(200);
       expect(response.body).to.have.keys(['success', 'updatedPoem']);
@@ -196,94 +193,102 @@ describe('Poems', () => {
         expect(updatedPoem.tags).to.be.eql(['a', 'c']);
       }
     });
-  });
-  it('should return 404 if there is no poem with given :poemId', async () => {
-    const generatedId = Types.ObjectId().toHexString();
-    const fieldsToUpdate = {
-      author: 'Edgar Poe',
-      targetTimeSec: 15,
-    };
+    it('should return 404 if there is no poem with given :poemId', async () => {
+      const generatedId = Types.ObjectId().toHexString();
+      const fieldsToUpdate = {
+        author: 'Edgar Poe',
+        targetTimeSec: 15,
+      };
 
-    const response = await chai.request(app)
-      .put(`/api/poem/${generatedId}`)
-      .send(fieldsToUpdate);
+      const response = await request.put(`/api/poem/${generatedId}`, savedUser)
+        .send(fieldsToUpdate);
 
-    expect(response).to.have.status(404);
-    expect(response.body).be.eql({
-      success: false,
-      error: 'Resource not found',
-      message: `Failed to update poem by id(poem not found): ${generatedId}`,
+      expect(response).to.have.status(404);
+      expect(response.body).be.eql({
+        success: false,
+        error: 'Resource not found',
+        message: `Failed to update poem by id(poem not found): ${generatedId}`,
+      });
+    });
+    it('should return 400 if :poemId is not a valid ObjectId', async () => {
+      const invalidPoemId = 'invalidId';
+      const fieldsToUpdate = {
+        author: 'Edgar Poe',
+        targetTimeSec: 15,
+      };
+
+      const response = await request.put(`/api/poem/${invalidPoemId}`, savedUser)
+        .send(fieldsToUpdate);
+
+      expect(response).to.have.status(400);
+      expect(response.body).be.eql({
+        success: false,
+        error: 'Bad Request',
+        message: 'Invalid object identifier specified',
+      });
     });
   });
-  it('should return 400 if :poemId is not a valid ObjectId', async () => {
-    const invalidPoemId = 'invalidId';
-    const fieldsToUpdate = {
-      author: 'Edgar Poe',
-      targetTimeSec: 15,
-    };
+  describe('Delete /api/poem/:poemId', () => {
+    let savedPoem: IPoemDocument;
+    let poemOfDifferentUser: IPoemDocument;
 
-    const response = await chai.request(app)
-      .put(`/api/poem/${invalidPoemId}`)
-      .send(fieldsToUpdate);
-
-    expect(response).to.have.status(400);
-    expect(response.body).be.eql({
-      success: false,
-      error: 'Bad Request',
-      message: 'Invalid object identifier specified',
+    beforeEach(async () => {
+      savedPoem = await createAndSaveMockPoem(savedUser, 1);
+      poemOfDifferentUser = await createAndSaveMockPoem(anotherUser, 2);
     });
-  });
-});
-describe('Delete /api/poem/:poemId', () => {
-  let poem: IPoem;
-
-  beforeEach(async () => {
-    poem = new Poem({
-      author: 'Author',
-      name: 'Poem to delete',
-      text: 'Test text',
-      targetTimeSec: 100,
+    afterEach(async () => {
+      await Poem.deleteMany({});
     });
-    await poem.save();
-  });
-  afterEach(async () => {
-    await Poem.deleteMany({});
-  });
-  it('should delete poem', async () => {
-    const poemsCountBeforeReq = await Poem.estimatedDocumentCount();
+    it('should delete poem', async () => {
+      const poemsCountBeforeReq = await Poem.estimatedDocumentCount();
 
-    const response = await chai.request(app)
-      .delete(`/api/poem/${poem._id}`);
-    expect(response).to.have.status(200);
-    expect(response.body).to.have.keys(['success', 'deletedPoem']);
-    expect(response.body.success).to.be.equal(true);
+      const response = await request.deleteReq(`/api/poem/${savedPoem._id}`, savedUser);
+      expect(response).to.have.status(200);
+      expect(response.body).to.have.keys(['success', 'deletedPoem']);
+      expect(response.body.success).to.be.equal(true);
 
-    const poemsCountAfterReq = await Poem.estimatedDocumentCount();
-    expect(poemsCountBeforeReq).to.be.equal(1);
-    expect(poemsCountAfterReq).to.be.equal(0);
-  });
-  it('should return 404 if there is no poem with given :poemId', async () => {
-    const generatedId = Types.ObjectId();
-
-    const response = await chai.request(app)
-      .delete(`/api/poem/${generatedId}`);
-    expect(response).to.have.status(404);
-    expect(response.body).be.eql({
-      success: false,
-      error: 'Resource not found',
-      message: `Failed to delete poem by id(poem not found): ${generatedId}`,
+      const poemsCountAfterReq = await Poem.estimatedDocumentCount();
+      expect(poemsCountBeforeReq).to.be.equal(2);
+      expect(poemsCountAfterReq).to.be.equal(1);
     });
-  });
-  it('should return 400 if :poemId is not a valid ObjectId', async () => {
-    const invalidPoemId = 'invalidId';
+    it('should not delete poem if it was created by a different user', async () => {
+      const poemsCountBeforeReq = await Poem.estimatedDocumentCount();
 
-    const response = await chai.request(app)
-      .delete(`/api/poem/${invalidPoemId}`);
-    expect(response).to.have.status(400);
-    expect(response.body).be.eql({
-      success: false,
-      error: 'Bad Request',
-      message: 'Invalid object identifier specified',
+      const response = await request.deleteReq(
+        `/api/poem/${poemOfDifferentUser._id}`, savedUser,
+      );
+      expect(response).to.have.status(404);
+      expect(response.body).to.be.eql({
+        success: false,
+        error: 'Resource not found',
+        message: `Failed to delete poem by id(poem not found): ${poemOfDifferentUser.id}`,
+      });
+
+      const poemsCountAfterReq = await Poem.estimatedDocumentCount();
+      expect(poemsCountBeforeReq).to.be.equal(2);
+      expect(poemsCountAfterReq).to.be.equal(2);
+    });
+    it('should return 404 if there is no poem with given :poemId', async () => {
+      const generatedId = Types.ObjectId();
+
+      const response = await request.deleteReq(`/api/poem/${generatedId}`, savedUser);
+      expect(response).to.have.status(404);
+      expect(response.body).be.eql({
+        success: false,
+        error: 'Resource not found',
+        message: `Failed to delete poem by id(poem not found): ${generatedId}`,
+      });
+    });
+    it('should return 400 if :poemId is not a valid ObjectId', async () => {
+      const invalidPoemId = 'invalidId';
+
+      const response = await request.deleteReq(`/api/poem/${invalidPoemId}`, savedUser);
+      expect(response).to.have.status(400);
+      expect(response.body).be.eql({
+        success: false,
+        error: 'Bad Request',
+        message: 'Invalid object identifier specified',
+      });
     });
   });
 });

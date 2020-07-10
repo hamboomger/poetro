@@ -3,6 +3,7 @@ import chaiHttp from 'chai-http';
 import app from '../../../src/server';
 import User, { IUser } from '../../../src/server/model/user';
 import hashPassword from '../../../src/server/util/hashPassword';
+import request from '../../util/request';
 
 chai.use(chaiHttp);
 
@@ -17,8 +18,7 @@ describe('Auth', () => {
       await User.deleteMany({});
     });
     it('should register user', async () => {
-      const response = await chai.request(app)
-        .post('/api/register-local')
+      const response = await request.post('/api/register-local')
         .type('form')
         .send(user);
       expect(response).to.have.status(200);
@@ -70,7 +70,7 @@ describe('Auth', () => {
         .send(authorizationFields);
 
       expect(response).to.have.status(200);
-      expect(response.body).to.have.key('jwt');
+      expect(response.body).to.have.key('authentication');
     });
   });
 });

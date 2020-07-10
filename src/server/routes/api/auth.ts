@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import { Router, Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
 import { body, checkSchema, validationResult } from 'express-validator';
 import UserLoginValidationSchema from './validation/userAuthValidationSchema';
 import BadRequestError from '../../lib/errors/BadRequestError';
@@ -8,6 +7,7 @@ import User, { IUser } from '../../model/user';
 import hashPassword from '../../util/hashPassword';
 import verifyPassword from '../../util/verifyPassword';
 import UnauthorizedRequestError from '../../lib/errors/UnauthorizedRequestError';
+import { createJwtToken } from '../../lib/jwtAuthentication';
 
 const route = Router();
 route.post(
@@ -28,10 +28,10 @@ route.post(
       throw new UnauthorizedRequestError('Invalid login or password');
     }
 
-    const webTokenString = jwt.sign(user.toObject(), process.env.WEB_TOKEN_SECRET);
+    const webTokenString = createJwtToken({ userId: user._id });
     res.status(200);
     res.json({
-      jwt: webTokenString,
+      authentication: webTokenString,
     });
   },
 );
@@ -63,4 +63,5 @@ route.post(
   },
 );
 
-export default route;
+// eslint-disable-next-line import/prefer-default-export
+export { route as authRoute };

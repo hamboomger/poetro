@@ -1,6 +1,10 @@
-import { Schema, model, Document } from 'mongoose';
+import {
+  Document, model, Schema, Types,
+} from 'mongoose';
+import { IUserDocument } from './user';
 
 const PoemSchema = new Schema({
+  user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   name: { type: String, required: false },
   author: { type: String, required: true },
   text: { type: String, required: true },
@@ -10,14 +14,18 @@ const PoemSchema = new Schema({
   versionKey: false,
 });
 
-export interface IPoem extends Document {
-  name: string;
+export interface IPoem {
+  user: Types.ObjectId | IUserDocument,
+  name?: string;
   author: string;
   text: string;
   targetTimeSec: number;
   tags: string[];
 }
 
-const Poem = model<IPoem>('PoemSchema', PoemSchema);
+export interface IPoemDocument extends IPoem, Document {
+}
+
+const Poem = model<IPoemDocument>('PoemSchema', PoemSchema);
 
 export default Poem;
