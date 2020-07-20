@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 interface Props {
   status: string;
-  isEdit: boolean;
+  message?: string;
 }
 
 const useStyles = makeStyles({
@@ -14,20 +14,22 @@ const useStyles = makeStyles({
   },
 });
 
-const CreatePoemFeedbackPanel: React.FC<Props> = ({ status, isEdit }) => {
+const FeedbackPanel: React.FC<Props> = ({ status, message }) => {
   const classes = useStyles();
   return (
     <Grid item xs={12} className={classes.feedbackPanel}>
       <Collapse in={status === 'success'}>
         <Alert severity="success">
-          {`Poem ${isEdit ? 'saved' : 'created'}!`}
+          {message}
         </Alert>
       </Collapse>
       <Collapse in={status === 'error'}>
-        <Alert severity="error">An error occurred while submitting a form :(</Alert>
+        <Alert severity="error">
+          {message}
+        </Alert>
       </Collapse>
     </Grid>
   );
 };
 
-export default CreatePoemFeedbackPanel;
+export default FeedbackPanel;

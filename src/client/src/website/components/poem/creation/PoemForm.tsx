@@ -10,8 +10,8 @@ import connectStore from '../../../connectStore';
 import InputField from '../../fields/InputField';
 import TextAreaField from '../../fields/TextAreaField';
 import TagsField from './TagsField';
-import CreatePoemFeedbackPanel from './CreatePoemFeedbackPanel';
 import Poem from '../model/poem';
+import FeedbackPanel from '../../common/FeedbackPanel';
 
 const useStyles = makeStyles({
   fieldLabel: {
@@ -59,7 +59,7 @@ async function onSubmit(poem: any, actions: FormikHelpers<any>): Promise<boolean
     actions.setStatus('success');
     return true;
   } catch (e) {
-    console.log('Error occured on form submit: ', e);
+    console.log('Error occurred on form submit: ', e);
     actions.setStatus('error');
     return false;
   }
@@ -85,7 +85,7 @@ const PoemForm: React.FC<Props> = ({ poem, actions: reduxActions }) => {
       render={({ status, setFieldValue, values }) => (
         <Form autoComplete="off">
           <Grid container spacing={2}>
-            <CreatePoemFeedbackPanel status={status} isEdit={values._id !== undefined} />
+            <FeedbackPanel status={status} message={`Poem ${values._id !== undefined ? 'saved' : 'created'}`} />
             <Grid item xs={3}>
               <Typography className={classes.fieldLabel}>
                 Author:
