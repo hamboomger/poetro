@@ -7,7 +7,6 @@ import apiRouter from './routes/api/index';
 import { customRequestErrorsHandler, invalidObjectIdErrorHandler, logUnhandledErrors } from './lib/errorHandlers';
 import connectToDatabase from './lib/connectToDatabase';
 
-
 dotenv.config();
 
 connectToDatabase().catch((err) => {

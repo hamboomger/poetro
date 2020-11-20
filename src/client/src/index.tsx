@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import dotenv from 'dotenv-flow';
 import './index.css';
 import { ThemeProvider } from '@material-ui/core';
 import { Provider } from 'react-redux';
@@ -10,6 +11,7 @@ import * as serviceWorker from './serviceWorker';
 import { defaultTheme } from './website/themes';
 import rootReducer from './reducers';
 
+dotenv.config();
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(

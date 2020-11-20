@@ -6,6 +6,7 @@ async function connectMongoose() {
     throw Error('MONGODB_URI environment variable is not provided');
   }
 
+  console.log(`Connecting to the mongo db using URI: "${databaseURI}"...`);
   await mongoose.connect(databaseURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
