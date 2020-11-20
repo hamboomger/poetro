@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "lint": "eslint --ext js,jsx,ts,tsx .",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "start": "react-scripts start",
-    "test": "react-scripts test",
-    "lint-staged": "lint-staged"
+    "test": "react-scripts test"
   },
   "browserslist": {
     "production": [
@@ -31,7 +31,6 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.1",
     "@testing-library/user-event": "^7.2.1",
-    "@types/axios": "^0.14.0",
     "@types/jest": "^24.9.1",
     "@types/lodash": "^4.14.149",
     "@types/node": "^12.12.29",
@@ -41,12 +40,12 @@
     "@types/react-router-dom": "^5.1.4",
     "@types/react-select": "^3.0.13",
     "@types/react-toast-notifications": "^2.4.0",
-    "@types/redux": "^3.6.0",
-    "@types/redux-thunk": "^2.1.0",
     "@types/yup": "^0.28.0",
     "axios": "^0.19.2",
     "clsx": "^1.1.0",
+    "dotenv-flow": "^3.1.0",
     "formik": "^2.1.4",
+    "http-proxy-middleware": "^1.0.6",
     "lodash": "^4.17.15",
     "moment": "^2.25.3",
     "moment-duration-format": "^2.3.2",
@@ -72,6 +71,5 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^1.7.0",
     "lint-staged": "^10.0.8"
-  },
-  "proxy": "http://localhost:3000"
+  }
 }

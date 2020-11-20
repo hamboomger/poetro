@@ -1,7 +1,6 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
-import { Types } from 'mongoose';
-import Poem, { IPoem } from '../../../src/server/model/poem';
+import Poem from '../../../src/server/model/poem';
 import app from '../../../src/server';
 
 chai.use(chaiHttp);
