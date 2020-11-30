@@ -1,11 +1,8 @@
 import React from 'react';
-import {
-  Card, CardContent, Container, Typography,
-} from '@material-ui/core';
+import { Card, CardContent, Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import LoginForm from './LoginForm';
 import Background from './background.png';
-import { buildForm, FormFields, OnFormSubmit } from '../../../util/buildForm';
 
 const useStyles = makeStyles({
   background: {
@@ -33,12 +30,6 @@ interface FormFields {
 
 const LoginView: React.FC<Props> = () => {
   const classes = useStyles();
-  const loginForm = buildForm<FormFields>({
-    email: { type: 'email' },
-    password: { type: 'password' },
-  }, (values) => {
-    return { success: true, message: values.email };
-  });
 
   return (
     <div className={classes.background}>

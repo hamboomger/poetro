@@ -9,6 +9,7 @@ import ComponentProps from '../../../models/ComponentProps';
 import FeedbackPanel from '../common/FeedbackPanel';
 import InputField from '../fields/InputField';
 import connectStore from '../../connectStore';
+import {useCookies} from "react-cookie";
 
 const useStyles = makeStyles({
   fieldLabel: {
@@ -37,38 +38,41 @@ const initialValues = {
   password: '',
 };
 
-async function onSubmit(credentials: any, actions: FormikHelpers<any>): Promise<boolean> {
+async function onSubmit(credentials: any, actions: FormikHelpers<any>): Promise<string | null> {
   try {
     const response = await axios.post('/api/login-local', credentials);
     console.log(response);
     actions.setSubmitting(false);
     actions.setStatus('success');
-    return true;
+    return response.data.authentication;
   } catch (e) {
     console.log('Error occured on form submit: ', e);
     actions.setStatus('error');
-    return false;
+    return null;
   }
 }
 
-const LoginForm: React.FC<ComponentProps> = () => {
+const LoginForm: React.FC<ComponentProps> = ({ actions: { allTags } }) => {
   const classes = useStyles();
+  const [, setCookie] = useCookies(['authToken']);
+  const history = useHistory();
   return (
     <Formik
       enableReinitialize
       initialValues={initialValues}
       onSubmit={async (values: any, actions: FormikHelpers<any>) => {
-        const submittedSuccessfully = await onSubmit(values, actions);
-        // if (submittedSuccessfully) {
-        //   loadAllTags();
-        //   setTimeout(() => history.push('/'), 1000);
-        // }
+        const authToken = await onSubmit(values, actions);
+        if (authToken) {
+          setCookie('authToken', authToken);
+          allTags.loadAllTags();
+          setTimeout(() => history.push('/'), 1000);
+        }
       }}
       validationSchema={validationSchema}
       render={({ status }) => (
         <Form autoComplete="off">
           <Grid container spacing={2}>
-            <FeedbackPanel status={status} isEdit />
+            <FeedbackPanel status={status} errorMsg="Login failed" successMsg="Login succeeded" />
             <Grid item xs={3}>
               <Typography className={classes.fieldLabel}>
                 Email:

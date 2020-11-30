@@ -5,7 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 interface Props {
   status: string;
-  message?: string;
+  errorMsg?: string;
+  successMsg?: string;
 }
 
 const useStyles = makeStyles({
@@ -14,18 +15,18 @@ const useStyles = makeStyles({
   },
 });
 
-const FeedbackPanel: React.FC<Props> = ({ status, message }) => {
+const FeedbackPanel: React.FC<Props> = ({ status, errorMsg, successMsg }) => {
   const classes = useStyles();
   return (
     <Grid item xs={12} className={classes.feedbackPanel}>
       <Collapse in={status === 'success'}>
         <Alert severity="success">
-          {message}
+          {successMsg || 'Success!'}
         </Alert>
       </Collapse>
       <Collapse in={status === 'error'}>
         <Alert severity="error">
-          {message}
+          {errorMsg || 'Error happened'}
         </Alert>
       </Collapse>
     </Grid>

@@ -68,7 +68,6 @@ export function buildForm<T>(
   initialValues: T,
 ): React.ReactElement {
   const [feedbackMessage, setFeedbackMessage] = useState<string>();
-
   const classes = useStyles();
   const fieldsRows = Object.entries(formFields)
     .map(([fieldName, props]) => {
@@ -87,7 +86,7 @@ export function buildForm<T>(
           try {
             response = await response;
           } catch (e) {
-            console.log()
+            console.log();
           }
         }
       })}

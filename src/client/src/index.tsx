@@ -6,7 +6,8 @@ import { ThemeProvider } from '@material-ui/core';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
-import App from './website/components/App';
+import { CookiesProvider } from 'react-cookie';
+import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { defaultTheme } from './website/themes';
 import rootReducer from './reducers';
@@ -17,7 +18,9 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 ReactDOM.render(
   <ThemeProvider theme={defaultTheme}>
     <Provider store={store}>
-      <App />
+      <CookiesProvider>
+        <App />
+      </CookiesProvider>
     </Provider>
   </ThemeProvider>,
   document.getElementById('root'),

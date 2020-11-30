@@ -85,7 +85,11 @@ const PoemForm: React.FC<Props> = ({ poem, actions: reduxActions }) => {
       render={({ status, setFieldValue, values }) => (
         <Form autoComplete="off">
           <Grid container spacing={2}>
-            <FeedbackPanel status={status} message={`Poem ${values._id !== undefined ? 'saved' : 'created'}`} />
+            <FeedbackPanel
+              status={status}
+              successMsg={`Poem ${values._id !== undefined ? 'saved' : 'created'}`}
+              errorMsg="Failed to save poem"
+            />
             <Grid item xs={3}>
               <Typography className={classes.fieldLabel}>
                 Author:

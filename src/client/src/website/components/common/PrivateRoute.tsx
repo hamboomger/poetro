@@ -1,16 +1,19 @@
-import { Route, Redirect, RouteProps } from 'react-router-dom';
+import {Redirect, Route, RouteProps} from 'react-router-dom';
 import React from 'react';
-import ComponentProps from '../../../models/ComponentProps';
+import {useCookies} from "react-cookie";
 
-interface Props extends ComponentProps, RouteProps {
+interface Props extends RouteProps {
+  path: string
 }
 
 const PrivateRoute: React.FC<Props> = ({
-  state, path,
+  path, exact, component,
 }) => {
-  const isLoggedIn = false;
+  const [cookies,] = useCookies(['authToken']);
+  const isLoggedIn = cookies.authToken !== null;
+
   return (isLoggedIn
-    ? <Route path={path} />
+    ? <Route path={path} exact={exact} component={component} />
     : <Redirect to="/login" />
   );
 };

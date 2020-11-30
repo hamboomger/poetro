@@ -1,12 +1,12 @@
 import ReduxAction from '../../util/ReduxAction';
+import AppThunk from '../../util/AppThunk';
 
 export interface SetJwtTokenAction extends ReduxAction {
   payload: string,
 }
 
 interface UserActionCreator {
-  setJwtToken(jwtToken: string): SetJwtTokenAction;
-  clearJwtToken(): ReduxAction
+  createDummyPoem(): AppThunk
 }
 
 export default UserActionCreator;

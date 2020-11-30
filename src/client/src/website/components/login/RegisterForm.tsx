@@ -9,8 +9,6 @@ import ComponentProps from '../../../models/ComponentProps';
 import FeedbackPanel from '../common/FeedbackPanel';
 import InputField from '../fields/InputField';
 import connectStore from '../../connectStore';
-import { Simulate } from 'react-dom/test-utils';
-import error = Simulate.error;
 
 const useStyles = makeStyles({
   fieldLabel: {
@@ -55,7 +53,8 @@ async function onSubmit(credentials: any, actions: FormikHelpers<any>): Promise<
   }
 }
 
-const RegisterForm: React.FC<ComponentProps> = (credentials: any, actions: FormikHelpers<any>) => {
+const RegisterForm: React.FC<ComponentProps> = () => {
+  const history = useHistory();
   const classes = useStyles();
   const [feedbackPanelMessage, setFeedbackPanelMessage] = useState<string>();
 
@@ -65,16 +64,17 @@ const RegisterForm: React.FC<ComponentProps> = (credentials: any, actions: Formi
       initialValues={initialValues}
       onSubmit={async (values: any, actions: FormikHelpers<any>) => {
         const errorMessage = await onSubmit(values, actions);
-        setFeedbackPanelMessage(errorMessage);
         if (!errorMessage) {
           setTimeout(() => history.push('/'), 1000);
+        } else {
+          setFeedbackPanelMessage(errorMessage);
         }
       }}
       validationSchema={validationSchema}
       render={({ status }) => (
         <Form autoComplete="off">
           <Grid container spacing={2}>
-            <FeedbackPanel status={status} message={feedbackPanelMessage} />
+            <FeedbackPanel status={status} errorMsg={feedbackPanelMessage} />
             <Grid item xs={3}>
               <Typography className={classes.fieldLabel}>
                 Name:
