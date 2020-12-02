@@ -189,9 +189,12 @@ describe('Poems', () => {
       expect(response.body).to.have.keys(['success', 'updatedPoem']);
 
       const updatedPoem = await Poem.findById(poemId);
-      expect(updatedPoem.author).to.be.equal('Edgar Poe');
-      expect(updatedPoem.targetTimeSec).to.be.equal(15);
-      expect(updatedPoem.tags).to.be.eql(['a', 'c']);
+      expect(updatedPoem).to.not.equal(null);
+      if (updatedPoem) { // required for the type guards
+        expect(updatedPoem.author).to.be.equal('Edgar Poe');
+        expect(updatedPoem.targetTimeSec).to.be.equal(15);
+        expect(updatedPoem.tags).to.be.eql(['a', 'c']);
+      }
     });
   });
   it('should return 404 if there is no poem with given :poemId', async () => {
