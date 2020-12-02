@@ -23,8 +23,10 @@ app.use(customRequestErrorsHandler);
 app.use(logUnhandledErrors);
 
 const SERVER_PORT = Number(process.env.SERVER_PORT || 3000);
-const server = app.listen(SERVER_PORT, (err) => {
-  console.log(err || `Server started on port ${SERVER_PORT}`);
+const server = app.listen(SERVER_PORT, () => {
+  console.log(`Server started on port ${SERVER_PORT}`);
+}).on('error', (err) => {
+  console.log('Error occurred while starting the server: ', err);
 });
 
 export default server;

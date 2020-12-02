@@ -11,7 +11,7 @@
     "client:dev": "cd src/client && npm start",
     "lint-staged:server": "lint-staged",
     "lint-staged:client": "cd src/client && lint-staged",
-    "server:dev": "nodemon src/server/index.ts",
+    "server:dev": "nodemon --config nodemon.json src/server/index.ts",
     "server:prod": "npm run build && node dist/index.js",
     "start": "npm run start:all",
     "start:all": "run-p server:dev client:dev",
