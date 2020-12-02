@@ -1,0 +1,9 @@
+# Dependency directories
+node_modules/
+# Webstorm
+.idea/
+# local .env* files
+.env.local
+.env.*.local
+# Dist direcectory with transpiled javascript
+dist/

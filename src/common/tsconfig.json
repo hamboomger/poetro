@@ -20,7 +20,6 @@
   },
   "compileOnSave": true,
   "include": [
-    "src/server/**/*.ts",
-    "test/**/*.ts"
+    "**/*.ts"
   ]
 }

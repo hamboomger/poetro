@@ -1,8 +1,8 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import { Types } from 'mongoose';
-import Poem, { IPoem } from '../../../src/server/model/poem';
-import app from '../../../src/server';
+import app from '../../../index';
+import Poem, { IPoem } from '../../../model/poem';
 
 chai.use(chaiHttp);
 
@@ -170,7 +170,7 @@ describe('Poems', () => {
         tags: ['a', 'b'],
       });
       await poem.save();
-      poemId = poem._id;
+      poemId = poem.id;
     });
     afterEach(async () => {
       await Poem.deleteMany({});
@@ -253,7 +253,7 @@ describe('Delete /api/poem/:poemId', () => {
     const poemsCountBeforeReq = await Poem.estimatedDocumentCount();
 
     const response = await chai.request(app)
-      .delete(`/api/poem/${poem._id}`);
+      .delete(`/api/poem/${poem.id}`);
     expect(response).to.have.status(200);
     expect(response.body).to.have.keys(['success', 'deletedPoem']);
     expect(response.body.success).to.be.equal(true);
