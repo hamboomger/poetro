@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import server from '../src/server';
+import server from '../index';
 
 before(async () => {
   if (process.env.NODE_ENV !== 'test') {
