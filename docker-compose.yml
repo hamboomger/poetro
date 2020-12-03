@@ -7,8 +7,8 @@ services:
     networks:
       - poetronet
   server:
-    build: .
-    command: ["npm", "run", "server:dev"]
+    build: ./src/server
+    command: ["npm", "run", "start:dev"]
     ports:
       - "3000:3000"
     networks:
@@ -17,17 +17,15 @@ services:
       - MONGODB_URI=mongodb://mongo/poetro
     volumes:
       - '/app/node_modules'
-      - '/app/src/client/node_modules'
-      - '.:/app'
+      - './src/server:/app'
     depends_on:
       - mongo
   client:
-    build: .
-    command: ["npm", "run", "client:dev"]
+    build: ./src/client
+    command: ["npm", "start"]
     volumes:
-      - '/app/src/client/node_modules'
       - '/app/node_modules'
-      - '.:/app'
+      - './src/client:/app'
     ports:
       - "8080:8080"
     environment:

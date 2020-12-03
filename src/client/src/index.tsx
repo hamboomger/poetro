@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import dotenv from 'dotenv-flow';
+import { CookiesProvider } from 'react-cookie';
 import './index.css';
 import { ThemeProvider } from '@material-ui/core';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
-import { CookiesProvider } from 'react-cookie';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { defaultTheme } from './website/themes';

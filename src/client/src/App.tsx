@@ -1,6 +1,5 @@
 import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { ToastProvider } from 'react-toast-notifications';
 import React from 'react';
 import {
   BrowserRouter as Router, Route, Switch,

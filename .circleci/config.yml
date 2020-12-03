@@ -7,5 +7,5 @@ jobs:
     working_directory: ~/app
     steps:
       - checkout
-      - run: npm install
+      - run: npx lerna bootstrap
       - run: npm run test
