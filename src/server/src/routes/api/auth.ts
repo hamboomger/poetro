@@ -8,6 +8,7 @@ import hashPassword from '../../util/hashPassword';
 import verifyPassword from '../../util/verifyPassword';
 import UnauthorizedRequestError from '../../lib/errors/UnauthorizedRequestError';
 import { createJwtToken } from '../../lib/jwtAuthentication';
+import { requestsLogger } from '../../lib/loggers';
 
 const route = Router();
 route.post(
@@ -23,11 +24,14 @@ route.post(
     }
 
     const { email, password } = req.body;
+    requestsLogger.debug(`User tries to log in using ${email} email`);
+
     const user = await User.findOne({ email });
     if (!user || !verifyPassword(password, user.passwordHash)) {
       throw new UnauthorizedRequestError('Invalid login or password');
     }
 
+    requestsLogger.debug(`User authenticates successfully using email ${email}`);
     const webTokenString = createJwtToken({ userId: user._id });
     res.status(200);
     res.json({
