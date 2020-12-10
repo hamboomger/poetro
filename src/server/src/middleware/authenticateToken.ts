@@ -2,21 +2,20 @@ import { RequestHandler } from 'express';
 import httpContext from 'express-http-context';
 import { getTokenPayload } from '../lib/jwtAuthentication';
 import User from '../model/user';
-import { currentUserExists } from '../lib/currentUser';
+import UnauthorizedRequestError from '../lib/errors/UnauthorizedRequestError';
 
 const JWT_PARAMETER_NAME = 'authorization';
 
 const authenticateToken: RequestHandler = (req, res, next) => {
-  // if user object is already set, then authorization already happened (used for testing purposes)
-  if (currentUserExists()) {
+  // pass authentication process to the next authenticateTestUser middleware
+  if (process.env.NODE_ENV === 'test') {
     next();
     return;
   }
 
   const token = req.headers[JWT_PARAMETER_NAME];
   if (!token) {
-    res.sendStatus(401);
-    return;
+    throw new UnauthorizedRequestError('No jwt token in the header');
   }
 
   const payload = getTokenPayload(token);

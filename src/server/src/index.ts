@@ -27,10 +27,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(httpContext.middleware);
 
-app.use(authenticateTestUser);
-app.use(authenticateToken);
-
 app.use(authRoute);
+
+app.use(authenticateToken);
+app.use(authenticateTestUser);
+
 app.use(apiRoutes);
 app.use(invalidObjectIdErrorHandler);
 app.use(customRequestErrorsHandler);
