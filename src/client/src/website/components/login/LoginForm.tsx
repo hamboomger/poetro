@@ -5,11 +5,13 @@ import { Form, Formik, FormikHelpers } from 'formik';
 import React from 'react';
 import axios from 'axios';
 import * as Yup from 'yup';
+import { useCookies } from 'react-cookie';
 import ComponentProps from '../../../models/ComponentProps';
 import FeedbackPanel from '../common/FeedbackPanel';
 import InputField from '../fields/InputField';
 import connectStore from '../../connectStore';
-import {useCookies} from "react-cookie";
+
+const JWT_TOKEN_NAME = 'authorization';
 
 const useStyles = makeStyles({
   fieldLabel: {
@@ -52,9 +54,9 @@ async function onSubmit(credentials: any, actions: FormikHelpers<any>): Promise<
   }
 }
 
-const LoginForm: React.FC<ComponentProps> = ({ actions: { allTags } }) => {
+const LoginForm: React.FC<ComponentProps> = ({ actions: { allTags }, state: { user } }) => {
   const classes = useStyles();
-  const [, setCookie] = useCookies(['authToken']);
+  const [, setCookie] = useCookies([JWT_TOKEN_NAME]);
   const history = useHistory();
   return (
     <Formik
@@ -63,7 +65,7 @@ const LoginForm: React.FC<ComponentProps> = ({ actions: { allTags } }) => {
       onSubmit={async (values: any, actions: FormikHelpers<any>) => {
         const authToken = await onSubmit(values, actions);
         if (authToken) {
-          setCookie('authToken', authToken);
+          setCookie(JWT_TOKEN_NAME, authToken);
           allTags.loadAllTags();
           setTimeout(() => history.push('/'), 1000);
         }

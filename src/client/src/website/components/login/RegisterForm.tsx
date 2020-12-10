@@ -47,7 +47,7 @@ async function onSubmit(credentials: any, actions: FormikHelpers<any>): Promise<
     actions.setStatus('success');
     return null;
   } catch (e) {
-    console.log('Error occured on form submit: ', e);
+    console.log('Error occurred on form submit: ', e);
     actions.setStatus('error');
     return e.message;
   }

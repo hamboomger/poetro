@@ -1,23 +1,18 @@
 import { AnyAction as Action } from 'redux';
 import UserState from '../models/state/UserState';
-import { CLEAR_JWT_TOKEN, SET_JWT_TOKEN } from '../actions/user';
-import { SetJwtTokenAction } from '../actions/interfaces/UserActionCreator';
+import { SET_USER_NAME } from '../actions/user';
+import ReduxPayloadAction from '../util/ReduxPayloadAction';
 
 const initialState: UserState = {
-  jwtToken: undefined,
+  userName: undefined,
 };
 
 function userReducer(state: UserState = initialState, action: Action): UserState {
   switch (action.type) {
-    case SET_JWT_TOKEN:
+    case SET_USER_NAME:
       return {
         ...state,
-        jwtToken: (action as SetJwtTokenAction).payload,
-      };
-    case CLEAR_JWT_TOKEN:
-      return {
-        ...state,
-        jwtToken: undefined,
+        userName: (action as ReduxPayloadAction<string>).payload,
       };
     default:
       return state;

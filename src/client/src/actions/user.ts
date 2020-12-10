@@ -1,16 +1,14 @@
 import UserActionCreator from './interfaces/UserActionCreator';
-import AppThunk from '../util/AppThunk';
+import ReduxPayloadAction from '../util/ReduxPayloadAction';
 
-export const DUMMY_POEM_IS_CREATING = 'DUMMY_POEM_IS_CREATING';
-export const DUMMY_POEM_IS_CREATED = 'DUMMY_POEM_IS_CREATED';
-export const CLEAR_JWT_TOKEN = 'CLEAR_JWT_TOKEN';
-export const SET_JWT_TOKEN = 'SET_JWT_TOKEN';
+export const SET_USER_NAME = 'SET_USER_NAME';
 
 const userActionCreator: UserActionCreator = {
-  createDummyPoem(): AppThunk {
-    return (() => {
-
-    });
+  setUserName(userName: string): ReduxPayloadAction<String> {
+    return {
+      type: SET_USER_NAME,
+      payload: userName,
+    };
   },
 };
 

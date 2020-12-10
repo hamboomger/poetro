@@ -1,5 +1,5 @@
 interface UserState {
-  jwtToken: string | undefined;
+  userName?: string
 }
 
 export default UserState;
