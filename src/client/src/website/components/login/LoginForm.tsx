@@ -10,8 +10,7 @@ import ComponentProps from '../../../models/ComponentProps';
 import FeedbackPanel from '../common/FeedbackPanel';
 import InputField from '../fields/InputField';
 import connectStore from '../../connectStore';
-
-const JWT_TOKEN_NAME = 'authorization';
+import appConstants from '../../lib/appConstants';
 
 const useStyles = makeStyles({
   fieldLabel: {
@@ -54,9 +53,9 @@ async function onSubmit(credentials: any, actions: FormikHelpers<any>): Promise<
   }
 }
 
-const LoginForm: React.FC<ComponentProps> = ({ actions: { allTags }, state: { user } }) => {
+const LoginForm: React.FC<ComponentProps> = ({ actions: { allTags } }) => {
   const classes = useStyles();
-  const [, setCookie] = useCookies([JWT_TOKEN_NAME]);
+  const [, setCookie] = useCookies([appConstants.JWT_TOKEN_NAME]);
   const history = useHistory();
   return (
     <Formik
@@ -65,7 +64,7 @@ const LoginForm: React.FC<ComponentProps> = ({ actions: { allTags }, state: { us
       onSubmit={async (values: any, actions: FormikHelpers<any>) => {
         const authToken = await onSubmit(values, actions);
         if (authToken) {
-          setCookie(JWT_TOKEN_NAME, authToken);
+          setCookie(appConstants.JWT_TOKEN_NAME, authToken);
           allTags.loadAllTags();
           setTimeout(() => history.push('/'), 1000);
         }

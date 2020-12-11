@@ -11,6 +11,10 @@ class CustomRequestError extends Error {
     this.errorCode = errorCode;
     this.errors = errors;
   }
+
+  isServerError(): boolean {
+    return this.errorCode >= 500;
+  }
 }
 
 export default CustomRequestError;

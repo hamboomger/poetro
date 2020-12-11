@@ -24,14 +24,15 @@ route.post(
     }
 
     const { email, password } = req.body;
-    requestsLogger.debug(`User tries to log in using ${email} email`);
+    requestsLogger.logAuthenticationTry(email);
 
     const user = await User.findOne({ email });
     if (!user || !verifyPassword(password, user.passwordHash)) {
+      requestsLogger.logAuthenticationSuccess(email, false);
       throw new UnauthorizedRequestError('Invalid login or password');
     }
 
-    requestsLogger.debug(`User authenticates successfully using email ${email}`);
+    requestsLogger.logAuthenticationSuccess(email, true);
     const webTokenString = createJwtToken({ userId: user._id });
     res.status(200);
     res.json({

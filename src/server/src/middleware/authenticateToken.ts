@@ -3,6 +3,8 @@ import httpContext from 'express-http-context';
 import { getTokenPayload } from '../lib/jwtAuthentication';
 import User from '../model/user';
 import UnauthorizedRequestError from '../lib/errors/UnauthorizedRequestError';
+import { logger } from '../lib/loggers';
+import {setCurrentUser} from '../lib/currentUser';
 
 const JWT_PARAMETER_NAME = 'authorization';
 
@@ -13,9 +15,9 @@ const authenticateToken: RequestHandler = (req, res, next) => {
     return;
   }
 
-  const token = req.headers[JWT_PARAMETER_NAME];
+  const token = req.headers[JWT_PARAMETER_NAME] || req.cookies[JWT_PARAMETER_NAME];
   if (!token) {
-    throw new UnauthorizedRequestError('No jwt token in the header');
+    throw new UnauthorizedRequestError('No authorization token in the header or cookies');
   }
 
   const payload = getTokenPayload(token);
@@ -25,17 +27,17 @@ const authenticateToken: RequestHandler = (req, res, next) => {
   }
   User.findById(payload.userId, (err, user) => {
     if (err) {
-      console.log(err);
+      logger.error(err);
       res.sendStatus(403);
       return;
     }
     if (user === null) {
-      console.log('Failed to fetch user: invalid user id in payload: ', payload.userId);
+      logger.error('Failed to fetch user: invalid user id in payload: ', payload.userId);
       res.sendStatus(401);
       return;
     }
 
-    httpContext.set('user', user.toObject());
+    setCurrentUser(user);
     next();
   });
 };

@@ -1,11 +1,11 @@
 import { Request, Response, Router } from 'express';
 import { checkSchema, validationResult } from 'express-validator';
+import { Types } from 'mongoose';
 import Poem, { IPoem } from '../../model/poem';
 import NotFoundError from '../../lib/errors/NotFoundError';
 import BadRequestError from '../../lib/errors/BadRequestError';
 import { createPoemValidationSchema, editPoemValidationSchema } from './validation/poemValidationSchema';
 import { getCurrentUser } from '../../lib/currentUser';
-import {Types} from 'mongoose';
 
 const route = Router();
 route.get('/api/poems', async (req, res) => {

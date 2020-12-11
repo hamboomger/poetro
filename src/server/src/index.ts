@@ -5,6 +5,7 @@ require('express-async-errors');
 import httpContext from 'express-http-context';
 import dotenv from 'dotenv-flow';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import { apiRoutes, authRoute } from './routes/api';
 import { customRequestErrorsHandler, invalidObjectIdErrorHandler, logUnhandledErrors } from './lib/errorHandlers';
@@ -12,6 +13,7 @@ import connectToDatabase from './lib/connectToDatabase';
 import { initPassportSerializationFunctions } from './passportConfig';
 import authenticateToken from './middleware/authenticateToken';
 import authenticateTestUser from './middleware/authenticateTestUser';
+import logRequestMiddleware from './middleware/requestLogging';
 
 dotenv.config();
 initPassportSerializationFunctions();
@@ -24,9 +26,11 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(passport.initialize());
 app.use(httpContext.middleware);
 
+app.use(logRequestMiddleware);
 app.use(authRoute);
 
 app.use(authenticateToken);
