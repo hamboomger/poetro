@@ -1,33 +1,35 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
-import Poem from '../../../model/poem';
-import app from '../../../index';
+import createAndSaveMockPoem from '../../mocks/createAndSaveMockPoem';
+import createAndSaveTestUser from '../../mocks/createAndSaveTestUser';
+import request from '../../util/request';
+import Poem from '../../../src/model/poem';
+import User, { IUserDocument } from '../../../src/model/user';
 
 chai.use(chaiHttp);
 
 describe('Tags', () => {
+  let savedUser: IUserDocument;
+  beforeEach(async () => {
+    const { user } = await createAndSaveTestUser(1);
+    savedUser = user;
+  });
+  afterEach(async () => {
+    await User.deleteMany({});
+  });
+
   describe('GET /api/tags', () => {
     beforeEach(async () => {
-      const poem1 = new Poem({
-        author: 'author1',
-        text: 'Dummy text',
-        targetTimeSec: 10,
-        tags: ['a', 'b'],
-      });
-      const poem2 = new Poem({
-        author: 'author2',
-        text: 'Dummy text',
-        targetTimeSec: 10,
-        tags: ['a', 'c'],
-      });
-      await poem1.save();
-      await poem2.save();
+      const tags1 = ['a', 'b'];
+      const tags2 = ['a', 'c'];
+      await createAndSaveMockPoem(savedUser, 1, tags1);
+      await createAndSaveMockPoem(savedUser, 2, tags2);
     });
     afterEach(async () => {
       await Poem.deleteMany({});
     });
     it('should return list of all tags', async () => {
-      const response = await chai.request(app).get('/api/tags');
+      const response = await request.get('/api/tags', savedUser);
       expect(response).to.have.status(200);
       expect(response.body).to.eql(['a', 'b', 'c']);
     });

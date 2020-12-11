@@ -1,10 +1,6 @@
 import { SwipeableDrawer } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useState } from 'react';
-import connectStore from '../../connectStore';
-import useWindowDimensions from '../../../util/useWindowDimensions';
-import ComponentProps from '../../../models/ComponentProps';
-import useEffectOnce from '../../../util/useEffectOnce';
 import DrawerContent from './DrawerContent';
 
 const drawerWidth = 240;
@@ -12,25 +8,16 @@ const drawerWidth = 240;
 const useStyles = makeStyles({
   drawer: {
     width: drawerWidth,
-    zIndex: 1,
   },
   drawerPaper: {
     width: drawerWidth,
+    zIndex: 1,
   },
 });
 
-const App: React.FC<ComponentProps> = ({ state, actions }) => {
+const MobileDrawer: React.FC = () => {
   const classes = useStyles();
   const [isOpened, setIsOpened] = useState(false);
-  const { isDesktopClient } = useWindowDimensions();
-  const { isFetching, data: tags } = state.allTags;
-  const { loadAllTags } = actions.allTags;
-
-  useEffectOnce(() => {
-    if (!tags.length && !isFetching) {
-      loadAllTags();
-    }
-  });
 
   return (
     <SwipeableDrawer
@@ -39,7 +26,7 @@ const App: React.FC<ComponentProps> = ({ state, actions }) => {
       onOpen={() => setIsOpened(true)}
       onClose={() => setIsOpened(false)}
       className={classes.drawer}
-      variant={isDesktopClient ? 'permanent' : 'temporary'}
+      variant="temporary"
       classes={{
         paper: classes.drawerPaper,
       }}
@@ -49,4 +36,4 @@ const App: React.FC<ComponentProps> = ({ state, actions }) => {
   );
 };
 
-export default connectStore(App);
+export default MobileDrawer;

@@ -1,4 +1,7 @@
 # Dependency directories
+src/client/node_modules/
+src/server/node_modules/
+src/server/logs/
 node_modules/
 # Webstorm
 .idea/

@@ -5,13 +5,14 @@
     "esModuleInterop": true,
     "target": "es6",
     "lib": [
-      "ES2019"
+      "es2019"
     ],
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
     "baseUrl": ".",
+    "skipLibCheck": true, // stays here until the @types/mongoose issue gets resolved
     "paths": {
       "*": [
         "node_modules/*"
@@ -20,6 +21,7 @@
   },
   "compileOnSave": true,
   "include": [
-    "**/*.ts"
+    "src/**/*.ts",
+    "test/**/*.ts"
   ]
 }
