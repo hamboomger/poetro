@@ -3,16 +3,16 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "lint:server": "cd src/server && npm run lint",
-    "lint:client": "cd src/client && npm run lint",
+    "lint:server": "cd modules/server && npm run lint",
+    "lint:client": "cd modules/client && npm run lint",
     "lint:all": "run-p lint:server lint:client",
-    "client:dev": "cd src/client && npm start",
-    "server:dev": "cd src/server && npm start",
-    "server:prod": "cd src/server && npm run start:prod",
+    "client:dev": "cd modules/client && npm start",
+    "server:dev": "cd modules/server && npm start",
+    "server:prod": "cd modules/server && npm run start:prod",
     "start": "npm run start:all",
     "start:all": "run-p server:dev client:dev",
     "test": "npm run test:server",
-    "test:server": "cd src/server && npm run test"
+    "test:server": "cd modules/server && npm run test"
   },
   "dependencies": {
     "npm-run-all": "^4.1.5"
