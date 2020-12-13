@@ -1,5 +1,5 @@
 node_modules/
-src/client/node_modules/
-src/server/node_modules/
-src/server/logs/
+modules/client/node_modules/
+modules/server/node_modules/
+modules/server/logs/
 .git
