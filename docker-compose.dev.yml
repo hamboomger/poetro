@@ -27,7 +27,7 @@ services:
       - '/app/node_modules'
       - './modules/client:/app'
     ports:
-      - "80:8080"
+      - "8080:8080"
     environment:
       - HTTP_PROXY=http://server:3000
     networks:
