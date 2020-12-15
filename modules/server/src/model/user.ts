@@ -8,6 +8,12 @@ const UserSchema = new Schema({
   versionKey: false,
 });
 
+export interface IUserNoRef {
+  name: string;
+  email: string;
+  passwordHash: string;
+}
+
 export interface IUser {
   name: string;
   email: string;

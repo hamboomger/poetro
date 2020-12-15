@@ -1,0 +1,51 @@
+[{
+  "tags": [
+    "English poems",
+    "Currently learning",
+    "Short"
+  ],
+  "author": "William Blake",
+  "text": "I was angry with my friend;\nI told my wrath, my wrath did end.\nI was angry with my foe:\nI told it not, my wrath did grow.\n\nAnd I watered it in fears,\nNight & morning with my tears:\nAnd I sunned it with smiles,\nAnd with soft deceitful wiles.\n\nAnd it grew both day and night,\nTill it bore an apple bright.\nAnd my foe beheld it shine,\nAnd he knew that it was mine.\n\nAnd into my garden stole.\nWhen the night had veiled the pole;\nIn the morning glad I see,\nMy foe outstretched beneath the tree.",
+  "name": "Poison Tree",
+  "targetTimeSec": 100
+},{
+  "tags": [
+    "Short",
+    "English poems",
+    "New"
+  ],
+  "author": "Robert Frost",
+  "text": "Whose woods these are I think I know.   \nHis house is in the village though;   \nHe will not see me stopping here   \nTo watch his woods fill up with snow.   \n\nMy little horse must think it queer   \nTo stop without a farmhouse near   \nBetween the woods and frozen lake   \nThe darkest evening of the year.   \n\nHe gives his harness bells a shake   \nTo ask if there is some mistake.   \nThe only other sound’s the sweep   \nOf easy wind and downy flake.   \n\nThe woods are lovely, dark and deep,   \nBut I have promises to keep,   \nAnd miles to go before I sleep,   \nAnd miles to go before I sleep.",
+  "name": "Stopping by Woods on a Snowy Evening",
+  "targetTimeSec": 110
+},{
+  "tags": [
+    "Short",
+    "Learned",
+    "English poems"
+  ],
+  "author": "Robert Frost",
+  "text": "Some say the world will end in fire,\nSome say in ice.\nFrom what I’ve tasted of desire\nI hold with those who favor fire.\nBut if it had to perish twice,\nI think I know enough of hate\nTo say that for destruction ice\nIs also great\nAnd would suffice.",
+  "name": "Fire and Ice",
+  "targetTimeSec": 60
+},{
+  "tags": [
+    "Learned",
+    "Russian poems",
+    "Favorite"
+  ],
+  "author": "Николай Гумилев",
+  "text": "Сегодня, я вижу, особенно грустен твой взгляд\nИ руки особенно тонки, колени обняв.\nПослушай: далёко, далёко, на озере Чад\nИзысканный бродит жираф.\n\nЕму грациозная стройность и нега дана,\nИ шкуру его украшает волшебный узор,\nС которым равняться осмелится только луна,\nДробясь и качаясь на волнах широких озер.\n\nВдали он подобен цветным парусам корабля,\nИ бег его плавен, как радостный птичий полет.\nЯ знаю, что много чудесного видит земля,\nКогда на закате он прячется в мраморный грот.\n\nЯ знаю веселые сказки таинственных стран\nПро чёрную деву, про страсть молодого вождя,\nНо ты слишком долго вдыхала тяжелый туман,\nТы верить не хочешь во что-нибудь кроме дождя.\n\nИ как я тебе расскажу про тропический сад,\nПро стройные пальмы, про запах немыслимых трав.\nТы плачешь? Послушай... далёко, на озере Чад\nИзысканный бродит жираф.",
+  "name": "Жираф",
+  "targetTimeSec": 160
+},{
+  "tags": [
+    "Favorite",
+    "Russian poems",
+    "Long"
+  ],
+  "author": "Александр Блок",
+  "text": "о вечерам над ресторанами\nГорячий воздух дик и глух,\nИ правит окриками пьяными\nВесенний и тлетворный дух.\n \nВдали над пылью переулочной,\nНад скукой загородных дач,\nЧуть золотится крендель булочной,\nИ раздается детский плач.\n \nИ каждый вечер, за шлагбаумами,\nЗаламывая котелки,\nСреди канав гуляют с дамами\nИспытанные остряки.\n \nНад озером скрипят уключины\nИ раздается женский визг,\nА в небе, ко всему приученный\nБесмысленно кривится диск.\n \nИ каждый вечер друг единственный\nВ моем стакане отражен\nИ влагой терпкой и таинственной\nКак я, смирён и оглушён.\n \nА рядом у соседних столиков\nЛакеи сонные торчат,\nИ пьяницы с глазами кроликов\n«In vino veritas!» кричат.\n \nИ каждый вечер, в час назначенный\n(Иль это только снится мне?),\nДевичий стан, шелками схваченный,\nВ туманном движется окне.\n \nИ медленно, пройдя меж пьяными,\nВсегда без спутников, одна\nДыша духами и туманами,\nОна садится у окна.\n \nИ веют древними поверьями\nЕе упругие шелка,\nИ шляпа с траурными перьями,\nИ в кольцах тонкая рука.\n \nИ странной близостью закованный,\nСмотрю за темную вуаль,\nИ вижу берег очарованный\nИ очарованную даль.\n \nГлухие тайны мне поручены,\nМне чье-то солнце вручено,\nИ все души моей излучины\nПронзило терпкое вино.\n \nИ перья страуса склоненные\nВ моем качаются мозгу,\nИ очи синие бездонные\nЦветут на дальнем берегу.\n \nВ моей душе лежит сокровище,\nИ ключ поручен только мне!\nТы право, пьяное чудовище!\nЯ знаю: истина в вине.",
+  "name": "Незнакомка",
+  "targetTimeSec": 180
+}]
