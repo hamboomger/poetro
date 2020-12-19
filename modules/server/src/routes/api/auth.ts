@@ -9,6 +9,8 @@ import verifyPassword from '../../util/verifyPassword';
 import UnauthorizedRequestError from '../../lib/errors/UnauthorizedRequestError';
 import { createJwtToken } from '../../lib/jwtAuthentication';
 import { requestsLogger } from '../../lib/loggers';
+import initializeNewUserData from '../../lib/initializeNewUserData';
+import {save} from 'nconf';
 
 const route = Router();
 route.post(
@@ -63,6 +65,7 @@ route.post(
       passwordHash,
     };
     const savedUser = await new User(user).save();
+    await initializeNewUserData(savedUser);
     res.status(200);
     res.json(_.omit(savedUser.toObject(), 'passwordHash'));
   },

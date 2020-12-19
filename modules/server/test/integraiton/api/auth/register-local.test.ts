@@ -15,13 +15,16 @@ describe('POST /api/register-local', () => {
   afterEach(async () => {
     await User.deleteMany({});
   });
-  it('should register user', async () => {
+  it('should register user and add initial poems and tags', async () => {
     const response = await request.post('/api/register-local')
       .type('form')
       .send(user);
+    const userPoems = await request.get('/api/poems', user);
+
     expect(response).to.have.status(200);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.keys(['_id', 'name', 'email']);
+    // TODO check if initial poems were added
   });
   it('should fail because of fields missing', async () => {
     const response = await chai.request(app)
@@ -42,4 +45,6 @@ describe('POST /api/register-local', () => {
       success: false,
     });
   });
+  // TODO should fail if user with such email already exists
+  // TODO should fail if user with such name already exists
 });

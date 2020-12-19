@@ -1,5 +1,3 @@
 node_modules/
 modules/client/node_modules/
-modules/server/node_modules/
-modules/server/logs/
 .git

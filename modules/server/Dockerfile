@@ -6,8 +6,10 @@ RUN apk --no-cache add --virtual \
       python
 
 WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm i
-COPY . ./
+COPY ["package.json", "package-lock.json", "./"]
+RUN npm install
+
+# Copy the remaining source files in.
+COPY . /app/
 
 EXPOSE 3000

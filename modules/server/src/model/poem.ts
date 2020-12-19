@@ -13,13 +13,16 @@ const PoemSchema = new Schema({
   versionKey: false,
 });
 
-export interface IPoem {
-  user: Types.ObjectId,
+export interface IPoemNoRefs {
   name?: string;
   author: string;
   text: string;
   targetTimeSec: number;
   tags: string[];
+}
+
+export interface IPoem extends IPoemNoRefs {
+  user: Types.ObjectId,
 }
 
 export interface IPoemDocument extends IPoem, Document {
