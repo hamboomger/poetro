@@ -7,7 +7,8 @@ services:
     networks:
       - poetronet
   server:
-    build: modules/server
+    build:
+      context: './modules/server'
     command: ["npm", "run", "start:dev"]
     ports:
       - "3000:3000"
@@ -16,15 +17,16 @@ services:
     environment:
       - MONGODB_URI=mongodb://mongo/poetro
     volumes:
-      - '/app/node_modules'
+      - 'server_modules:/app/node_modules'
       - './modules/server:/app'
     depends_on:
       - mongo
   client:
-    build: modules/client
+    build:
+      context: './modules/client'
     command: ["npm", "start"]
     volumes:
-      - '/app/node_modules'
+      - 'client_modules:/app/node_modules'
       - './modules/client:/app'
     ports:
       - "80:8080"
@@ -37,3 +39,6 @@ services:
 networks:
   poetronet:
     driver: bridge
+volumes:
+  client_modules:
+  server_modules:
