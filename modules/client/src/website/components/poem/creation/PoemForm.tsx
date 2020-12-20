@@ -51,9 +51,9 @@ interface Props extends ComponentProps {
 async function onSubmit(poem: any, actions: FormikHelpers<any>): Promise<boolean> {
   try {
     if (poem._id) {
-      await axios.put(`/api/poem/${poem._id}`, poem);
+      await axios.put(`/api/poems/${poem._id}/update`, poem);
     } else {
-      await axios.post('/api/poem', poem);
+      await axios.post('/api/poems/create', poem);
     }
     actions.setSubmitting(false);
     actions.setStatus('success');
