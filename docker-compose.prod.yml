@@ -1,0 +1,6 @@
+version: "3.8"
+services:
+  mongo:
+    volumes:
+      - "$HOME/app_data/:/data/db"
+
