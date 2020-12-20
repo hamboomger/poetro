@@ -22,6 +22,7 @@ const useStyles = makeStyles({
   tagIcon: {
     paddingRight: 10,
     paddingLeft: 10,
+    fontSize: '22px',
   },
   clearSelection: {
     textAlign: 'center',
@@ -65,13 +66,13 @@ const DrawerContent: React.FC<ComponentProps> = ({ state, actions }) => {
         {tags.map((tag) => (
           <ListItem
             selected={filter?.tag === tag}
-            onClick={() => applyFilter({ tag })}
+            onClick={() => applyFilter({ tag: (filter?.tag !== tag) ? tag : undefined })}
             button
             disabled={!isRootRoute}
             classes={{ disabled: classes.disabledTag }}
             key={tag}
           >
-            <LabelIcon color="primary" className={classes.tagIcon} />
+            <LabelIcon color={filter?.tag === tag ? 'primary' : 'secondary'} className={classes.tagIcon} />
             <ListItemText primary={tag} />
           </ListItem>
         ))}
