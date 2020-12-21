@@ -24,6 +24,3 @@ jobs:
 
       - run: npx lerna bootstrap
       - run: npm run test
-  deploy:
-    docker:
-      - image: circleci/node:12.6
