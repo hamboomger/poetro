@@ -39,7 +39,7 @@ const chosenPoemActionCreator: ChosenPoemActionCreator = {
   deletePoem(poemId: string): AppThunk {
     return (dispatch) => {
       dispatch({ type: POEM_DELETING });
-      axios.delete(`/api/poem/${poemId}`)
+      axios.delete(`/api/poems/${poemId}/delete`)
         .then(() => {
           dispatch<PoemDeletedAction>({
             type: POEM_DELETED,

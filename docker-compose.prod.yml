@@ -2,4 +2,4 @@ version: "3.8"
 services:
   mongo:
     volumes:
-      - "/app_data/:/data/db"
+      - "$HOME/app_data/:/data/db"

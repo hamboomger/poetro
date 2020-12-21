@@ -14,7 +14,7 @@ route.get('/api/poems', async (req, res) => {
   res.json(poems);
 });
 
-route.get('/api/poem/:poemId',
+route.get('/api/poems/:poemId',
   async (req: Request, res: Response) => {
     const { poemId } = req.params;
     const user = getCurrentUser();
@@ -26,7 +26,7 @@ route.get('/api/poem/:poemId',
     res.json(poem);
   });
 
-route.post('/api/poem',
+route.post('/api/poems/create',
   checkSchema(createPoemValidationSchema),
   async (req: Request, res: Response) => {
     const user = getCurrentUser();
@@ -49,7 +49,7 @@ route.post('/api/poem',
     });
   });
 
-route.put('/api/poem/:poemId',
+route.put('/api/poems/:poemId/update',
   checkSchema(editPoemValidationSchema),
   async (req: Request, res: Response) => {
     const result = validationResult(req);
@@ -72,7 +72,7 @@ route.put('/api/poem/:poemId',
     });
   });
 
-route.delete('/api/poem/:poemId',
+route.delete('/api/poems/:poemId/delete',
   async (req: Request, res: Response) => {
     const user = getCurrentUser();
     const { poemId } = req.params;
