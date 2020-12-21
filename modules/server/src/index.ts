@@ -1,5 +1,6 @@
 /* eslint-disable import/newline-after-import,import/first */
 import express from 'express';
+import 'reflect-metadata';
 require('express-async-errors');
 
 import httpContext from 'express-http-context';

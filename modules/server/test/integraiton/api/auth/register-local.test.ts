@@ -19,7 +19,6 @@ describe('POST /api/register-local', () => {
     const response = await request.post('/api/register-local')
       .type('form')
       .send(user);
-    const userPoems = await request.get('/api/poems', user);
 
     expect(response).to.have.status(200);
     expect(response.body).to.be.an('object');

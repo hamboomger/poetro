@@ -1,11 +1,14 @@
 import { Router } from 'express';
 import { validate } from 'express-validation';
+import { Container } from 'typedi';
 import Poem from '../../model/poem';
 import { getCurrentUser } from '../../lib/currentUser';
 import tagValidationSchema from './validation/tagValidationSchema';
 import { ITagNoRefs, Tag } from '../../model/tag';
+import { TagsService } from '../../services/TagsService';
 
 const route = Router();
+const tagsService = Container.get(TagsService);
 route.get('/api/tags', async (req, res) => {
   const user = getCurrentUser();
   const poems = await Poem.find({ user: user._id });
