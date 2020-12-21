@@ -3,4 +3,3 @@ services:
   mongo:
     volumes:
       - "$HOME/app_data/:/data/db"
-
