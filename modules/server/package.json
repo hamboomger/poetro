@@ -18,6 +18,7 @@
     "*.js": "eslint --cache --fix"
   },
   "dependencies": {
+    "@types/joi": "^14.3.4",
     "app-root-path": "^3.0.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
@@ -26,7 +27,9 @@
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "express-http-context": "^1.2.4",
+    "express-validation": "^3.0.6",
     "express-validator": "^6.4.0",
+    "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
     "logform": "^2.2.0",
