@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import { logger } from './loggers';
 
 export interface JwtTokenPayload {
   userId: string,
@@ -7,7 +6,6 @@ export interface JwtTokenPayload {
 
 function getJwtTokenSecretOrFail(): string {
   const webTokenSecret = process.env.WEB_TOKEN_SECRET;
-  logger.info(`Web token secret: ${webTokenSecret}`);
   if (!webTokenSecret) {
     throw Error('WEB_TOKEN_SECRET variable does not exist. Did you create .env.local file with web token secret?');
   }
