@@ -10,7 +10,6 @@ import UnauthorizedRequestError from '../../lib/errors/UnauthorizedRequestError'
 import { createJwtToken } from '../../lib/jwtAuthentication';
 import { requestsLogger } from '../../lib/loggers';
 import initializeNewUserData from '../../lib/initializeNewUserData';
-import {save} from 'nconf';
 
 const route = Router();
 route.post(
@@ -53,8 +52,10 @@ route.post(
     }
 
     const { email, password } = req.body;
+    requestsLogger.logRegistrationTry(email);
     const existingUser = await User.findOne({ name: email });
     if (existingUser) {
+      requestsLogger.logRegistrationSuccess(email, false);
       throw new BadRequestError('User with such name already exists');
     }
 
@@ -66,6 +67,7 @@ route.post(
     };
     const savedUser = await new User(user).save();
     await initializeNewUserData(savedUser);
+    requestsLogger.logRegistrationSuccess(email, true);
     res.status(200);
     res.json(_.omit(savedUser.toObject(), 'passwordHash'));
   },

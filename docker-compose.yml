@@ -14,22 +14,24 @@ services:
       - "3000:3000"
     networks:
       - poetronet
-    environment:
-      - MONGODB_URI=mongodb://mongo/poetro
     depends_on:
       - mongo
+    volumes:
+      - './modules/server/src:/app/src'
   client:
     build:
       context: './modules/client'
     command: ["npm", "start"]
     ports:
-      - "80:8080"
+      - "8080:8080"
     environment:
       - HTTP_PROXY=http://server:3000
     networks:
       - poetronet
     depends_on:
       - server
+    volumes:
+      - './modules/client/src:/app/src'
 networks:
   poetronet:
     driver: bridge

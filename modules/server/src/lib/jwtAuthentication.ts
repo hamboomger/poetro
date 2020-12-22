@@ -6,7 +6,7 @@ export interface JwtTokenPayload {
 
 function getJwtTokenSecretOrFail(): string {
   const webTokenSecret = process.env.WEB_TOKEN_SECRET;
-  if (webTokenSecret === undefined) {
+  if (!webTokenSecret) {
     throw Error('WEB_TOKEN_SECRET variable does not exist. Did you create .env.local file with web token secret?');
   }
   return webTokenSecret;
