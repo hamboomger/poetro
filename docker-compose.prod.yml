@@ -3,5 +3,13 @@ services:
   mongo:
     ports:
       - "80:8080"
+    command:
+      - "--auth"
+      - "-f"
+      - "/etc/mongo.conf"
     volumes:
       - "$HOME/app_data/:/data/db"
+      - "$HOME/configs/mongod.conf:/etc/mongod.conf"
+    env_file:
+      - "./modules/server/.env"
+      - "./modules/server/.env.local"
