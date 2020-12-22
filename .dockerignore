@@ -1,4 +1,2 @@
-node_modules
-modules/client/node_modules
-modules/server/node_modules
+**/node_modules
 .git

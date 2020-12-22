@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { Error } from 'mongoose';
-import CustomRequestError from './errors/CustomRequestError';
-import BadRequestError from './errors/BadRequestError';
-import { logger, requestsLogger } from './loggers';
+import CustomRequestError from '../lib/errors/CustomRequestError';
+import BadRequestError from '../lib/errors/BadRequestError';
+import { logger, requestsLogger } from '../lib/loggers';
 
 export function logUnhandledErrors(err: Error, req: Request, res: Response, next: NextFunction) {
   logger.error(err);

@@ -24,12 +24,20 @@ export const requestsLogger = {
   logAuthenticationTry: (email: string) => {
     logger.debug(`User login \t| email: ${email} | pending`);
   },
+  logRegistrationTry: (email: string) => {
+    logger.debug(`User sign up \t| email: ${email} | pending`);
+  },
   logAuthenticationSuccess: (email: string, success: boolean) => {
     logger.debug(`User login \t| email: ${email} | success: ${success}`);
   },
+  logRegistrationSuccess: (email: string, success: boolean) => {
+    logger.debug(`User sign up \t| email: ${email} | success: ${success}`);
+  },
   logRequestError: (error: CustomRequestError) => {
-    const { name, errorCode, errors } = error;
-    let message = `${error.isServerError() ? '5xx' : '4xx'} error: \t| ${errorCode} ${name}`;
+    const {
+      name, errorCode, errors, message: errorMessage,
+    } = error;
+    let message = `${error.isServerError() ? '5xx' : '4xx'} error: \t| ${errorCode} ${name}: ${errorMessage}`;
     if (errors?.length) {
       message += ` | errors: \n${JSON.stringify(errors, null, 2)}`;
     }
