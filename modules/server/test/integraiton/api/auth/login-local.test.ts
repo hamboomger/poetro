@@ -21,6 +21,7 @@ describe('POST /auth/login-local', () => {
   });
   it('should authorize user successfully', async () => {
     const authorizationFields = {
+      name: user.name,
       email: user.email,
       password,
     };
@@ -30,6 +31,7 @@ describe('POST /auth/login-local', () => {
       .type('json')
       .send(authorizationFields);
 
+    console.log(`Response: ${JSON.stringify(response.body)}`);
     expect(response).to.have.status(200);
     expect(response.body).to.have.key('authentication');
   });

@@ -1,13 +1,17 @@
 import { Request, Response, Router } from 'express';
 import { checkSchema, validationResult } from 'express-validator';
 import { Types } from 'mongoose';
+import { Container } from 'typedi';
 import Poem, { IPoem } from '../../model/poem';
 import NotFoundError from '../../lib/errors/NotFoundError';
 import BadRequestError from '../../lib/errors/BadRequestError';
 import { createPoemValidationSchema, editPoemValidationSchema } from './validation/poemValidationSchema';
 import { getCurrentUser } from '../../lib/currentUser';
+import { PoemsService } from '../../services/PoemsService';
 
 const route = Router();
+const poemsService = Container.get(PoemsService);
+
 route.get('/api/poems', async (req, res) => {
   const user = getCurrentUser();
   const poems = await Poem.find({ user: user._id });
@@ -18,7 +22,7 @@ route.get('/api/poems/:poemId',
   async (req: Request, res: Response) => {
     const { poemId } = req.params;
     const user = getCurrentUser();
-    const poem = await Poem.findOne({ user: user._id, _id: poemId });
+    const poem = await poemsService.getPoemById(poemId, user._id);
     if (poem === null) {
       throw new NotFoundError(`Failed to find poem by id: ${poemId}`);
     }
@@ -42,7 +46,7 @@ route.post('/api/poems/create',
     const poem: IPoem = {
       user: Types.ObjectId(user._id), author, text, name, targetTimeSec, tags,
     };
-    const savedPoem = await new Poem(poem).save();
+    const savedPoem = await poemsService.createNewPoem(poem, user._id);
     res.json({
       success: true,
       poemId: savedPoem.id,

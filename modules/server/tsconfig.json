@@ -13,6 +13,8 @@
     "outDir": "dist",
     "baseUrl": ".",
     "skipLibCheck": true, // stays here until the @types/mongoose issue gets resolved
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "paths": {
       "*": [
         "node_modules/*"

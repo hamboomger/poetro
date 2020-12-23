@@ -6,6 +6,7 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'no-underscore-dangle': 0,
+    'class-methods-use-this': 0,
     'import/prefer-default-export': 'off',
   },
   root: true,

@@ -45,7 +45,7 @@ describe('Poems', () => {
       expect(poemsBelongingToFirstUser.length).to.be.equal(poems.length);
     });
   });
-  describe('GET /api/poem/:poemId', () => {
+  describe('GET /api/poems/:poemId', () => {
     let firstUserPoem1: IPoemDocument;
     let secondUserPoem: IPoemDocument;
     beforeEach(async () => {
@@ -59,7 +59,7 @@ describe('Poems', () => {
     it('should return poem by id if it belongs to the current user', async () => {
       const poemId = firstUserPoem1.id;
 
-      const response = await request.get(`/api/poem/${poemId}`, firstUser);
+      const response = await request.get(`/api/poems/${poemId}`, firstUser);
       expect(response).to.have.status(200);
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.keys(['_id', 'author', 'text', 'targetTimeSec', 'tags', 'name', 'user']);
@@ -67,7 +67,7 @@ describe('Poems', () => {
     it('should return 404 if there is no poem with given :poemId', async () => {
       const generatedId = Types.ObjectId().toHexString();
 
-      const response = await request.get(`/api/poem/${generatedId}`, firstUser);
+      const response = await request.get(`/api/poems/${generatedId}`, firstUser);
       expect(response).to.have.status(404);
       expect(response.body).be.eql({
         success: false,
@@ -78,7 +78,7 @@ describe('Poems', () => {
     it('should return 404 if a poem with given :poemId belongs to a different user', async () => {
       const secondUserPoemId = secondUserPoem.id;
 
-      const response = await request.get(`/api/poem/${secondUserPoemId}`, firstUser);
+      const response = await request.get(`/api/poems/${secondUserPoemId}`, firstUser);
       expect(response).to.have.status(404);
       expect(response.body).be.eql({
         success: false,
@@ -89,7 +89,7 @@ describe('Poems', () => {
     it('should return 400 if :poemId is not a valid ObjectId', async () => {
       const invalidPoemId = 'invalidId';
 
-      const response = await request.get(`/api/poem/${invalidPoemId}`, firstUser);
+      const response = await request.get(`/api/poems/${invalidPoemId}`, firstUser);
       expect(response).to.have.status(400);
       expect(response.body).be.eql({
         success: false,
@@ -98,7 +98,7 @@ describe('Poems', () => {
       });
     });
   });
-  describe('POST /api/poem', () => {
+  describe('POST /api/poems/create', () => {
     afterEach(async () => {
       await Poem.deleteMany({});
     });
@@ -111,7 +111,7 @@ describe('Poems', () => {
       };
       const poemsCountBeforeReq = await Poem.estimatedDocumentCount();
 
-      const response = await request.post('/api/poem', firstUser).send(poem);
+      const response = await request.post('/api/poems/create', firstUser).send(poem);
 
       expect(response).to.have.status(200);
       expect(response.body).to.have.keys(['success', 'poemId']);
@@ -126,7 +126,7 @@ describe('Poems', () => {
         targetTimeSec: 10,
       };
 
-      const response = await request.post('/api/poem', firstUser)
+      const response = await request.post('/api/poems/create', firstUser)
         .send(invalidPoem);
       expect(response).to.have.status(400);
       expect(response.body).be.eql({
@@ -149,7 +149,7 @@ describe('Poems', () => {
         },
       };
 
-      const response = await request.post('/api/poem', firstUser)
+      const response = await request.post('/api/poems/create', firstUser)
         .send(invalidPoem);
       expect(response).to.have.status(400);
       expect(response.body).be.eql({
@@ -166,7 +166,7 @@ describe('Poems', () => {
         tags: [1, 2, 3],
       };
 
-      const response = await request.post('/api/poem', firstUser)
+      const response = await request.post('/api/poems/create', firstUser)
         .send(invalidPoem);
       expect(response).to.have.status(400);
       expect(response.body).be.eql({
@@ -176,7 +176,7 @@ describe('Poems', () => {
       });
     });
   });
-  describe('PUT /api/poem/:poemId', () => {
+  describe('PUT /api/poems/:poemId/update', () => {
     let poemId: string;
     beforeEach(async () => {
       const poem: IPoem = {
@@ -198,7 +198,7 @@ describe('Poems', () => {
         tags: ['a', 'c'],
       };
 
-      const response = await request.put(`/api/poem/${poemId}`, firstUser)
+      const response = await request.put(`/api/poems/${poemId}/update`, firstUser)
         .send(fieldsToUpdate);
       expect(response).to.have.status(200);
       expect(response.body).to.have.keys(['success', 'updatedPoem']);
@@ -218,7 +218,7 @@ describe('Poems', () => {
         targetTimeSec: 15,
       };
 
-      const response = await request.put(`/api/poem/${generatedId}`, firstUser)
+      const response = await request.put(`/api/poems/${generatedId}/update`, firstUser)
         .send(fieldsToUpdate);
 
       expect(response).to.have.status(404);
@@ -235,7 +235,7 @@ describe('Poems', () => {
         targetTimeSec: 15,
       };
 
-      const response = await request.put(`/api/poem/${invalidPoemId}`, firstUser)
+      const response = await request.put(`/api/poems/${invalidPoemId}/update`, firstUser)
         .send(fieldsToUpdate);
 
       expect(response).to.have.status(400);
@@ -246,7 +246,7 @@ describe('Poems', () => {
       });
     });
   });
-  describe('Delete /api/poem/:poemId', () => {
+  describe('Delete /api/poems/:poemId/delete', () => {
     let savedPoem: IPoemDocument;
     let poemOfDifferentUser: IPoemDocument;
 
@@ -260,7 +260,7 @@ describe('Poems', () => {
     it('should delete poem', async () => {
       const poemsCountBeforeReq = await Poem.estimatedDocumentCount();
 
-      const response = await request.deleteReq(`/api/poem/${savedPoem._id}`, firstUser);
+      const response = await request.deleteReq(`/api/poems/${savedPoem._id}/delete`, firstUser);
       expect(response).to.have.status(200);
       expect(response.body).to.have.keys(['success', 'deletedPoem']);
       expect(response.body.success).to.be.equal(true);
@@ -273,7 +273,7 @@ describe('Poems', () => {
       const poemsCountBeforeReq = await Poem.estimatedDocumentCount();
 
       const response = await request.deleteReq(
-        `/api/poem/${poemOfDifferentUser._id}`, firstUser,
+        `/api/poems/${poemOfDifferentUser._id}/delete`, firstUser,
       );
       expect(response).to.have.status(404);
       expect(response.body).to.be.eql({
@@ -289,7 +289,7 @@ describe('Poems', () => {
     it('should return 404 if there is no poem with given :poemId', async () => {
       const generatedId = Types.ObjectId();
 
-      const response = await request.deleteReq(`/api/poem/${generatedId}`, firstUser);
+      const response = await request.deleteReq(`/api/poems/${generatedId}/delete`, firstUser);
       expect(response).to.have.status(404);
       expect(response.body).be.eql({
         success: false,
@@ -300,7 +300,7 @@ describe('Poems', () => {
     it('should return 400 if :poemId is not a valid ObjectId', async () => {
       const invalidPoemId = 'invalidId';
 
-      const response = await request.deleteReq(`/api/poem/${invalidPoemId}`, firstUser);
+      const response = await request.deleteReq(`/api/poems/${invalidPoemId}/delete`, firstUser);
       expect(response).to.have.status(400);
       expect(response.body).be.eql({
         success: false,

@@ -19,7 +19,6 @@ describe('POST /api/register-local', () => {
     const response = await request.post('/api/register-local')
       .type('form')
       .send(user);
-    const userPoems = await request.get('/api/poems', user);
 
     expect(response).to.have.status(200);
     expect(response.body).to.be.an('object');
@@ -36,6 +35,8 @@ describe('POST /api/register-local', () => {
     expect(response.body).to.be.eql({
       error: 'Bad Request',
       errors: [
+        'name field is missing',
+        'name field should be a string',
         'email field is missing',
         'email field should be a string',
         'password field is missing',
