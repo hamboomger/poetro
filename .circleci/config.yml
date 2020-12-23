@@ -11,9 +11,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - client-deps-{{ checksum "src/client/package-lock.json" }}
+            - client-deps-{{ checksum "modules/client/package-lock.json" }}
             - client-deps-
-            - server-deps-{{ checksum "src/server/package-lock.json" }}
+            - server-deps-{{ checksum "modules/server/package-lock.json" }}
 
       - run: npm install
 
