@@ -9,7 +9,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import { apiRoutes, authRoute } from './routes/api';
-import { customRequestErrorsHandler, invalidObjectIdErrorHandler, logUnhandledErrors } from './lib/errorHandlers';
+import { customRequestErrorsHandler, invalidObjectIdErrorHandler, logUnhandledErrors } from './middleware/errorHandlers';
 import connectToDatabase from './lib/connectToDatabase';
 import { initPassportSerializationFunctions } from './passportConfig';
 import authenticateToken from './middleware/authenticateToken';
