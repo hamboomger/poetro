@@ -22,7 +22,7 @@ route.get('/api/poems/:poemId',
   async (req: Request, res: Response) => {
     const { poemId } = req.params;
     const user = getCurrentUser();
-    const poem = await Poem.findOne({ user: user._id, _id: poemId });
+    const poem = await poemsService.getPoemById(poemId, user._id);
     if (poem === null) {
       throw new NotFoundError(`Failed to find poem by id: ${poemId}`);
     }
@@ -46,7 +46,7 @@ route.post('/api/poems/create',
     const poem: IPoem = {
       user: Types.ObjectId(user._id), author, text, name, targetTimeSec, tags,
     };
-    const savedPoem = await new Poem(poem).save();
+    const savedPoem = await poemsService.createNewPoem(poem, user._id);
     res.json({
       success: true,
       poemId: savedPoem.id,

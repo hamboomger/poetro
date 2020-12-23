@@ -21,17 +21,17 @@ export const requestsLogger = {
     const token = req.params.authorization || req.cookies.authorization || 'none';
     logger.debug(`Request log \t| url: ${req.originalUrl} | token: ${token}`);
   },
-  logAuthenticationTry: (email: string) => {
-    logger.debug(`User login \t| email: ${email} | pending`);
+  logAuthenticationTry: (nameOrEmail: string) => {
+    logger.debug(`User login \t| login: ${nameOrEmail} | pending`);
   },
-  logRegistrationTry: (email: string) => {
-    logger.debug(`User sign up \t| email: ${email} | pending`);
+  logAuthenticationSuccess: (nameOrEmail: string, success: boolean) => {
+    logger.debug(`User login \t| login: ${nameOrEmail} | success: ${success}`);
   },
-  logAuthenticationSuccess: (email: string, success: boolean) => {
-    logger.debug(`User login \t| email: ${email} | success: ${success}`);
+  logRegistrationTry: (name: string, email: string) => {
+    logger.debug(`User sign up \t| name: ${name}, email: ${email} | pending`);
   },
-  logRegistrationSuccess: (email: string, success: boolean) => {
-    logger.debug(`User sign up \t| email: ${email} | success: ${success}`);
+  logRegistrationSuccess: (name: string, email: string, success: boolean) => {
+    logger.debug(`User sign up \t| name: ${name}, email: ${email} | success: ${success}`);
   },
   logRequestError: (error: CustomRequestError) => {
     const {

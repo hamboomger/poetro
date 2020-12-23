@@ -6,6 +6,10 @@ import { TagsService } from './TagsService';
 export class PoemsService {
   constructor(private tagsService: TagsService) {}
 
+  async getPoemById(poemId: string, userId: string): Promise<IPoemDocument | null> {
+    return Poem.findOne({ user: userId, _id: poemId });
+  }
+
   async removeTagFromAllPoems(tagName: string) {
     await Poem.updateMany({ tags: { $in: [tagName] } }, { $pullAll: { tags: [tagName] } });
   }

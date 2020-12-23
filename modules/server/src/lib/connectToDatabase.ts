@@ -17,6 +17,7 @@ async function connectMongoose() {
     // Make Mongoose use `findOneAndRemove() without deprecation warnings`
     useFindAndModify: false,
   });
+  console.log('Database connection succeeded');
 }
 
 export default connectMongoose;

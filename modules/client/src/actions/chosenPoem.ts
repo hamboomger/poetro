@@ -24,7 +24,7 @@ const chosenPoemActionCreator: ChosenPoemActionCreator = {
   loadPoem(poemId: string): AppThunk {
     return ((dispatch) => {
       dispatch({ type: POEM_LOADING });
-      axios.get(`/api/poem/${poemId}`)
+      axios.get(`/api/poems/${poemId}`)
         .then((response) => {
           setTimeout(() => {
             dispatch<PoemLoadedAction>({ type: POEM_LOADED, payload: response.data });

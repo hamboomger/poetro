@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
 
+const TOKEN_EXPIRATION_TIME = '10h';
+
 export interface JwtTokenPayload {
   userId: string,
 }
@@ -13,7 +15,7 @@ function getJwtTokenSecretOrFail(): string {
 }
 
 export function createJwtToken(payload: JwtTokenPayload): string {
-  return jwt.sign(payload, getJwtTokenSecretOrFail());
+  return jwt.sign(payload, getJwtTokenSecretOrFail(), { expiresIn: TOKEN_EXPIRATION_TIME });
 }
 
 export function getTokenPayload(token: string): JwtTokenPayload | null {

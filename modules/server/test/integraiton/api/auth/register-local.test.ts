@@ -35,6 +35,8 @@ describe('POST /api/register-local', () => {
     expect(response.body).to.be.eql({
       error: 'Bad Request',
       errors: [
+        'name field is missing',
+        'name field should be a string',
         'email field is missing',
         'email field should be a string',
         'password field is missing',
