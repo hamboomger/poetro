@@ -37,10 +37,10 @@ const AuthenticatedRoutesContainer: React.FC = () => {
         <Switch>
           <PrivateRoute path="/" exact component={PoemsGrid} />
           <PrivateRoute path="/home" exact component={PoemsGrid} />
-          <Route path="/create-poem" exact component={CreatePoemView} />
-          <Route path="/poem/:id" component={PoemView} />
-          <Route path="/edit-poem/:id" component={EditPoemView} />
-          <Route path="/stopwatch" component={Stopwatch} />
+          <PrivateRoute path="/create-poem" exact component={CreatePoemView} />
+          <PrivateRoute path="/poem/:id" component={PoemView} />
+          <PrivateRoute path="/edit-poem/:id" component={EditPoemView} />
+          <PrivateRoute path="/stopwatch" component={Stopwatch} />
         </Switch>
       </Container>
     </>
