@@ -13,7 +13,7 @@ const authenticateTestUser: RequestHandler = async (req, res, next) => {
     if (!testUser) {
       throw new Error(`No user found by id: ${testUserId}`);
     }
-    setCurrentUser(testUser);
+    setCurrentUser(testUser, req);
   }
   next();
 };

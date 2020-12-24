@@ -13,7 +13,7 @@ const route = Router();
 const poemsService = Container.get(PoemsService);
 
 route.get('/api/poems', async (req, res) => {
-  const user = getCurrentUser();
+  const user = getCurrentUser(req);
   const poems = await Poem.find({ user: user._id });
   res.json(poems);
 });
@@ -21,7 +21,7 @@ route.get('/api/poems', async (req, res) => {
 route.get('/api/poems/:poemId',
   async (req: Request, res: Response) => {
     const { poemId } = req.params;
-    const user = getCurrentUser();
+    const user = getCurrentUser(req);
     const poem = await poemsService.getPoemById(poemId, user._id);
     if (poem === null) {
       throw new NotFoundError(`Failed to find poem by id: ${poemId}`);
@@ -33,7 +33,7 @@ route.get('/api/poems/:poemId',
 route.post('/api/poems/create',
   checkSchema(createPoemValidationSchema),
   async (req: Request, res: Response) => {
-    const user = getCurrentUser();
+    const user = getCurrentUser(req);
 
     const result = validationResult(req);
     if (!result.isEmpty()) {
@@ -61,7 +61,7 @@ route.put('/api/poems/:poemId/update',
       throw BadRequestError.from(result);
     }
 
-    const user = getCurrentUser();
+    const user = getCurrentUser(req);
     const { poemId } = req.params;
     const poem = req.body;
 
@@ -78,7 +78,7 @@ route.put('/api/poems/:poemId/update',
 
 route.delete('/api/poems/:poemId/delete',
   async (req: Request, res: Response) => {
-    const user = getCurrentUser();
+    const user = getCurrentUser(req);
     const { poemId } = req.params;
     const deletedPoem = await Poem.findOneAndRemove({ _id: poemId, user: user._id });
 

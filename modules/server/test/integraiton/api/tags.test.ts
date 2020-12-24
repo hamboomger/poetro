@@ -29,7 +29,7 @@ describe('Tags', () => {
       await Poem.deleteMany({});
     });
     it('should return list of all tags', async () => {
-      const response = await request.get('/api/tags', savedUser);
+      const response = await request.get('/api/tags', savedUser._id);
       expect(response).to.have.status(200);
       expect(response.body).to.eql(['a', 'b', 'c']);
     });

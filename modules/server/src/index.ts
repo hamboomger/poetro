@@ -1,9 +1,8 @@
 /* eslint-disable import/newline-after-import,import/first */
 import express from 'express';
 import 'reflect-metadata';
-require('express-async-errors');
 
-import httpContext from 'express-http-context';
+require('express-async-errors');
 import dotenv from 'dotenv-flow';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
@@ -29,7 +28,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(passport.initialize());
-app.use(httpContext.middleware);
 
 app.use(logRequestMiddleware);
 app.use(authRoute);

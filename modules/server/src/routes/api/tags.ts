@@ -8,9 +8,8 @@ import { ITagNoRefs, Tag } from '../../model/tag';
 import { TagsService } from '../../services/TagsService';
 
 const route = Router();
-const tagsService = Container.get(TagsService);
 route.get('/api/tags', async (req, res) => {
-  const user = getCurrentUser();
+  const user = getCurrentUser(req);
   const poems = await Poem.find({ user: user._id });
   const allTags = new Set(poems.flatMap((poem) => poem.tags));
   const tagsSorted = Array.from(allTags).sort();
