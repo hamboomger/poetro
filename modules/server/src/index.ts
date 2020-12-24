@@ -1,9 +1,9 @@
 /* eslint-disable import/newline-after-import,import/first */
+import httpContext from 'express-http-context';
 import express from 'express';
 import 'reflect-metadata';
-require('express-async-errors');
 
-import httpContext from 'express-http-context';
+require('express-async-errors');
 import dotenv from 'dotenv-flow';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
