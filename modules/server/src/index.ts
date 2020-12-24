@@ -1,5 +1,4 @@
 /* eslint-disable import/newline-after-import,import/first */
-import httpContext from 'express-http-context';
 import express from 'express';
 import 'reflect-metadata';
 
@@ -33,7 +32,6 @@ app.use(passport.initialize());
 app.use(logRequestMiddleware);
 app.use(authRoute);
 
-app.use(httpContext.middleware);
 app.use(authenticateToken);
 app.use(authenticateTestUser);
 

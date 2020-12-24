@@ -1,23 +1,24 @@
-import httpContext from 'express-http-context';
+import { Request } from 'express';
 import { IUserDocument } from '../model/user';
 import { logger } from './loggers';
 
 const CURRENT_USER_PARAMETER = 'currentUser';
 
-export function currentUserExists(): boolean {
-  return httpContext.get(CURRENT_USER_PARAMETER) !== undefined;
+export function currentUserExists(req: Request): boolean {
+  // @ts-ignore
+  return req.appUser !== undefined;
 }
 
-export function getCurrentUser(): IUserDocument {
-  const currentUser = httpContext.get(CURRENT_USER_PARAMETER);
-  logger.info(`Getting http context variable: ${CURRENT_USER_PARAMETER} | ${JSON.stringify(currentUser, null, 2)}`);
+export function getCurrentUser(req: Request): IUserDocument {
+  // @ts-ignore
+  const currentUser = req.appUser;
   if (currentUser === undefined) {
-    throw Error('Failed to fetch current user from context');
+    throw Error('Failed to get current user from request');
   }
   return currentUser;
 }
 
-export function setCurrentUser(user: IUserDocument) {
-  httpContext.set(CURRENT_USER_PARAMETER, user);
-  logger.info(`Http context variable got set: ${CURRENT_USER_PARAMETER} | ${JSON.stringify(user, null, 2)}`);
+export function setCurrentUser(user: IUserDocument, req: Request) {
+  // @ts-ignore
+  req.appUser = user;
 }

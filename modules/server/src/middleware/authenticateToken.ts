@@ -37,7 +37,7 @@ const authenticateToken: RequestHandler = (req, res, next) => {
     }
 
     req.user = { id: user._id };
-    setCurrentUser(user);
+    setCurrentUser(user, req);
     next();
   });
 };
