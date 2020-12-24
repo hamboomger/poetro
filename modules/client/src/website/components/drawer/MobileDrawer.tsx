@@ -1,9 +1,14 @@
 import { SwipeableDrawer } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import React, { useState } from 'react';
+import React from 'react';
 import DrawerContent from './DrawerContent';
 
 const drawerWidth = 240;
+
+interface Props {
+  drawerOpened: boolean
+  setDrawerOpened(value: boolean): void
+}
 
 const useStyles = makeStyles({
   drawer: {
@@ -15,16 +20,16 @@ const useStyles = makeStyles({
   },
 });
 
-const MobileDrawer: React.FC = () => {
+const MobileDrawer: React.FC<Props> = ({ drawerOpened, setDrawerOpened }) => {
   const classes = useStyles();
-  const [isOpened, setIsOpened] = useState(false);
 
+  console.log(`Is opened: ${drawerOpened}`);
   return (
     <SwipeableDrawer
       anchor="left"
-      open={isOpened}
-      onOpen={() => setIsOpened(true)}
-      onClose={() => setIsOpened(false)}
+      open={drawerOpened}
+      onOpen={() => setDrawerOpened(true)}
+      onClose={() => setDrawerOpened(false)}
       className={classes.drawer}
       variant="temporary"
       classes={{
