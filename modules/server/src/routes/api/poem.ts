@@ -13,8 +13,10 @@ const route = Router();
 const poemsService = Container.get(PoemsService);
 
 route.get('/api/poems', async (req, res) => {
-  const user = getCurrentUser();
-  const poems = await Poem.find({ user: user._id });
+  // @ts-ignore
+  const userId = req.user!!.id;
+  // const user = getCurrentUser();
+  const poems = await Poem.find({ user: userId });
   res.json(poems);
 });
 

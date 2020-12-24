@@ -1,10 +1,9 @@
 import { RequestHandler } from 'express';
-import httpContext from 'express-http-context';
 import { getTokenPayload } from '../lib/jwtAuthentication';
 import User from '../model/user';
 import UnauthorizedRequestError from '../lib/errors/UnauthorizedRequestError';
 import { logger } from '../lib/loggers';
-import {setCurrentUser} from '../lib/currentUser';
+import { setCurrentUser } from '../lib/currentUser';
 
 const JWT_PARAMETER_NAME = 'authorization';
 
@@ -37,6 +36,7 @@ const authenticateToken: RequestHandler = (req, res, next) => {
       return;
     }
 
+    req.user = { id: user._id };
     setCurrentUser(user);
     next();
   });

@@ -1,35 +1,34 @@
 import { Request as SuperagentRequest } from 'superagent';
 import chai from 'chai';
-import { IUserDocument } from '../../src/model/user';
 import app from '../../src';
 
 export const TEST_USER_HEADER_PARAMETER = 'testUserId';
 
 function request(
   requestFun: (agent: ChaiHttp.Agent) => SuperagentRequest,
-  authenticatedUser?: IUserDocument,
+  userId?: string,
 ): SuperagentRequest {
   let req = requestFun(chai.request(app));
-  if (authenticatedUser) {
-    req = req.set(TEST_USER_HEADER_PARAMETER, authenticatedUser.id);
+  if (userId) {
+    req = req.set(TEST_USER_HEADER_PARAMETER, userId);
   }
   return req;
 }
 
-function get(url: string, authenticatedUser?: IUserDocument): SuperagentRequest {
-  return request(((agent) => agent.get(url)), authenticatedUser);
+function get(url: string, userId?: string): SuperagentRequest {
+  return request(((agent) => agent.get(url)), userId);
 }
 
-function post(url: string, authenticatedUser?: IUserDocument): SuperagentRequest {
-  return request(((agent) => agent.post(url)), authenticatedUser);
+function post(url: string, userId?: string): SuperagentRequest {
+  return request(((agent) => agent.post(url)), userId);
 }
 
-function put(url: string, authenticatedUser?: IUserDocument): SuperagentRequest {
-  return request(((agent) => agent.put(url)), authenticatedUser);
+function put(url: string, userId?: string): SuperagentRequest {
+  return request(((agent) => agent.put(url)), userId);
 }
 
-function deleteReq(url: string, authenticatedUser?: IUserDocument): SuperagentRequest {
-  return request(((agent) => agent.delete(url)), authenticatedUser);
+function deleteReq(url: string, userId?: string): SuperagentRequest {
+  return request(((agent) => agent.delete(url)), userId);
 }
 
 export default {

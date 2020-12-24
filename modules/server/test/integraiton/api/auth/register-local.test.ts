@@ -23,7 +23,14 @@ describe('POST /api/register-local', () => {
     expect(response).to.have.status(200);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.keys(['_id', 'name', 'email']);
-    // TODO check if initial poems were added
+    expect(response.body).to.not.include.any.keys(['passwordHash']);
+
+    const userId = response.body._id;
+    const userPoemsResponse = await request.get('/api/poems', userId);
+    const userPoems = userPoemsResponse.body;
+    expect(userPoemsResponse).to.have.status(200);
+    expect(userPoemsResponse.body).to.be.an('array');
+    expect(userPoems.length).to.be.greaterThan(0);
   });
   it('should fail because of fields missing', async () => {
     const response = await chai.request(app)

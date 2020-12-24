@@ -29,11 +29,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(passport.initialize());
-app.use(httpContext.middleware);
 
 app.use(logRequestMiddleware);
 app.use(authRoute);
 
+app.use(httpContext.middleware);
 app.use(authenticateToken);
 app.use(authenticateTestUser);
 
