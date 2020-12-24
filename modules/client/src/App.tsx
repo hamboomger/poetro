@@ -1,6 +1,6 @@
 import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router, Route, Switch,
 } from 'react-router-dom';
@@ -29,11 +29,12 @@ const useStyles = makeStyles({
 
 const AuthenticatedRoutesContainer: React.FC = () => {
   const classes = useStyles();
+  const [drawerOpened, setDrawerOpened] = useState(false);
   return (
     <>
       <Container className={classes.appContainer} maxWidth="md">
-        <AppBar />
-        <AppDrawer />
+        <AppBar setDrawerOpened={setDrawerOpened} />
+        <AppDrawer drawerOpened={drawerOpened} setDrawerOpened={setDrawerOpened} />
         <Switch>
           <PrivateRoute path="/" exact component={PoemsGrid} />
           <PrivateRoute path="/home" exact component={PoemsGrid} />

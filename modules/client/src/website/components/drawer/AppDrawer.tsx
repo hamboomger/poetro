@@ -6,7 +6,14 @@ import connectStore from '../../connectStore';
 import DesktopDrawer from './DesktopDrawer';
 import MobileDrawer from './MobileDrawer';
 
-const AppDrawer: React.FC<ComponentProps> = ({ state, actions }) => {
+interface Props extends ComponentProps {
+  drawerOpened: boolean
+  setDrawerOpened(value: boolean): void
+}
+
+const AppDrawer: React.FC<Props> = ({
+  state, actions, drawerOpened, setDrawerOpened,
+}) => {
   const { isDesktopClient } = useWindowDimensions();
   const { isFetching, data: tags } = state.allTags;
   const { loadAllTags } = actions.allTags;
@@ -17,7 +24,10 @@ const AppDrawer: React.FC<ComponentProps> = ({ state, actions }) => {
     }
   });
 
-  return isDesktopClient ? <DesktopDrawer /> : <MobileDrawer />;
+  console.log(`Drawer opened: ${drawerOpened}`);
+  return isDesktopClient
+    ? <DesktopDrawer />
+    : <MobileDrawer drawerOpened={drawerOpened} setDrawerOpened={setDrawerOpened} />;
 };
 
 export default connectStore(AppDrawer);

@@ -17,6 +17,10 @@ import connectStore from '../connectStore';
 import ComponentProps from '../../models/ComponentProps';
 import appConstants from '../lib/appConstants';
 
+interface Props extends ComponentProps {
+  setDrawerOpened(value: boolean): void
+}
+
 const useStyles = makeStyles(({ palette, spacing }: Theme) => ({
   appBar: {
     backgroundColor: palette.primary.main,
@@ -31,7 +35,7 @@ const useStyles = makeStyles(({ palette, spacing }: Theme) => ({
   },
 }));
 
-const AppBar: React.FC<ComponentProps> = ({ state }) => {
+const AppBar: React.FC<Props> = ({ state, setDrawerOpened }) => {
   const classes = useStyles();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
   const { isFetching: poemsListFetching } = state.loadedPoems;
@@ -47,7 +51,16 @@ const AppBar: React.FC<ComponentProps> = ({ state }) => {
       <Toolbar>
         {isMobile
           && (
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <IconButton
+              onClick={() => {
+                console.log('Drawer got opened!!!');
+                setDrawerOpened(true);
+              }}
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+            >
               <MenuIcon />
             </IconButton>
           )}
