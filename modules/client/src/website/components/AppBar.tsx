@@ -12,8 +12,10 @@ import {
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
+import { useCookies } from 'react-cookie';
 import connectStore from '../connectStore';
 import ComponentProps from '../../models/ComponentProps';
+import appConstants from '../lib/appConstants';
 
 const useStyles = makeStyles(({ palette, spacing }: Theme) => ({
   appBar: {
@@ -36,6 +38,8 @@ const AppBar: React.FC<ComponentProps> = ({ state }) => {
   const { isFetching: chosenPoemFetching } = state.chosenPoem;
   const { isFetching: allTagsFetching } = state.allTags;
 
+  const [,, removeCookie] = useCookies([appConstants.JWT_TOKEN_NAME]);
+
   const dataIsFetching = poemsListFetching || chosenPoemFetching || allTagsFetching;
 
   return (
@@ -50,7 +54,15 @@ const AppBar: React.FC<ComponentProps> = ({ state }) => {
         <Typography variant="h6" className={classes.title}>
           Poetro
         </Typography>
-        <Button color="inherit">Login</Button>
+        <Button
+          onClick={() => {
+            // @ts-ignore
+            removeCookie(appConstants.JWT_TOKEN_NAME);
+          }}
+          color="inherit"
+        >
+          Logout
+        </Button>
       </Toolbar>
       <Collapse in={dataIsFetching}>
         <LinearProgress color="secondary" />
