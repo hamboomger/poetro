@@ -11,6 +11,3 @@ services:
     env_file:
       - "./modules/server/.env"
       - "./modules/server/.env.local"
-  client:
-    ports:
-      - "80:8080"
