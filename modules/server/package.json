@@ -13,10 +13,6 @@
     "start:prod": "npm run build && node dist/index.js",
     "test": "NODE_ENV=test mocha -r ts-node/register test/**/*.test.ts"
   },
-  "lint-staged": {
-    "*.ts": "eslint",
-    "*.js": "eslint --cache --fix"
-  },
   "dependencies": {
     "@types/joi": "^14.3.4",
     "app-root-path": "^3.0.0",
@@ -69,7 +65,6 @@
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "lerna": "^3.22.1",
-    "lint-staged": "^10.0.8",
     "mocha": "^7.1.0",
     "nconf": "^0.10.0",
     "nodemon": "^2.0.2",
