@@ -1,6 +1,6 @@
 {
   "name": "poetro",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "scripts": {
     "lint:server": "cd modules/server && npm run lint",
@@ -12,13 +12,15 @@
     "start": "npm run start:all",
     "start:all": "run-p server:dev client:dev",
     "test": "npm run test:server",
-    "test:server": "cd modules/server && npm run test"
+    "test:server": "cd modules/server && npm run test",
+    "release": "standard-version"
   },
   "dependencies": {
     "npm-run-all": "^4.1.5"
   },
   "devDependencies": {
-    "cz-conventional-changelog": "^3.3.0"
+    "cz-conventional-changelog": "^3.3.0",
+    "standard-version": "^9.2.0"
   },
   "config": {
     "commitizen": {
