@@ -1,8 +1,8 @@
 import { RequestHandler } from 'express';
-import User from '../model/user';
-import { setCurrentUser } from '../lib/currentUser';
+import User from '../models/user';
+import { setCurrentUser } from '../lib/util/currentUser';
 
-const authenticateTestUser: RequestHandler = async (req, res, next) => {
+const testAuth: RequestHandler = async (req, res, next) => {
   if (process.env.NODE_ENV === 'test') {
     const testUserId = req.header('testUserId');
     if (!testUserId) {
@@ -18,4 +18,4 @@ const authenticateTestUser: RequestHandler = async (req, res, next) => {
   next();
 };
 
-export default authenticateTestUser;
+export default testAuth;

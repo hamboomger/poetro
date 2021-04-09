@@ -1,8 +1,8 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import { Types } from 'mongoose';
-import Poem, { IPoem, IPoemDocument } from '../../../src/model/poem';
-import User, { IUserDocument } from '../../../src/model/user';
+import Poem, { IPoem, IPoemDocument } from '../../../src/models/poem';
+import User, { IUserDocument } from '../../../src/models/user';
 import createAndSaveMockPoem from '../../mocks/createAndSaveMockPoem';
 import createAndSaveTestUser from '../../mocks/createAndSaveTestUser';
 import request from '../../util/request';

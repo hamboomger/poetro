@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { Service } from 'typedi';
 import { Types } from 'mongoose';
-import { ITag, Tag } from '../model/tag';
+import { ITag, Tag } from '../models/tag';
 
 @Service()
 export class TagsService {

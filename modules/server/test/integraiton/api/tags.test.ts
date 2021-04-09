@@ -3,8 +3,8 @@ import chaiHttp from 'chai-http';
 import createAndSaveMockPoem from '../../mocks/createAndSaveMockPoem';
 import createAndSaveTestUser from '../../mocks/createAndSaveTestUser';
 import request from '../../util/request';
-import Poem from '../../../src/model/poem';
-import User, { IUserDocument } from '../../../src/model/user';
+import Poem from '../../../src/models/poem';
+import User, { IUserDocument } from '../../../src/models/user';
 
 chai.use(chaiHttp);
 

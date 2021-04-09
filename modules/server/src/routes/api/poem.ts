@@ -2,11 +2,11 @@ import { Request, Response, Router } from 'express';
 import { checkSchema, validationResult } from 'express-validator';
 import { Types } from 'mongoose';
 import { Container } from 'typedi';
-import Poem, { IPoem } from '../../model/poem';
+import Poem, { IPoem } from '../../models/poem';
 import NotFoundError from '../../lib/errors/NotFoundError';
 import BadRequestError from '../../lib/errors/BadRequestError';
 import { createPoemValidationSchema, editPoemValidationSchema } from './validation/poemValidationSchema';
-import { getCurrentUser } from '../../lib/currentUser';
+import { getCurrentUser } from '../../lib/util/currentUser';
 import { PoemsService } from '../../services/PoemsService';
 
 const route = Router();

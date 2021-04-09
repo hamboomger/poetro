@@ -4,7 +4,7 @@ function hidePassword(connectionString: string): string {
   return connectionString.replace(/\/\/([^:]+):(.*)@/, '//$1:***@');
 }
 
-async function connectMongoose() {
+export async function connectToMongoDb() {
   const databaseURI = process.env.MONGODB_URI;
   if (databaseURI === undefined) {
     throw Error('MONGODB_URI environment variable is not provided');
@@ -19,5 +19,3 @@ async function connectMongoose() {
   });
   console.log('Database connection succeeded');
 }
-
-export default connectMongoose;

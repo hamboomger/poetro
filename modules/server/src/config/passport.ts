@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import User, { IUserDocument } from './model/user';
-import verifyPassword from './util/verifyPassword';
+import User, { IUserDocument } from '../models/user';
+import verifyPassword from '../lib/util/verifyPassword';
 
 export function initPassportSerializationFunctions() {
   passport.serializeUser<IUserDocument, string>((user, done) => {

@@ -1,25 +1,24 @@
-/* eslint-disable import/newline-after-import,import/first */
 import express from 'express';
 import 'reflect-metadata';
-
-require('express-async-errors');
+import 'express-async-errors';
 import dotenv from 'dotenv-flow';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import { apiRoutes, authRoute } from './routes/api';
-import { customRequestErrorsHandler, invalidObjectIdErrorHandler, logUnhandledErrors } from './middleware/errorHandlers';
-import connectToDatabase from './lib/connectToDatabase';
-import { initPassportSerializationFunctions } from './passportConfig';
-import authenticateToken from './middleware/authenticateToken';
-import authenticateTestUser from './middleware/authenticateTestUser';
-import logRequestMiddleware from './middleware/requestLogging';
+import logRequestMiddleware from './middleware/logRequests';
+import auth from './middleware/auth';
+import testAuth from './middleware/testAuth';
+import { initPassportSerializationFunctions } from './config/passport';
+import { connectToMongoDb } from './config/database';
+import { customRequestErrorsHandler, invalidObjectIdErrorHandler, logUnhandledErrors } from './middleware/handleErrors';
+import config from './config/config';
 
 dotenv.config();
 initPassportSerializationFunctions();
-
-connectToDatabase().catch((err) => {
-  console.log('Error connecting to database: ', err);
+connectToMongoDb().catch((err) => {
+  console.log('Error connecting to the database: ', err);
+  process.exit();
 });
 
 const app = express();
@@ -32,8 +31,7 @@ app.use(passport.initialize());
 app.use(logRequestMiddleware);
 app.use(authRoute);
 
-app.use(authenticateToken);
-app.use(authenticateTestUser);
+app.use(config.env.isTest() ? testAuth : auth);
 
 app.use(apiRoutes);
 app.use(invalidObjectIdErrorHandler);

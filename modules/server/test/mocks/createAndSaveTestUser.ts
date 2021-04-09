@@ -1,5 +1,5 @@
-import User, { IUser, IUserDocument } from '../../src/model/user';
-import hashPassword from '../../src/util/hashPassword';
+import User, { IUser, IUserDocument } from '../../src/models/user';
+import hashPassword from '../../src/lib/util/hashPassword';
 
 async function createAndSaveTestUser(
   variation = 1,

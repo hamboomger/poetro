@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
-import Poem, { IPoem, IPoemDocument } from '../../src/model/poem';
-import { IUserDocument } from '../../src/model/user';
+import Poem, { IPoem, IPoemDocument } from '../../src/models/poem';
+import { IUserDocument } from '../../src/models/user';
 
 async function createAndSaveMockPoem(
   user: IUserDocument,

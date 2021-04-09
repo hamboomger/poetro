@@ -1,11 +1,11 @@
 import { Service } from 'typedi';
-import User, { IUser, IUserDocument } from '../model/user';
-import verifyPassword from '../util/verifyPassword';
+import User, { IUser, IUserDocument } from '../models/user';
+import verifyPassword from '../lib/util/verifyPassword';
 import { requestsLogger } from '../lib/loggers';
 import UnauthorizedRequestError from '../lib/errors/UnauthorizedRequestError';
 import { createJwtToken } from '../lib/jwtAuthentication';
 import BadRequestError from '../lib/errors/BadRequestError';
-import hashPassword from '../util/hashPassword';
+import hashPassword from '../lib/util/hashPassword';
 import initializeNewUserData from '../lib/initializeNewUserData';
 
 @Service()

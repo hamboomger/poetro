@@ -1,8 +1,8 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../../../src/index';
-import User, { IUser } from '../../../../src/model/user';
-import hashPassword from '../../../../src/util/hashPassword';
+import User, { IUser } from '../../../../src/models/user';
+import hashPassword from '../../../../src/lib/util/hashPassword';
 
 chai.use(chaiHttp);
 

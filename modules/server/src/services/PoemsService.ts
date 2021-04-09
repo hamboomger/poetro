@@ -1,5 +1,5 @@
 import { Service } from 'typedi';
-import Poem, { IPoem, IPoemDocument } from '../model/poem';
+import Poem, { IPoem, IPoemDocument } from '../models/poem';
 import { TagsService } from './TagsService';
 
 @Service()

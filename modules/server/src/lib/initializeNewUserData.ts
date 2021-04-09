@@ -2,8 +2,8 @@ import fs from 'fs';
 import appRoot from 'app-root-path';
 import path from 'path';
 import { Types } from 'mongoose';
-import { IUserDocument } from '../model/user';
-import Poem, { IPoem, IPoemNoRefs } from '../model/poem';
+import { IUserDocument } from '../models/user';
+import Poem, { IPoem, IPoemNoRefs } from '../models/poem';
 
 async function initializeNewUserData(user: IUserDocument) {
   const initialPoemsFilePath = path.resolve(appRoot.path, 'initial-data', 'poems.json');
