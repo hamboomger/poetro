@@ -11,14 +11,20 @@ const UserSchema = new Schema({
   versionKey: false,
 });
 
-export interface IUser {
+interface BaseUser {
   name: string;
   email: string;
   passwordHash?: string;
   googleId?: string;
 }
 
-export interface IUserDocument extends Document, IUser {
+export interface CreateUser extends BaseUser { }
+
+export interface UserModel extends BaseUser {
+  id: string;
+}
+
+export interface IUserDocument extends Document, UserModel {
   _id: string,
 }
 

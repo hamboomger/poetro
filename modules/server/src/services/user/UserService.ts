@@ -1,5 +1,5 @@
 import { Service } from 'typedi';
-import { IUser } from '../../models/user';
+import { UserModel } from '../../models/user';
 import { UserRepository } from './UserRepository';
 
 @Service()
@@ -10,7 +10,7 @@ export class UserService {
     this.userRepo = userRepo;
   }
 
-  async getUserById(uid: string): Promise<IUser | null> {
+  async getUserById(uid: string): Promise<UserModel | null> {
     return this.userRepo.findById(uid);
   }
 }

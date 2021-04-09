@@ -1,13 +1,13 @@
 import { Service } from 'typedi';
-import User, { IUser, IUserDocument } from '../../models/user';
+import User, { UserModel, IUserDocument } from '../../models/user';
 
 @Service()
 export class UserRepository {
-  async findById(uid: string): Promise<IUser | null> {
+  async findById(uid: string): Promise<UserModel | null> {
     return User.findById(uid);
   }
 
-  async findByEmail(email: string): Promise<IUser | null> {
+  async findByEmail(email: string): Promise<UserModel | null> {
     return User.findOne({ email });
   }
 

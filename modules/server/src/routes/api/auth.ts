@@ -4,7 +4,7 @@ import { body, checkSchema, validationResult } from 'express-validator';
 import { Container } from 'typedi';
 import UserLoginValidationSchema from './validation/userAuthValidationSchema';
 import BadRequestError from '../../lib/errors/BadRequestError';
-import User, { IUser } from '../../models/user';
+import User, { UserModel } from '../../models/user';
 import hashPassword from '../../lib/util/hashPassword';
 import verifyPassword from '../../lib/util/verifyPassword';
 import UnauthorizedRequestError from '../../lib/errors/UnauthorizedRequestError';

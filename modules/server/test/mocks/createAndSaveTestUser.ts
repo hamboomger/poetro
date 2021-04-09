@@ -1,11 +1,13 @@
-import User, { IUser, IUserDocument } from '../../src/models/user';
+import User, { UserModel, IUserDocument } from '../../src/models/user';
 import hashPassword from '../../src/lib/util/hashPassword';
+import mongooseUtils from '../util/mongooseUtils';
 
 async function createAndSaveTestUser(
   variation = 1,
 ): Promise<{ user: IUserDocument, password: string }> {
   const password = `testPassword123${variation}`;
-  const user: IUser = {
+  const user: UserModel = {
+    id: mongooseUtils.generateId(),
     email: `testEmail${variation}`,
     name: `testName${variation}`,
     passwordHash: hashPassword(password),

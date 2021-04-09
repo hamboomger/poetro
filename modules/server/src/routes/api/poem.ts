@@ -14,7 +14,7 @@ const poemsService = Container.get(PoemsService);
 
 route.get('/api/poems', async (req, res) => {
   const user = getCurrentUser(req);
-  const poems = await Poem.find({ user: user._id });
+  const poems = await Poem.find({ user: user.id });
   res.json(poems);
 });
 
@@ -22,7 +22,7 @@ route.get('/api/poems/:poemId',
   async (req: Request, res: Response) => {
     const { poemId } = req.params;
     const user = getCurrentUser(req);
-    const poem = await poemsService.getPoemById(poemId, user._id);
+    const poem = await poemsService.getPoemById(poemId, user.id);
     if (poem === null) {
       throw new NotFoundError(`Failed to find poem by id: ${poemId}`);
     }
@@ -44,9 +44,9 @@ route.post('/api/poems/create',
       author, text, name, targetTimeSec, tags,
     } = req.body;
     const poem: IPoem = {
-      user: Types.ObjectId(user._id), author, text, name, targetTimeSec, tags,
+      user: Types.ObjectId(user.id), author, text, name, targetTimeSec, tags,
     };
-    const savedPoem = await poemsService.createNewPoem(poem, user._id);
+    const savedPoem = await poemsService.createNewPoem(poem, user.id);
     res.json({
       success: true,
       poemId: savedPoem.id,
@@ -65,7 +65,7 @@ route.put('/api/poems/:poemId/update',
     const { poemId } = req.params;
     const poem = req.body;
 
-    const updatedPoem = await Poem.findOneAndUpdate({ _id: poemId, user: user._id }, poem);
+    const updatedPoem = await Poem.findOneAndUpdate({ _id: poemId, user: user.id }, poem);
     if (!updatedPoem) {
       throw new NotFoundError(`Failed to update poem by id(poem not found): ${poemId}`);
     }
@@ -80,7 +80,7 @@ route.delete('/api/poems/:poemId/delete',
   async (req: Request, res: Response) => {
     const user = getCurrentUser(req);
     const { poemId } = req.params;
-    const deletedPoem = await Poem.findOneAndRemove({ _id: poemId, user: user._id });
+    const deletedPoem = await Poem.findOneAndRemove({ _id: poemId, user: user.id });
 
     if (!deletedPoem) {
       throw new NotFoundError(`Failed to delete poem by id(poem not found): ${poemId}`);

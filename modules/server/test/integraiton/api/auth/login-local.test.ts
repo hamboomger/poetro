@@ -1,14 +1,16 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../../../src/index';
-import User, { IUser } from '../../../../src/models/user';
+import User, { UserModel } from '../../../../src/models/user';
 import hashPassword from '../../../../src/lib/util/hashPassword';
+import mongooseUtils from '../../../util/mongooseUtils';
 
 chai.use(chaiHttp);
 
 describe('POST /auth/login-local', () => {
   const password = 'testtest';
-  const user: IUser = {
+  const user: UserModel = {
+    id: mongooseUtils.generateId(),
     name: 'test name',
     email: 'testEmail@mail.com',
     passwordHash: hashPassword(password),
