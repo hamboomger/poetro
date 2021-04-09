@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/hamboomger/poetro/compare/v1.2.0...v1.3.0) (2021-04-09)
+
+
+### Features
+
+* **server:** gulp integration ([0275f29](https://github.com/hamboomger/poetro/commit/0275f29916d8ca67d8232c6a50fa461a5bdd36c0))
+
 ## 1.2.0 (2021-04-07)
 
 
