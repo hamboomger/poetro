@@ -1,23 +1,24 @@
 import { Router } from 'express';
 import { validate } from 'express-validation';
-import Poem from '../../models/poem';
-import { getCurrentUser } from '../../lib/util/currentUser';
-import tagValidationSchema from './validation/tagValidationSchema';
-import { ITagNoRefs, Tag } from '../../models/tag';
+import { Container } from 'typedi';
+import { getCurrentUser } from '../../../lib/util/currentUser';
+import { TagsService } from '../../../services/TagsService';
+import { Tag, TagModel } from '../../../models/tag';
+import { updateTagValidationSchema } from './schema';
 
 const route = Router();
+
+const tagsService = Container.get(TagsService);
 route.get('/api/tags', async (req, res) => {
   const user = getCurrentUser(req);
-  const poems = await Poem.find({ user: user.id });
-  const allTags = new Set(poems.flatMap((poem) => poem.tags));
-  const tagsSorted = Array.from(allTags).sort();
-  res.json(tagsSorted);
+  const tags = await tagsService.getAll(user.id);
+  res.json(tags);
 });
 route.put(
   '/api/tags/update',
-  validate(tagValidationSchema),
+  validate(updateTagValidationSchema),
   async (req, res) => {
-    const tag: ITagNoRefs = req.body;
+    const tag: Partial<TagModel> = req.body;
     Tag.updateOne({ name: tag.name }, tag, { upsert: true });
     res.sendStatus(200);
   },

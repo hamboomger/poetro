@@ -1,22 +1,17 @@
-import {
-  Document, model, Schema, Types,
-} from 'mongoose';
+import { Document, model, Schema } from 'mongoose';
 
 const TagSchema = new Schema({
-  user: { type: Schema.Types.ObjectId, required: true },
+  userId: { type: String, required: true },
   name: { type: String, required: true },
   color: { type: String, required: false },
 });
 
-export interface ITagNoRefs {
-  name: string;
-  color?: string;
+export interface TagModel {
+  userId: string
+  name: string
+  color?: string
 }
 
-export interface ITag extends ITagNoRefs {
-  user: Types.ObjectId,
-}
-
-export interface ITagDocument extends ITag, Document {}
+export interface ITagDocument extends TagModel, Document {}
 
 export const Tag = model<ITagDocument>('TagSchema', TagSchema);

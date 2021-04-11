@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { poemRoute } from './poem';
-import { tagsRoute } from './tags';
 import { authRoute } from './auth';
+import { poemRoute } from './poems/route';
+import { tagsRoute } from './tags/route';
 
 const apiRoutes = Router();
 apiRoutes.use(poemRoute);

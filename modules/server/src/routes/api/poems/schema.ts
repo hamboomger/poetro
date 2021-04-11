@@ -1,5 +1,5 @@
 import { Schema } from 'express-validator';
-import isStringArray from './custom/isStringArray';
+import isStringArray from '../validation/custom/isStringArray';
 
 export const createPoemValidationSchema: Schema = {
   author: {
