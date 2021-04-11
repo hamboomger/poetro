@@ -6,7 +6,7 @@ import { logger } from '../lib/loggers';
 import { setCurrentUser } from '../lib/util/currentUser';
 import { UserService } from '../services/user/UserService';
 
-const JWT_PARAMETER_NAME = 'authorization';
+export const JWT_PARAMETER_NAME = 'authorization';
 
 const userService = Container.get(UserService);
 const auth: RequestHandler = async (req, res, next) => {

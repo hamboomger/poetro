@@ -16,10 +16,8 @@ const GoogleButton: React.FC = () => {
   return (
     <Button
       variant="outlined"
-      component={Link}
-      to="/api/google"
+      href="/api/google"
       className={classes.googleBtn}
-      // size="large"
       startIcon={<GoogleIcon />}
     >
       Sign in using Google

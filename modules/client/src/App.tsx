@@ -15,6 +15,7 @@ import LoginView from './website/components/login/LoginView';
 import AppDrawer from './website/components/drawer/AppDrawer';
 import RegisterView from './website/components/login/RegisterView';
 import PrivateRoute from './website/components/common/PrivateRoute';
+import GoogleSignInCallback from './website/components/login/google/GoogleSignInCallback';
 
 const useStyles = makeStyles({
   root: {
@@ -56,6 +57,7 @@ const App: React.FunctionComponent = () => {
         <Switch>
           <Route path="/login" exact component={LoginView} />
           <Route path="/register" exact component={RegisterView} />
+          <Route path="/google-callback" exact component={GoogleSignInCallback} />
           <Route component={AuthenticatedRoutesContainer} />
         </Switch>
       </div>

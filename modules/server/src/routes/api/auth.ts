@@ -7,6 +7,7 @@ import UserLoginValidationSchema from './validation/userAuthValidationSchema';
 import BadRequestError from '../../lib/errors/BadRequestError';
 import { AuthService } from '../../services/AuthService';
 import { createJwtToken } from '../../lib/jwtAuthentication';
+import { JWT_PARAMETER_NAME } from '../../middleware/auth';
 
 function createJWTTokenForSerializedUser(req: Request): string {
   if (req.user === undefined || req.user.id === undefined) {
@@ -69,8 +70,8 @@ route.get(
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
     const jwtToken = createJWTTokenForSerializedUser(req);
-    res.status(200);
-    res.json({ authentication: jwtToken });
+    res.cookie(JWT_PARAMETER_NAME, jwtToken);
+    res.redirect('/');
   },
 );
 export { route as authRoute };
