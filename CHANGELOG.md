@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/hamboomger/poetro/compare/v1.3.0...v1.4.0) (2021-04-11)
+
+
+### Features
+
+* **client:** google authorization flow implemented ([e3e9559](https://github.com/hamboomger/poetro/commit/e3e95597b56d084f62cecccbbbf324f38ec73886))
+* **client:** new Google Sign-In button added to the Login Form ([56605b1](https://github.com/hamboomger/poetro/commit/56605b1abee29ef0bba510b9880dbe3d2d9efd99))
+* **server:** google Oauth2 integrated via passport.js strategy ([690c7af](https://github.com/hamboomger/poetro/commit/690c7afcde9d471030b72a382b540989b3b0ce25))
+
+
+### Bug Fixes
+
+* **mongo:** docker-compose.prod.yml config fixed after the change of production servers ([d209c19](https://github.com/hamboomger/poetro/commit/d209c19dc310b14d9c0a32237b43dbead8153845))
+
 ## [1.3.0](https://github.com/hamboomger/poetro/compare/v1.2.0...v1.3.0) (2021-04-09)
 
 
