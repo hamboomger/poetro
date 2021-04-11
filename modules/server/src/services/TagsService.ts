@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { Service } from 'typedi';
-import { TagModel, Tag } from '../models/tag';
+import { TagModel, Tag, CreateTag } from '../models/tag';
 import { TagsRepository } from './tags/TagsRepository';
 
 @Service()
@@ -15,12 +15,16 @@ export class TagsService {
     return this.tagsRepo.findByUserId(uid);
   }
 
+  async createTag(tag: CreateTag): Promise<TagModel> {
+    return this.tagsRepo.createTag(tag);
+  }
+
   async addAnyNewTagByName(tagsNames: string[], userId: string) {
     const existingTags = await Tag.find({ name: { $in: tagsNames } });
     const existingTagsNames = existingTags.map((t) => t.name);
     const newTagsNames = _.difference(tagsNames, existingTagsNames);
     if (!_.isEmpty(newTagsNames)) {
-      const newTags: TagModel[] = newTagsNames.map((tagName) => ({
+      const newTags: CreateTag[] = newTagsNames.map((tagName) => ({
         userId,
         name: tagName,
       }));

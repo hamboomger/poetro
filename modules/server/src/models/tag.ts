@@ -4,12 +4,20 @@ const TagSchema = new Schema({
   userId: { type: String, required: true },
   name: { type: String, required: true },
   color: { type: String, required: false },
+}, {
+  versionKey: false,
 });
 
-export interface TagModel {
+interface BaseTag {
   userId: string
   name: string
   color?: string
+}
+
+export interface CreateTag extends BaseTag {}
+
+export interface TagModel extends BaseTag {
+  id: string
 }
 
 export interface ITagDocument extends TagModel, Document {}

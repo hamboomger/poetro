@@ -5,13 +5,17 @@ import dotenv from 'dotenv-flow';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
-import session from 'express-session';
 import { apiRoutes, authRoute } from './routes/api';
 import logRequestMiddleware from './middleware/logRequests';
 import auth from './middleware/auth';
 import testAuth from './middleware/testAuth';
 import { connectToMongoDb } from './config/database';
-import { customRequestErrorsHandler, invalidObjectIdErrorHandler, logUnhandledErrors } from './middleware/handleErrors';
+import {
+  customRequestErrorsHandler,
+  handleValidationErrors,
+  invalidObjectIdErrorHandler,
+  logUnhandledErrors,
+} from './middleware/handleErrors';
 import config from './config/config';
 import { initPassportJs } from './config/passport';
 
@@ -37,6 +41,8 @@ app.use(authRoute);
 app.use(config.env.isTest() ? testAuth : auth);
 
 app.use(apiRoutes);
+
+app.use(handleValidationErrors);
 app.use(invalidObjectIdErrorHandler);
 app.use(customRequestErrorsHandler);
 app.use(logUnhandledErrors);

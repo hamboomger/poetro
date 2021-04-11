@@ -1,5 +1,8 @@
-import { NextFunction, Request, Response } from 'express';
+import {
+  ErrorRequestHandler, NextFunction, Request, Response,
+} from 'express';
 import { Error } from 'mongoose';
+import { ValidationError } from 'express-validation';
 import CustomRequestError from '../lib/errors/CustomRequestError';
 import BadRequestError from '../lib/errors/BadRequestError';
 import { logger, requestsLogger } from '../lib/loggers';
@@ -36,6 +39,21 @@ export function customRequestErrorsHandler(
     next(err);
   }
 }
+
+export const handleValidationErrors: ErrorRequestHandler = async (err, req, res, next) => {
+  if (err instanceof ValidationError) {
+    const jsonRes = {
+      name: 'ValidationError',
+      message: 'Validation error',
+      code: err.statusCode,
+      validationErrors: err.details,
+    };
+    res.status(400);
+    res.json(jsonRes);
+  } else {
+    next(err);
+  }
+};
 
 export function invalidObjectIdErrorHandler(
   err: Error, req: Request, res: Response, next: NextFunction,

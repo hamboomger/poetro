@@ -5,7 +5,7 @@ export const updateTagValidationSchema = {
     name: Joi.string()
       .required(),
     color: Joi.string()
-      .regex(/^#([0-9A-F]{3}){1,2}$/)
+      .regex(/^#([0-9a-f]{3}){1,2}$/)
       .message('Invalid hex color format'),
   }),
 };
@@ -16,7 +16,7 @@ export const createTagValidationSchema = {
       .required(),
     color: Joi.string()
       .optional()
-      .regex(/^#([0-9A-F]{3}){1,2}$/)
+      .regex(/^#([0-9a-f]{3}){1,2}$/)
       .message('Invalid hex color format'),
   }),
 };
