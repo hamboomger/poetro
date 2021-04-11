@@ -1,4 +1,6 @@
-import { Button, Grid, Typography } from '@material-ui/core';
+import {
+  Button, Divider, Grid, Typography,
+} from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Form, Formik, FormikHelpers } from 'formik';
@@ -11,6 +13,8 @@ import FeedbackPanel from '../common/FeedbackPanel';
 import InputField from '../fields/InputField';
 import connectStore from '../../connectStore';
 import appConstants from '../../lib/appConstants';
+import GoogleButton from './google/GoogleButton';
+import DividerWithText from '../common/DividerWithText';
 
 const useStyles = makeStyles({
   fieldLabel: {
@@ -23,6 +27,9 @@ const useStyles = makeStyles({
   },
   submitBtn: {
     marginRight: 10,
+  },
+  googleBtn: {
+
   },
 });
 
@@ -110,6 +117,12 @@ const LoginForm: React.FC<ComponentProps> = ({ actions: { allTags } }) => {
               >
                 Register
               </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <DividerWithText textToDisplay="or" />
+            </Grid>
+            <Grid item xs={12} className={classes.buttonGroup}>
+              <GoogleButton />
             </Grid>
           </Grid>
         </Form>
