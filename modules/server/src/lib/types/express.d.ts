@@ -1,12 +1,14 @@
 declare namespace Express {
-  // These open interfaces may be extended in an application-specific manner via declaration merging
-  // See for example method-override.d.ts (https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/method-override/index.d.ts)
+  // This interface is used only once in order to get the id from the passport.js-serialized
+  // user, create JWT token and then send it back to the user
+  interface User {
+    id: string,
+    email: string,
+    name: string,
+    googleId?: string
+  }
+
   interface Request {
-    user?: {
-      id: string,
-      email: string,
-      name: string,
-      googleId?: string
-    }
+    appUser?: User
   }
 }

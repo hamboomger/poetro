@@ -5,17 +5,18 @@ import dotenv from 'dotenv-flow';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
+import session from 'express-session';
 import { apiRoutes, authRoute } from './routes/api';
 import logRequestMiddleware from './middleware/logRequests';
 import auth from './middleware/auth';
 import testAuth from './middleware/testAuth';
-import { initPassportSerializationFunctions } from './config/passport';
 import { connectToMongoDb } from './config/database';
 import { customRequestErrorsHandler, invalidObjectIdErrorHandler, logUnhandledErrors } from './middleware/handleErrors';
 import config from './config/config';
+import { initPassportJs } from './config/passport';
 
 dotenv.config();
-initPassportSerializationFunctions();
+initPassportJs();
 connectToMongoDb().catch((err) => {
   console.log('Error connecting to the database: ', err);
   process.exit();
@@ -26,7 +27,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+// express-session is used for passport.js strategies only, app uses JWT for authentication
 app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(logRequestMiddleware);
 app.use(authRoute);

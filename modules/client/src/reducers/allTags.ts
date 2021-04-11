@@ -11,7 +11,6 @@ const initialState: AllTagsState = {
 };
 
 function addNewTags(allTags: string[], tags: string[]) {
-  console.log(`New tags: ${tags}`);
   return Array.from(new Set([...allTags, ...tags])).sort();
 }
 

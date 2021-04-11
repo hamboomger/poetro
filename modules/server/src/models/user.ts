@@ -1,6 +1,7 @@
 import {
   Document, model, Schema,
 } from 'mongoose';
+import { Required } from 'utility-types';
 
 const UserSchema = new Schema({
   name: { type: String, required: true },
@@ -18,7 +19,8 @@ interface BaseUser {
   googleId?: string;
 }
 
-export interface CreateUser extends BaseUser { }
+// user should have either passwordHash or googleId
+export type CreateUser = Required<BaseUser, 'passwordHash'> | Required<BaseUser, 'googleId'>;
 
 export interface UserModel extends BaseUser {
   id: string;

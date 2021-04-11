@@ -10,7 +10,6 @@ export const ADD_ANY_NEW_TAGS = 'TAGS_LOADING_FAILED';
 const allTagsActionCreator: AllTagsActionCreator = {
   loadAllTags(): AppThunk {
     return ((dispatch) => {
-      console.log('Loading all tags!!!');
       dispatch({ type: TAGS_LOADING });
       axios.get('/api/tags')
         .then((res) => {

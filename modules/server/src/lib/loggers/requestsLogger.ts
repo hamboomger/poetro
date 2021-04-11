@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import winston from 'winston';
 import { Request } from 'express';
 import CustomRequestError from '../errors/CustomRequestError';
@@ -27,11 +26,11 @@ export const requestsLogger = {
   logAuthenticationSuccess: (nameOrEmail: string, success: boolean) => {
     logger.debug(`User login \t| login: ${nameOrEmail} | success: ${success}`);
   },
-  logRegistrationTry: (name: string, email: string) => {
-    logger.debug(`User sign up \t| name: ${name}, email: ${email} | pending`);
+  logRegistrationTry: (name: string, email: string, authMethod: string) => {
+    logger.debug(`User sign up \t| name: ${name}, email: ${email} | method: ${authMethod} | pending`);
   },
-  logRegistrationSuccess: (name: string, email: string, success: boolean) => {
-    logger.debug(`User sign up \t| name: ${name}, email: ${email} | success: ${success}`);
+  logRegistrationResult: (name: string, email: string, authMethod: string, success: boolean) => {
+    logger.debug(`User sign up \t| name: ${name}, email: ${email} | method: ${authMethod} | success: ${success}`);
   },
   logRequestError: (error: CustomRequestError) => {
     const {
