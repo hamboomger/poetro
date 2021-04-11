@@ -6,8 +6,8 @@ services:
       - "-f"
       - "/etc/mongod.conf"
     volumes:
-      - "$HOME/app_data/:/data/db"
-      - "$HOME/configs/mongod.conf:/etc/mongod.conf"
+      - "/hosted/db/poetro/data:/data/db"
+      - "/hosted/db/poetro/mongod.conf:/etc/mongod.conf"
     env_file:
       - "./modules/server/.env"
       - "./modules/server/.env.local"
