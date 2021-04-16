@@ -1,4 +1,9 @@
+export interface TagView {
+  name: string,
+  color: string
+}
+
 export default interface AllTagsState {
-  data: string[],
+  data: TagView[],
   isFetching: boolean,
 }

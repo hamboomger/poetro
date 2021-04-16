@@ -65,15 +65,15 @@ const DrawerContent: React.FC<ComponentProps> = ({ state, actions }) => {
       <List>
         {tags.map((tag) => (
           <ListItem
-            selected={filter?.tag === tag}
-            onClick={() => applyFilter({ tag: (filter?.tag !== tag) ? tag : undefined })}
+            selected={filter?.tag === tag.name}
+            onClick={() => applyFilter({ tag: (filter?.tag !== tag.name) ? tag.name : undefined })}
             button
             disabled={!isRootRoute}
             classes={{ disabled: classes.disabledTag }}
-            key={tag}
+            key={tag.name}
           >
-            <LabelIcon color={filter?.tag === tag ? 'primary' : 'secondary'} className={classes.tagIcon} />
-            <ListItemText primary={tag} />
+            <LabelIcon htmlColor={tag.color} className={classes.tagIcon} />
+            <ListItemText primary={tag.name} />
           </ListItem>
         ))}
       </List>

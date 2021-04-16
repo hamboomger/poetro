@@ -1,5 +1,5 @@
 import { AnyAction as Action } from 'redux';
-import AllTagsState from '../models/state/AllTagsState';
+import AllTagsState, { TagView } from '../models/state/AllTagsState';
 import {
   ADD_ANY_NEW_TAGS, TAGS_LOADED, TAGS_LOADING, TAGS_LOADING_FAILED,
 } from '../actions/allTags';
@@ -10,8 +10,8 @@ const initialState: AllTagsState = {
   isFetching: false,
 };
 
-function addNewTags(allTags: string[], tags: string[]) {
-  return Array.from(new Set([...allTags, ...tags])).sort();
+function addNewTags(allTags: TagView[], newTags: TagView[]) {
+  return Array.from(new Set([...allTags, ...newTags])).sort();
 }
 
 function allTagsReducer(state: AllTagsState = initialState, action: Action): AllTagsState {

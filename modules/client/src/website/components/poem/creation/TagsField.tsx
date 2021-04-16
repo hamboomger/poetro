@@ -26,6 +26,7 @@ const TagsField: React.FC<Props> = (props) => {
   } = props;
   const { loadAllTags } = actions.allTags;
   const { data: allTags, isFetching: tagsFetching } = state.allTags;
+  const allTagsNames = allTags.map((tag) => tag.name);
 
   useEffectOnce(() => {
     if (!allTags.length && !tagsFetching) {
@@ -37,7 +38,7 @@ const TagsField: React.FC<Props> = (props) => {
       isMulti
       isLoading={tagsFetching}
       value={mapToOptions(initialTags || [])}
-      options={mapToOptions(allTags)}
+      options={mapToOptions(allTagsNames)}
       onChange={(value?: any) => {
         const options = value as any[];
         const tags = options?.map((option) => option.value) || [];
