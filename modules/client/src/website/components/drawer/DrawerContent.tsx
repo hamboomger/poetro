@@ -70,6 +70,7 @@ const DrawerContent: React.FC<ComponentProps> = ({ state, actions }) => {
               applyFilter({ tag: (filter?.tag !== tag.name) ? tag.name : undefined });
             }}
             changeColor={(newColor: string) => { console.log('Change color triggered!'); }}
+            key={tag.name}
           />
         ))}
       </List>
