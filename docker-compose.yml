@@ -3,7 +3,7 @@ services:
   mongo:
     image: "mongo:3.6"
     ports:
-      - "27017:27017"
+      - "27018:27017"
     networks:
       - poetronet
   server:
