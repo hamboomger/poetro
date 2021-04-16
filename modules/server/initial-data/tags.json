@@ -1,0 +1,18 @@
+[
+  {
+    "color": "#bfe000",
+    "name": "New"
+  },
+  {
+    "color": "#00abff",
+    "name": "Favorite"
+  },
+  {
+    "color": "#ffca00",
+    "name": "In progress"
+  },
+  {
+    "color": "#32c553",
+    "name": "Finished"
+  }
+]

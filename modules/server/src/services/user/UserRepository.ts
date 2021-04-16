@@ -1,6 +1,6 @@
 import { Service } from 'typedi';
-import User, { UserModel, IUserDocument, CreateUser } from '../../models/user';
-import dbUtil from '../../lib/util/dbUtil';
+import User, { CreateUser, IUserDocument, UserModel } from '../../models/user';
+import { toPojo } from '../../lib/util/dbUtil';
 
 @Service()
 export class UserRepository {
@@ -18,6 +18,6 @@ export class UserRepository {
 
   async createUser(user: CreateUser): Promise<UserModel> {
     const result = await new User(user).save();
-    return dbUtil.toPojo<UserModel>(result);
+    return toPojo<UserModel>(result);
   }
 }

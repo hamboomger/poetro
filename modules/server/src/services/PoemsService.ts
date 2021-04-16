@@ -15,7 +15,7 @@ export class PoemsService {
   }
 
   async createNewPoem(poem: IPoem, userId: string): Promise<IPoemDocument> {
-    await this.tagsService.addAnyNewTagByName(poem.tags, userId);
+    await this.tagsService.addAnyNewTagByName(userId, poem.tags);
     return new Poem(poem).save();
   }
 }

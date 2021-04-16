@@ -1,6 +1,6 @@
 import { Service } from 'typedi';
 import { CreateTag, Tag, TagModel } from '../../models/tag';
-import dbUtil from '../../lib/util/dbUtil';
+import { toPojo } from '../../lib/util/dbUtil';
 
 @Service()
 export class TagsRepository {
@@ -8,8 +8,16 @@ export class TagsRepository {
     return Tag.find({ userId: { $eq: uid } });
   }
 
+  async findByNames(uid: string, tagsNames: string[]): Promise<TagModel[]> {
+    return Tag.find({ name: { $in: tagsNames } });
+  }
+
   async createTag(tag: CreateTag): Promise<TagModel> {
     const createdTag = await new Tag(tag).save();
-    return dbUtil.toPojo<TagModel>(createdTag);
+    return toPojo<TagModel>(createdTag);
+  }
+
+  async createTags(tags: CreateTag[]): Promise<TagModel[]> {
+    return Tag.insertMany(tags);
   }
 }
