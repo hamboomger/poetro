@@ -1,13 +1,13 @@
 import React from 'react';
 import {
-  Button, Divider, Fade, List, ListItem, ListItemText, Toolbar, Typography,
+  Button, Divider, Fade, List, Toolbar, Typography,
 } from '@material-ui/core';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import HomeIcon from '@material-ui/icons/Home';
-import LabelIcon from '@material-ui/icons/Label';
 import { makeStyles } from '@material-ui/core/styles';
 import connectStore from '../../connectStore';
 import ComponentProps from '../../../models/ComponentProps';
+import TagItem from '../tags/TagItem';
 
 const useStyles = makeStyles({
   drawerContainer: {
@@ -40,7 +40,6 @@ const useStyles = makeStyles({
 const DrawerContent: React.FC<ComponentProps> = ({ state, actions }) => {
   const classes = useStyles();
 
-  const isRootRoute = useLocation().pathname === '/';
   const { filter } = state.loadedPoems;
   const { applyFilter } = actions.loadedPoems;
   const { data: tags } = state.allTags;
@@ -64,17 +63,14 @@ const DrawerContent: React.FC<ComponentProps> = ({ state, actions }) => {
       </Typography>
       <List>
         {tags.map((tag) => (
-          <ListItem
+          <TagItem
+            tag={tag}
             selected={filter?.tag === tag.name}
-            onClick={() => applyFilter({ tag: (filter?.tag !== tag.name) ? tag.name : undefined })}
-            button
-            disabled={!isRootRoute}
-            classes={{ disabled: classes.disabledTag }}
-            key={tag.name}
-          >
-            <LabelIcon htmlColor={tag.color} className={classes.tagIcon} />
-            <ListItemText primary={tag.name} />
-          </ListItem>
+            onClick={() => {
+              applyFilter({ tag: (filter?.tag !== tag.name) ? tag.name : undefined });
+            }}
+            changeColor={(newColor: string) => { console.log('Change color triggered!'); }}
+          />
         ))}
       </List>
       <Fade in={filter?.tag !== undefined}>
