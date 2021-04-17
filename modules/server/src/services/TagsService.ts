@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { Service } from 'typedi';
-import { TagModel, CreateTag } from '../models/tag';
+import { Optional } from 'utility-types';
+import { TagModel, CreateTag, UpdateTag } from '../models/tag';
 import { TagsRepository } from './tags/TagsRepository';
 import config from '../config/config';
 
@@ -31,6 +32,10 @@ export class TagsService {
 
   async createTags(tags: CreateTag[]): Promise<TagModel[]> {
     return this.tagsRepo.createTags(tags);
+  }
+
+  async updateTag(uid: string, tagId: string, tag: UpdateTag): Promise<TagModel | null> {
+    return this.tagsRepo.updateTag(uid, tagId, tag);
   }
 
   async addAnyNewTagByName(userId: string, tagsNames: string[]) {

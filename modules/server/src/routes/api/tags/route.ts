@@ -3,9 +3,8 @@ import { validate } from 'express-validation';
 import { Container } from 'typedi';
 import { getCurrentUser } from '../../../lib/util/currentUser';
 import { TagsService } from '../../../services/TagsService';
-import { CreateTag, Tag, TagModel } from '../../../models/tag';
+import { CreateTag, Tag } from '../../../models/tag';
 import { createTagValidationSchema, updateTagValidationSchema } from './schema';
-import { CreateUser } from '../../../models/user';
 
 const route = Router();
 
@@ -29,12 +28,20 @@ route.post(
   },
 );
 route.put(
-  '/api/tags/update',
+  '/api/tags/:id/update',
   validate(updateTagValidationSchema),
   async (req, res) => {
-    const tag: Partial<TagModel> = req.body;
-    Tag.updateOne({ name: tag.name }, tag, { upsert: true });
-    res.sendStatus(200);
+    const user = getCurrentUser(req);
+    const { id: tagId } = req.params;
+    const { name, color } = req.body as {
+      name: string | undefined,
+      color: string | undefined
+    };
+
+    const result = await tagsService.updateTag(user.id, tagId, {
+      name, color,
+    });
+    res.json(result);
   },
 );
 route.delete('/api/tags/:name/delete', async (req, res) => {

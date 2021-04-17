@@ -1,4 +1,5 @@
 import { Document, model, Schema } from 'mongoose';
+import { Optional } from 'utility-types';
 
 const TagSchema = new Schema({
   userId: { type: String, required: true },
@@ -15,6 +16,8 @@ interface BaseTag {
 }
 
 export interface CreateTag extends BaseTag {}
+
+export interface UpdateTag extends Optional<Omit<BaseTag, 'userId'>> {}
 
 export interface TagModel extends BaseTag {
   id: string
