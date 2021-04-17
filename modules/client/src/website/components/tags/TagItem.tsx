@@ -5,6 +5,7 @@ import LabelIcon from '@material-ui/icons/Label';
 import { useLocation } from 'react-router-dom';
 import { TagView } from '../../../models/state/AllTagsState';
 import TagItemContextMenu from './TagItemContextMenu';
+import TagItemColorPicker from './TagItemColorPicker';
 
 const useStyles = makeStyles({
   tagIcon: {
@@ -51,31 +52,34 @@ const initialMousePos: MousePositionState = {
 const TagItem: React.FC<Props> = ({
   tag, changeColor, selected, onClick,
 }) => {
-  const [contextMenuOpened, setContextMenuOpened] = useState(false);
+  const [displayColorPicker, setDisplayColorPicker] = useState(false);
+  const [displayContextMenu, setDisplayContextMenu] = useState(false);
   const [mousePos, setMousePos] = useState(initialMousePos);
+
   const classes = useStyles();
   const isRootRoute = useLocation().pathname === '/';
 
-  const handleClick = (event: React.MouseEvent) => {
+  const handleRightClick = (event: React.MouseEvent) => {
     event.preventDefault();
     setMousePos({
       x: event.clientX - 2,
       y: event.clientY - 4,
     });
-    setContextMenuOpened(true);
+    setDisplayContextMenu(true);
   };
 
-  const handleClose = () => {
+  const closeContextMenu = () => {
     setMousePos(initialMousePos);
-    setContextMenuOpened(false);
+    setDisplayContextMenu(false);
   };
 
   return (
     <ListItem
-      onContextMenu={handleClick}
+      onContextMenu={handleRightClick}
       selected={selected}
       onClick={() => {
-        if (!contextMenuOpened) {
+        // do not select tag if clicked while any of the popups is opened
+        if (!displayContextMenu && !displayColorPicker) {
           onClick();
         }
       }}
@@ -86,12 +90,15 @@ const TagItem: React.FC<Props> = ({
       <LabelIcon htmlColor={tag.color} className={classes.tagIcon} />
       <ListItemText primary={tag.name} />
       <TagItemContextMenu
-        contextMenuOpened={contextMenuOpened}
+        contextMenuOpened={displayContextMenu}
         mouseX={mousePos.x}
         mouseY={mousePos.y}
-        handleClose={handleClose}
-        onPickColor={() => changeColor('alala')}
+        handleClose={closeContextMenu}
+        onPickColor={() => {
+          setDisplayColorPicker(true);
+        }}
       />
+      <TagItemColorPicker isVisible={displayColorPicker} setVisible={setDisplayColorPicker} />
     </ListItem>
   );
 };

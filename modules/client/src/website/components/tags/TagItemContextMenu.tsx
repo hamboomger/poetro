@@ -24,8 +24,10 @@ const useStyles = makeStyles({
   tagsHeader: {
     margin: '10px 0 10px 24px',
   },
-  menuItemText: {
-    paddingLeft: '10px',
+  menu: {
+    '&& li': {
+      padding: '2px 15px',
+    },
   },
   menuItemIcon: {
     minWidth: '30px',
@@ -48,6 +50,7 @@ const TagItemContextMenu: React.FC<Props> = ({
   return (
     <div>
       <Menu
+        className={classes.menu}
         keepMounted
         open={contextMenuOpened}
         onClose={handleClose}
@@ -58,7 +61,12 @@ const TagItemContextMenu: React.FC<Props> = ({
             : undefined
         }
       >
-        <MenuItem onClick={onPickColor}>
+        <MenuItem
+          onClick={() => {
+            onPickColor();
+            handleClose();
+          }}
+        >
           <ListItemIcon className={classes.menuItemIcon}>
             <PaletteIcon fontSize="small" />
           </ListItemIcon>
