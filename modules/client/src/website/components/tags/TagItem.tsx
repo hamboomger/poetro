@@ -35,7 +35,6 @@ const useStyles = makeStyles({
 interface Props {
   selected: boolean,
   tag: TagView,
-  changeColor: (newColor: string) => void,
   onClick: () => void
 }
 
@@ -50,7 +49,7 @@ const initialMousePos: MousePositionState = {
 };
 
 const TagItem: React.FC<Props> = ({
-  tag, changeColor, selected, onClick,
+  tag, selected, onClick,
 }) => {
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
   const [displayContextMenu, setDisplayContextMenu] = useState(false);
@@ -98,7 +97,11 @@ const TagItem: React.FC<Props> = ({
           setDisplayColorPicker(true);
         }}
       />
-      <TagItemColorPicker isVisible={displayColorPicker} setVisible={setDisplayColorPicker} />
+      <TagItemColorPicker
+        tag={tag}
+        isVisible={displayColorPicker}
+        setVisible={setDisplayColorPicker}
+      />
     </ListItem>
   );
 };

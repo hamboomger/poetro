@@ -24,7 +24,7 @@ interface Props extends ComponentProps {
 const useStyles = makeStyles(({ palette, spacing }: Theme) => ({
   appBar: {
     backgroundColor: palette.primary.main,
-    zIndex: 100,
+    zIndex: 11,
     height: 'auto',
   },
   title: {

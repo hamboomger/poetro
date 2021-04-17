@@ -10,9 +10,15 @@ export interface AddAnyNewTagsAction extends ReduxAction {
   payload: TagView[];
 }
 
+export interface TagColorChangedAction extends ReduxAction {
+  tagId: string,
+  newColor: string
+}
+
 interface TagsActionCreator {
   loadAllTags(): AppThunk;
   addAnyNewTags(tags: TagView[]): AddAnyNewTagsAction
+  changeTagColor(tagId: string, newColor: string): AppThunk
 }
 
 export default TagsActionCreator;

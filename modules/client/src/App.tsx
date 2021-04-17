@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   appContainer: {
     marginTop: 100,
     paddingBottom: 30,
-    zIndex: 10,
+    zIndex: 3,
   },
 });
 

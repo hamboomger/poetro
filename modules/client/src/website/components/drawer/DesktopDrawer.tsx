@@ -12,7 +12,7 @@ const useStyles = makeStyles({
   drawerPaper: {
     width: drawerWidth,
     overflow: 'visible',
-    zIndex: 1,
+    zIndex: 10,
   },
 });
 

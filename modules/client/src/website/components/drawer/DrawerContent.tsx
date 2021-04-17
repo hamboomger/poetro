@@ -69,7 +69,6 @@ const DrawerContent: React.FC<ComponentProps> = ({ state, actions }) => {
             onClick={() => {
               applyFilter({ tag: (filter?.tag !== tag.name) ? tag.name : undefined });
             }}
-            changeColor={(newColor: string) => { console.log(`New color picked: ${newColor}`); }}
             key={tag.name}
           />
         ))}

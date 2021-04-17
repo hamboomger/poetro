@@ -15,8 +15,9 @@ const useStyles = makeStyles({
     width: drawerWidth,
   },
   drawerPaper: {
+    position: 'relative',
     width: drawerWidth,
-    zIndex: 1,
+    zIndex: 10,
   },
 });
 
