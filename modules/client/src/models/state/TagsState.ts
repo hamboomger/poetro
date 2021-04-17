@@ -3,7 +3,7 @@ export interface TagView {
   color: string
 }
 
-export default interface AllTagsState {
+export default interface TagsState {
   data: TagView[],
   isFetching: boolean,
 }

@@ -15,8 +15,8 @@ const AppDrawer: React.FC<Props> = ({
   state, actions, drawerOpened, setDrawerOpened,
 }) => {
   const { isDesktopClient } = useWindowDimensions();
-  const { isFetching, data: tags } = state.allTags;
-  const { loadAllTags } = actions.allTags;
+  const { isFetching, data: tags } = state.tags;
+  const { loadAllTags } = actions.tags;
 
   useEffectOnce(() => {
     if (!tags.length && !isFetching) {

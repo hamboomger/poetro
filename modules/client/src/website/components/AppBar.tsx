@@ -40,7 +40,7 @@ const AppBar: React.FC<Props> = ({ state, setDrawerOpened }) => {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
   const { isFetching: poemsListFetching } = state.loadedPoems;
   const { isFetching: chosenPoemFetching } = state.chosenPoem;
-  const { isFetching: allTagsFetching } = state.allTags;
+  const { isFetching: allTagsFetching } = state.tags;
 
   const [,, removeCookie] = useCookies([appConstants.JWT_TOKEN_NAME]);
 

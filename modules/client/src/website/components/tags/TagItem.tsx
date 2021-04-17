@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { ListItem, ListItemText } from '@material-ui/core';
 import LabelIcon from '@material-ui/icons/Label';
 import { useLocation } from 'react-router-dom';
-import { TagView } from '../../../models/state/AllTagsState';
+import { TagView } from '../../../models/state/TagsState';
 import TagItemContextMenu from './TagItemContextMenu';
 import TagItemColorPicker from './TagItemColorPicker';
 

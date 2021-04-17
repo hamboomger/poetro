@@ -58,7 +58,7 @@ async function onSubmit(credentials: any, actions: FormikHelpers<any>): Promise<
   }
 }
 
-const LoginForm: React.FC<ComponentProps> = ({ actions: { allTags } }) => {
+const LoginForm: React.FC<ComponentProps> = ({ actions: { tags } }) => {
   const classes = useStyles();
   const [, setCookie] = useCookies([appConstants.JWT_TOKEN_NAME]);
   const history = useHistory();
@@ -70,7 +70,7 @@ const LoginForm: React.FC<ComponentProps> = ({ actions: { allTags } }) => {
         const authToken = await onSubmit(values, actions);
         if (authToken) {
           setCookie(appConstants.JWT_TOKEN_NAME, authToken);
-          allTags.loadAllTags();
+          tags.loadAllTags();
           setTimeout(() => history.push('/'), 1000);
         }
       }}

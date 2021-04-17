@@ -1,11 +1,11 @@
 import { AnyAction as Action } from 'redux';
-import AllTagsState, { TagView } from '../models/state/AllTagsState';
+import TagsState, { TagView } from '../models/state/TagsState';
 import {
   ADD_ANY_NEW_TAGS, TAGS_LOADED, TAGS_LOADING, TAGS_LOADING_FAILED,
-} from '../actions/allTags';
-import { AddAnyNewTagsAction, TagsLoadedAction } from '../actions/interfaces/AllTagsActionCreator';
+} from '../actions/tags';
+import { AddAnyNewTagsAction, TagsLoadedAction } from '../actions/interfaces/TagsActionCreator';
 
-const initialState: AllTagsState = {
+const initialState: TagsState = {
   data: [],
   isFetching: false,
 };
@@ -14,7 +14,7 @@ function addNewTags(allTags: TagView[], newTags: TagView[]) {
   return Array.from(new Set([...allTags, ...newTags])).sort();
 }
 
-function allTagsReducer(state: AllTagsState = initialState, action: Action): AllTagsState {
+function tagsReducer(state: TagsState = initialState, action: Action): TagsState {
   switch (action.type) {
     case TAGS_LOADING:
       return {
@@ -45,4 +45,4 @@ function allTagsReducer(state: AllTagsState = initialState, action: Action): All
   }
 }
 
-export default allTagsReducer;
+export default tagsReducer;

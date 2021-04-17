@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
 import chosenPoem from './chosenPoem';
 import loadedPoems from './loadedPoems';
-import allTags from './allTags';
+import tags from './tags';
 import user from './user';
 
 const rootReducer = combineReducers({
   chosenPoem,
   loadedPoems,
-  allTags,
+  tags,
   user,
 });
 

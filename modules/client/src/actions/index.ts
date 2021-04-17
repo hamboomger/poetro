@@ -1,13 +1,13 @@
 import chosenPoemActionCreator from './chosenPoem';
 import RootActionCreator from './interfaces/RootActionCreator';
 import loadedPoemsActionCreator from './loadedPoems';
-import allTagsActionCreator from './allTags';
+import tagsActionCreator from './tags';
 import userActionCreator from './user';
 
 const rootActionCreator: RootActionCreator = {
   chosenPoem: chosenPoemActionCreator,
   loadedPoems: loadedPoemsActionCreator,
-  allTags: allTagsActionCreator,
+  tags: tagsActionCreator,
   user: userActionCreator,
 };
 

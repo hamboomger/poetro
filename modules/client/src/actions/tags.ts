@@ -1,14 +1,14 @@
 import axios from 'axios';
-import AllTagsActionCreator, { AddAnyNewTagsAction, TagsLoadedAction } from './interfaces/AllTagsActionCreator';
 import AppThunk from '../util/AppThunk';
-import { TagView } from '../models/state/AllTagsState';
+import { TagView } from '../models/state/TagsState';
+import TagsActionCreator, { AddAnyNewTagsAction, TagsLoadedAction } from './interfaces/TagsActionCreator';
 
 export const TAGS_LOADING = 'TAGS_LOADING';
 export const TAGS_LOADED = 'TAGS_LOADED';
 export const TAGS_LOADING_FAILED = 'TAGS_LOADING_FAILED';
 export const ADD_ANY_NEW_TAGS = 'TAGS_LOADING_FAILED';
 
-const allTagsActionCreator: AllTagsActionCreator = {
+const tagsActionCreator: TagsActionCreator = {
   loadAllTags(): AppThunk {
     return ((dispatch) => {
       dispatch({ type: TAGS_LOADING });
@@ -32,4 +32,4 @@ const allTagsActionCreator: AllTagsActionCreator = {
   },
 };
 
-export default allTagsActionCreator;
+export default tagsActionCreator;

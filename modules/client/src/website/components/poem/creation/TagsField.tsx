@@ -24,8 +24,8 @@ const TagsField: React.FC<Props> = (props) => {
   const {
     state, actions, handleTags, initialTags,
   } = props;
-  const { loadAllTags } = actions.allTags;
-  const { data: allTags, isFetching: tagsFetching } = state.allTags;
+  const { loadAllTags } = actions.tags;
+  const { data: allTags, isFetching: tagsFetching } = state.tags;
   const allTagsNames = allTags.map((tag) => tag.name);
 
   useEffectOnce(() => {

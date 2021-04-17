@@ -68,7 +68,7 @@ async function onSubmit(poem: any, actions: FormikHelpers<any>): Promise<boolean
 const PoemForm: React.FC<Props> = ({ poem, actions: reduxActions }) => {
   const classes = useStyles();
   const history = useHistory();
-  const { loadAllTags } = reduxActions.allTags;
+  const { loadAllTags } = reduxActions.tags;
 
   return (
     <Formik

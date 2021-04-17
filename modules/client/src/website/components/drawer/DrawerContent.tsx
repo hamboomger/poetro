@@ -42,7 +42,7 @@ const DrawerContent: React.FC<ComponentProps> = ({ state, actions }) => {
 
   const { filter } = state.loadedPoems;
   const { applyFilter } = actions.loadedPoems;
-  const { data: tags } = state.allTags;
+  const { data: tags } = state.tags;
 
   return (
     <div className={classes.drawerContainer}>

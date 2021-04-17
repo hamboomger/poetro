@@ -1,11 +1,11 @@
 import ChosenPoemActionCreator from './ChosenPoemActionCreator';
 import LoadedPoemsActionCreator from './LoadedPoemsActionCreator';
-import AllTagsActionCreator from './AllTagsActionCreator';
 import UserActionCreator from './UserActionCreator';
+import TagsActionCreator from './TagsActionCreator';
 
 export default interface RootActionCreator {
   chosenPoem: ChosenPoemActionCreator;
   loadedPoems: LoadedPoemsActionCreator;
-  allTags: AllTagsActionCreator;
+  tags: TagsActionCreator;
   user: UserActionCreator;
 }
