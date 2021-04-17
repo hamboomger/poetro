@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/hamboomger/poetro/compare/v1.4.0...v2.0.0) (2021-04-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* **server:** GET /api/tags route now includes tags colors
+
+### Features
+
+* **client:** app drawer now supports different tags colors ([cbc2baa](https://github.com/hamboomger/poetro/commit/cbc2baae1ef0f9eb06b6f7508f8373d5b62b580a))
+* **client:** new color picker view for the tag menu item ([68aec90](https://github.com/hamboomger/poetro/commit/68aec90b4686a16901e977c16e1df07d1885aded))
+* **client:** now tag color picker actually changes color of the tag permanently ([2bbd325](https://github.com/hamboomger/poetro/commit/2bbd3252ca57a2aeb6fc0ce2a3516604c439a762))
+* **client:** tag entries in the drawer now support context menu, only visually for now ([abbdf11](https://github.com/hamboomger/poetro/commit/abbdf11ec0f31c39aa6ebf75f052e0fcfed28834))
+* **server:** initially created tags now have different colors ([89bcaba](https://github.com/hamboomger/poetro/commit/89bcaba0acd66462a3eeedb855995a0193ad8df7))
+* **server:** new POST /tags/create route added ([2013935](https://github.com/hamboomger/poetro/commit/2013935d84f30b6a755f312477ff79064ad58fb8))
+* **server:** PUT /api/tags/:id/update now works properly, proper mongo doc conversion on repo level ([ce149f1](https://github.com/hamboomger/poetro/commit/ce149f1a45cc16965e2665a1b12c4dcba76c9d2f))
+
 ## [1.4.0](https://github.com/hamboomger/poetro/compare/v1.3.0...v1.4.0) (2021-04-11)
 
 
