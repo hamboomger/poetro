@@ -3,11 +3,10 @@ services:
   mongo:
     command:
       - "--auth"
-      - "-f"
-      - "/etc/mongod.conf"
     volumes:
-      - "/hosted/db/poetro/data:/data/db"
-      - "/hosted/db/poetro/mongod.conf:/etc/mongod.conf"
+      - type: "bind"
+        source: "/hosted/db/poetro/data"
+        target: "/data/db"
     env_file:
       - "./modules/server/.env"
       - "./modules/server/.env.local"
