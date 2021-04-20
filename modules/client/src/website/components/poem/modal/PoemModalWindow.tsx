@@ -1,9 +1,9 @@
 import React from 'react';
-import { Backdrop, Fade, Modal, } from '@material-ui/core';
+import { Backdrop, Fade, Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PoemModalPreview from './PoemModalPreview';
-import ComponentProps from '../../../models/ComponentProps';
-import connectStore from '../../connectStore';
+import ComponentProps from '../../../../models/ComponentProps';
+import connectStore from '../../../connectStore';
 
 const useStyles = makeStyles({
   modal: {

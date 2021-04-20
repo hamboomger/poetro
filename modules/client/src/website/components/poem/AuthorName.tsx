@@ -7,6 +7,7 @@ const useStyles = makeStyles({
   subheader: {
     textAlign: 'left',
     display: 'flex',
+    marginBottom: 5,
   },
   authorIcon: {
     color: '#555',

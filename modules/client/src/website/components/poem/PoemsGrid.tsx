@@ -8,7 +8,7 @@ import ComponentProps from '../../../models/ComponentProps';
 import useEffectOnce from '../../../util/useEffectOnce';
 import useWindowDimensions from '../../../util/useWindowDimensions';
 import connectStore from '../../connectStore';
-import PoemModalWindow from './PoemModalWindow';
+import PoemModalWindow from './modal/PoemModalWindow';
 import PoemCard from './PoemsGridItem';
 
 const useStyles = makeStyles((theme) => ({
