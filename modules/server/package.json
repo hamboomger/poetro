@@ -75,7 +75,7 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "gulp-nodemon": "^2.5.0",
     "lerna": "^3.22.1",
-    "mocha": "^7.1.0",
+    "mocha": "^10.1.0",
     "nconf": "^0.10.0",
     "nodemon": "^2.0.2",
     "ts-node": "^8.6.2",
